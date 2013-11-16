@@ -1,3 +1,6 @@
+/* vim: ts=4:sw=4:smarttab:expandtab
+ */
+
 buildscript {
     repositories {
         mavenCentral()
@@ -39,5 +42,8 @@ android {
 }
 
 dependencies {
-	compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.squareup.okhttp:okhttp:1.2.1'
+    compile 'com.squareup.retrofit:retrofit:1.2.2'
+    compile 'com.squareup.picasso:picasso:2.1.1'
 }
