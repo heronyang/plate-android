@@ -36,9 +36,9 @@ public class LocationFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent restInent = new Intent(view.getContext(),RestaurantActivity.class);
-                //startActivity(restActivity);
-                view.getContext().startActivity(restInent);
+                Intent restIntent = new Intent(view.getContext(),RestaurantActivity.class);
+                restIntent.putExtra("locationId", position);
+                startActivity(restIntent);
                 Log.d("PlateLog", "clicked");
             }
         });

@@ -66,34 +66,13 @@ public class ReceiptFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*FIXME:
-            the following code is for testing and showing the usage for PlateService,
-            they should be removed
-         */
-        PlateService.PlateTWOldAPI plateTW;
-        PlateService.PlateTWAPI1 plateTWV1;
 
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
-
-        final String TAG = "PlateTest";
-        plateTW.restaurants(1, new Callback<PlateService.RestaurantResponse> () {
-            @Override public void success(PlateService.RestaurantResponse rs, Response response) {
-                Log.d(TAG, "restaurants: begin");
-                for (PlateService.Restaurant r: rs.list)
-                    Log.d(TAG, String.format("\t(%d, %d, %s)", r.rest_id, r.location, r.name));
-                Log.d(TAG, "restaurants: end");
-            }
-            @Override public void failure(RetrofitError e) {
-                Log.d(TAG, "restaurants: failure");
-            }
-        });
     }
 
-    public static ReceiptFragment newInstance(String text){
+    public static ReceiptFragment newInstance(){
         ReceiptFragment receiptFragment = new ReceiptFragment();
         Bundle b = new Bundle();
-        b.putString(ARG_FRAGMENT_MESSAGE, text);
+        b.putString(ARG_FRAGMENT_MESSAGE, "123");
 
         receiptFragment.setArguments(b);
         return receiptFragment;

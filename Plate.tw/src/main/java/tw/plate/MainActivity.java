@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             //    return PlaceholderFragment.newInstance(position + 1);
             switch(position){
                 case 0: return LocationFragment.newInstance("Where to eat? ");
-                case 1: return ReceiptFragment.newInstance("Your Receipt: ");
+                case 1: return ReceiptFragment.newInstance();
                 default: return LocationFragment.newInstance("Where to eat? ");
             }
             //end:aje
