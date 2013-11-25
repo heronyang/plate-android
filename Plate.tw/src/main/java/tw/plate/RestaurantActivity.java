@@ -36,30 +36,32 @@ public class RestaurantActivity extends ListActivity {
         Log.d(Constants.LOG_TAG, "This place: " + Integer.toString(locationId));
 
         PlateService.PlateTWOldAPI plateTW;
-        PlateService.PlateTWAPI1 plateTWV1;
-
         plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
 
-        final String TAG = "PlateTest";
         plateTW.restaurants(locationId, new Callback<PlateService.RestaurantResponse>() {
             @Override public void success(PlateService.RestaurantResponse rs, Response response) {
-                Log.d(TAG, "restaurants: begin");
                 for (PlateService.Restaurant r: rs.list) {
-                    Log.d(TAG, String.format("\t(%d, %d, %s)", r.rest_id, r.location, r.name));
                     restaurantList.add(r);
                 }
-                Log.d(TAG, "restaurants: end");
                 updateRestaurantList();
             }
             @Override public void failure(RetrofitError e) {
-                Log.d(TAG, "restaurants: failure");
+                Log.w(Constants.LOG_TAG, "restaurants: failure");
             }
         });
     }
 
+    @Override
+    protected void onListItemClick(ListView lv, View view, int position, long id) {
+        super.onListItemClick(lv, view, position, id);
+        Log.d(Constants.LOG_TAG, "clicked on : " + Integer.toString(position));
+        Intent menuIntent = new Intent(view.getContext(), MenuActivity.class);
+        menuIntent.putExtra("restId", restaurantList.get(position).rest_id);
+        startActivity(menuIntent);
+    }
+
     private void updateRestaurantList() {
-        ListView listView = (ListView) findViewById(android.R.id.list);
+        ListView lv = (ListView) findViewById(android.R.id.list);
 
         // FIXME: there must be a better way to get the name array of restaurants
         int l = restaurantList.size(), i;
@@ -72,7 +74,7 @@ public class RestaurantActivity extends ListActivity {
         ArrayAdapter<String> adapter;
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, restaurantNames);
-        listView.setAdapter(adapter);
+        lv.setAdapter(adapter);
     }
 
     @Override
