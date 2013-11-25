@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name="tw.plate.RestaurantActivity"
-            android:label="@string/title_activity_restaurant" >
+            android:label="@string/title_activity_restaurant"
+            android:parentActivityName="tw.plate.MainActivity" >
         </activity>
     </application>
 

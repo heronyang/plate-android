@@ -1,6 +1,7 @@
 package tw.plate;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,10 @@ public class RestaurantActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
-        ListView listView = (ListView) findViewById(R.id.lv_restaurant);
+
+        Intent intent = getIntent();
+
+        ListView listView = (ListView) findViewById(android.R.id.list);
         /*
         setListAdapter(new ArrayAdapter<String>(this, R.layout.activity_restaurant,Constants.RESTAURANT_LIST));
         listView.setTextFilterEnabled(true);*/
@@ -29,14 +33,6 @@ public class RestaurantActivity extends ListActivity {
         ArrayAdapter<String> files = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, Constants.RESTAURANT_LIST);
         listView.setAdapter(files);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.restaurant, menu);
-        return true;
     }
 
     @Override

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light"
     >
 
     <TextView
@@ -25,17 +24,5 @@
         android:layout_centerInParent="true"
          />
 
-<<<<<<< HEAD
-    <!--
-    <ImageView
-        android:id="@+id/iv_canteen"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_launcher" />*/
-    -->
-=======
->>>>>>> 4f8818485dd188ec32d869cfcb58bffa0a3ec43d
 
 </RelativeLayout>
