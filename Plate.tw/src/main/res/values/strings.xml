@@ -6,5 +6,7 @@
     <string name="tab_transaction">My Order</string>
     <string name="action_settings">Settings</string>
     <string name="your_number_message">Settings</string>
+    <string name="title_activity_restaurant">RestaurantActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
