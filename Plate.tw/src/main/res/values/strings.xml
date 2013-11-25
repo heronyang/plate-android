@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Plate.tw.local</string>
+    <string name="app_name">Plate.tw</string>
     <string name="tab_location">Dinning Halls</string>
     <string name="tab_transaction">My Order</string>
     <string name="action_settings">Settings</string>
+    <string name="your_number_message">Settings</string>
 
 </resources>

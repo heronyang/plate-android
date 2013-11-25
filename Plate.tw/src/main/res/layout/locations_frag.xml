@@ -6,6 +6,7 @@
     >
 
     <TextView
+        android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="29dp"
@@ -13,17 +14,24 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:id="@+id/tvLocation"
         />
 
-
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lv_canteen"
         android:layout_width="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:id="@+id/canteen_listview"
          />
+
+    <ImageView
+        android:id="@+id/iv_canteen"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_launcher" />
+
 
 </RelativeLayout>
