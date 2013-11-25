@@ -25,6 +25,7 @@
         android:layout_centerInParent="true"
          />
 
+<<<<<<< HEAD
     <!--
     <ImageView
         android:id="@+id/iv_canteen"
@@ -34,5 +35,7 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_launcher" />*/
     -->
+=======
+>>>>>>> 4f8818485dd188ec32d869cfcb58bffa0a3ec43d
 
 </RelativeLayout>
