@@ -5,7 +5,7 @@ package tw.plate;
  */
 final public class Constants {
     public static final String[] CANTEEN_LIST= new String[]{"第一餐廳", "第二餐廳", "女二餐廳", "其他"};
-    public static final String API_URI_PREFIX = "http://localhost:8000";
+    public static final String API_URI_PREFIX = "http://10.0.2.2:8000";
 
-    private constants(){}
+    private Constants(){}
 }

@@ -23,7 +23,7 @@ public class LocationFragment extends Fragment{
 
         //Displaying ListView items
         ArrayAdapter<String> files = new ArrayAdapter(getActivity(),
-                android.R.layout.simple_list_item_1, constants.CANTEEN_LIST);
+                android.R.layout.simple_list_item_1, Constants.CANTEEN_LIST);
 
         ListView lv = (ListView) v.findViewById(R.id.lv_canteen);
         lv.setAdapter(files);
