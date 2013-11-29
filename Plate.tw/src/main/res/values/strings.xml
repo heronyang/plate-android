@@ -9,5 +9,7 @@
     <string name="title_activity_restaurant">RestaurantActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_menu">MenuActivity</string>
+    <string name="action_confirm">確認</string>
+    <string name="title_activity_confirm_order">ConfirmOrder</string>
 
 </resources>

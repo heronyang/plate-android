@@ -1,6 +1,7 @@
 package tw.plate;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -9,14 +10,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,20 +73,71 @@ public class MenuActivity extends ListActivity {
     private void updateMenuList() {
         ListView lv = (ListView) findViewById(android.R.id.list);
 
-        // FIXME: there must be a better way to get the name array of restaurants
-        int l = mealList.size(), i;
-        String [] mealNames = new String[l];
-        for(i=0 ; i<l ; i++) {
-            mealNames[i] = mealList.get(i).meal_name;
-        }
-
-        //Displaying ListView items
         ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, mealNames);
-        lv.setAdapter(adapter);
+
+        String [] spinnerItems = new String[Constants.MAX_AMOUNT];
+        for(int i=0 ; i<spinnerItems.length ; i++)  spinnerItems[i] = "" + i;
+
+        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, spinnerItems);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lv.setAdapter(new CustomAdapter(this, adapter));
     }
 
+    private class CustomAdapter extends BaseAdapter
+    {
+        LayoutInflater inflater;
+        ArrayAdapter<String> adapter;
+
+        public CustomAdapter(Context context, ArrayAdapter<String> _adapter)
+        {
+            inflater=LayoutInflater.from(context);
+            adapter = _adapter;
+        }
+
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return mealList.size();
+        }
+
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        public View getView(int arg0, View convertview, ViewGroup arg2) {
+            ViewHolder viewHolder;
+            if(convertview==null)
+            {
+                convertview=inflater.inflate(R.layout.listrow_menu, null);
+                viewHolder=new ViewHolder();
+
+                // setup spinner
+                viewHolder.sp = (Spinner) convertview.findViewById(R.id.listrow_menu_spinner);
+                viewHolder.sp.setAdapter(adapter);
+
+                // setup textview
+                viewHolder.tv = (TextView) convertview.findViewById(R.id.listrow_menu_tv);
+                String meal_name = mealList.get(arg0).meal_name;
+                viewHolder.tv.setText(meal_name);
+            }
+            else
+            {
+                viewHolder=(ViewHolder)convertview.getTag();
+            }
+            return convertview;
+        }
+        public class ViewHolder
+        {
+            Spinner sp;
+            TextView tv;
+        }
+
+    }
 
     @Override
     protected void onListItemClick(ListView lv, View view, int position, long id) {
@@ -104,11 +160,21 @@ public class MenuActivity extends ListActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_confirm:
+                confirmOrder();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmOrder(){
+        Intent confirmOrderIntent = new Intent(this, ConfirmOrder.class);
+        // FIXME: push intent objects here
+        startActivity(confirmOrderIntent);
     }
 
     /**
