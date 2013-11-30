@@ -3,23 +3,19 @@ package tw.plate;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,9 +28,11 @@ import retrofit.client.Response;
 
 public class MenuActivity extends ListActivity {
 
-    List<PlateService.Meal> mealList = new ArrayList<PlateService.Meal>();
+    private List<PlateService.Meal> mealList = new ArrayList<PlateService.Meal>();
     int restId;
     String restName;
+    private CustomAdapter customAdapter;
+    private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();
 
     int [] orderAmount;
     int mealListLength;
@@ -44,26 +42,17 @@ public class MenuActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        /*
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-        */
-
         Intent intent = getIntent();
         restId = intent.getIntExtra("restId", 0);
         restName = intent.getStringExtra("restName");
-        Log.d(Constants.LOG_TAG, "This rest ID:" + Integer.toString(restId));
 
+        //
         PlateService.PlateTWOldAPI plateTW;
         plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
         plateTW.menu(restId, new Callback<PlateService.MenuResponse>() {
             @Override
             public void success(PlateService.MenuResponse ms, Response response) {
                 for (PlateService.Meal m : ms.meal_list) {
-                    //Log.d(Constants.LOG_TAG, m.meal_name);
                     mealList.add(m);
                 }
                 updateMenuList();
@@ -76,23 +65,26 @@ public class MenuActivity extends ListActivity {
         });
     }
 
+
     private void updateMenuList() {
         ListView lv = (ListView) findViewById(android.R.id.list);
 
-        ArrayAdapter<String> adapter;
-
+        ArrayAdapter<String> spAdapter;
         String [] spinnerItems = new String[Constants.MAX_AMOUNT];
         for(int i=0 ; i<spinnerItems.length ; i++)  spinnerItems[i] = "" + i;
+        spAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, spinnerItems);
+        spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, spinnerItems);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lv.setAdapter(new CustomAdapter(this, adapter));
+        customAdapter = new CustomAdapter(this, spAdapter);
+        lv.setAdapter(customAdapter);
     }
 
-    private class CustomAdapter extends BaseAdapter
+    private class CustomAdapter extends BaseAdapter // listview
     {
         LayoutInflater inflater;
-        ArrayAdapter<String> adapter;
+        ArrayAdapter<String> spAdapter;
+	int [] amounts = new int[mealList.size()];
+        
         public class ViewHolder
         {
             Spinner sp;
@@ -102,11 +94,9 @@ public class MenuActivity extends ListActivity {
 
         public CustomAdapter(Context context, ArrayAdapter<String> _adapter)
         {
-            //inflater=LayoutInflater.from(context);
-            inflater=(LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = LayoutInflater.from(context);
+            spAdapter = _adapter;
 
-            adapter = _adapter;
         }
 
         public int getCount() {
@@ -119,31 +109,30 @@ public class MenuActivity extends ListActivity {
             return position;
         }
 
+        public int getSelectedAmountAtPosition(int position) {
+            if (position > mealList.size()) return 0;
+            return amounts[position];
+        }
+
         public long getItemId(int position) {
             // TODO Auto-generated method stub
             return position;
         }
 
-        public View getView(int pos, View convertview, ViewGroup arg2) {
-            ViewHolder viewHolder;
-            if(convertview==null)
+        public View getView(final int arg0, View convertview, ViewGroup arg2) {
+            ViewHolder viewHolder = null;
+            Log.d(Constants.LOG_TAG, "arg0 >> " + arg0);
+            if(convertview == null)
             {
-                convertview=inflater.inflate(R.layout.listrow_menu, null);
+                convertview = inflater.inflate(R.layout.listrow_menu, null);
+
+                // creating instance
                 viewHolder=new ViewHolder();
-
-                // setup spinner
                 viewHolder.sp = (Spinner) convertview.findViewById(R.id.listrow_menu_spinner);
-                viewHolder.sp.setAdapter(adapter);
-
-                // setup textview meal name
                 viewHolder.tv_name = (TextView) convertview.findViewById(R.id.listrow_menu_tv);
-                String meal_name = mealList.get(pos).meal_name;
-                viewHolder.tv_name.setText(meal_name);
 
                 viewHolder.tv_price = (TextView) convertview.findViewById(R.id.tv_listrow_price);
-                int meal_price = mealList.get(pos).meal_price;
-                viewHolder.tv_price.setText(""+meal_price);
-
+                
 
                 convertview.setTag(viewHolder);
             }
@@ -151,6 +140,29 @@ public class MenuActivity extends ListActivity {
             {
                 viewHolder=(ViewHolder)convertview.getTag();
             }
+
+
+            // set values
+            String meal_name = mealList.get(arg0).meal_name;
+            viewHolder.tv_name.setText(meal_name);
+            int meal_price = mealList.get(pos).meal_price;
+            viewHolder.tv_price.setText(""+meal_price);
+            viewHolder.sp.setAdapter(spAdapter);
+            viewHolder.sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    amounts[arg0] = position;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // Callback method to be invoked when the selection disappears from this view.
+                    // The selection can disappear for instance when touch is activated or when the adapter becomes empty.
+                }
+            });
+            viewHolder.sp.setSelection(amounts[arg0]);
+
+
             return convertview;
         }
 
@@ -160,8 +172,6 @@ public class MenuActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView lv, View view, int position, long id) {
         super.onListItemClick(lv, view, position, id);
-        Log.d(Constants.LOG_TAG, "clicked on : " + Integer.toString(position));
-        // TODO: Next step here
         //
     }
 
@@ -189,10 +199,34 @@ public class MenuActivity extends ListActivity {
         }
     }
 
-    private void confirmOrder(){
-        Intent confirmOrderIntent = new Intent(this, ConfirmOrder.class);
-        // FIXME: push intent objects here
+    private void confirmOrder() {
+        View view = findViewById(android.R.id.content);
+        Intent confirmOrderIntent = new Intent(view.getContext(), ConfirmOrder.class);
+        collectResults();
+
+        // for test
+        int s = orderList.size();
+        Log.d(Constants.LOG_TAG, "Final List in this page (menu)");
+        for( int i=0 ; i<s ; i++ ){
+            Log.d(Constants.LOG_TAG, "meal name: " + orderList.get(i).first.meal_name + "\tamount : " + orderList.get(i).second);
+        }
+
+        // FIXME: next step here
+
         startActivity(confirmOrderIntent);
+    }
+
+    private void collectResults() {
+        int s = mealList.size();
+
+        Log.d(Constants.LOG_TAG, "s = " + s);
+        for(int i=0 ; i<s ; i++) {
+            int amount = customAdapter.getSelectedAmountAtPosition(i);
+            if (amount != 0) {
+                Pair<PlateService.Meal, Integer> orderItem = new Pair(mealList.get(i), amount);
+                orderList.add(orderItem);
+            }
+        }
     }
 
     /**
