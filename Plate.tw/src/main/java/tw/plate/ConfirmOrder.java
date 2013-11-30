@@ -1,28 +1,85 @@
 package tw.plate;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 public class ConfirmOrder extends ActionBarActivity {
+    //TEST Data Only
+    String serverTime = "11:30";
+    String restName = "元氣";
+    String myOrder;
+    String popupWarning = "This is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+        Intent intent = getIntent();
+        //TODO Receive the data getStringArrayExtra
+        TextView tv_time = (TextView) findViewById(R.id.tv_time);
+        TextView tv_rest = (TextView) findViewById(R.id.tv_rest);
+        TextView tv_myOrder = (TextView) findViewById(R.id.tv_your_order);
+        Button btCancel = (Button) findViewById(R.id.bt_cancel);
+        Button btOk = (Button) findViewById(R.id.bt_ok);
+
+        tv_time.setText(serverTime);
+        tv_rest.setText(restName);
+        //TODO create a complex-string from given data
+        myOrder = "my order";
+        tv_myOrder.setText(myOrder);
+
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        btOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater) getBaseContext()
+                        .getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup, null);
+                final PopupWindow popupWind = new PopupWindow(popupView, android.app.ActionBar
+                        .LayoutParams.WRAP_CONTENT, android.app.ActionBar.LayoutParams.WRAP_CONTENT);
+                TextView popupMessage = (TextView)  popupView.findViewById(R.id.tv_pop);
+                popupMessage.setText(popupWarning);
+                Button yes = (Button) popupView.findViewById(R.id.bt_pop_yes);
+                Button no = (Button) popupView.findViewById(R.id.bt_pop_no);
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWind.dismiss();
+                    }
+                });
+                yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //FIXME to the next fragment of mainactivity
+
+                    }
+                });
+                //TODO Fix the popup xml and make the background darker
+                popupWind.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupWind.update(0, 0, 300, 300);
+
+            }
+        });
     }
 
 

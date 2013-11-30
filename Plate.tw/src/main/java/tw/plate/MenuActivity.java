@@ -33,6 +33,11 @@ import retrofit.client.Response;
 public class MenuActivity extends ListActivity {
 
     List<PlateService.Meal> mealList = new ArrayList<PlateService.Meal>();
+    int restId;
+    String restName;
+
+    int [] orderAmount;
+    int mealListLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,8 @@ public class MenuActivity extends ListActivity {
         */
 
         Intent intent = getIntent();
-        int restId = intent.getIntExtra("restId", 0);
+        restId = intent.getIntExtra("restId", 0);
+        restName = intent.getStringExtra("restName");
         Log.d(Constants.LOG_TAG, "This rest ID:" + Integer.toString(restId));
 
         PlateService.PlateTWOldAPI plateTW;
@@ -57,7 +63,7 @@ public class MenuActivity extends ListActivity {
             @Override
             public void success(PlateService.MenuResponse ms, Response response) {
                 for (PlateService.Meal m : ms.meal_list) {
-                    Log.d(Constants.LOG_TAG, m.meal_name);
+                    //Log.d(Constants.LOG_TAG, m.meal_name);
                     mealList.add(m);
                 }
                 updateMenuList();
@@ -87,10 +93,19 @@ public class MenuActivity extends ListActivity {
     {
         LayoutInflater inflater;
         ArrayAdapter<String> adapter;
+        public class ViewHolder
+        {
+            Spinner sp;
+            TextView tv_name;
+            TextView tv_price;
+        }
 
         public CustomAdapter(Context context, ArrayAdapter<String> _adapter)
         {
-            inflater=LayoutInflater.from(context);
+            //inflater=LayoutInflater.from(context);
+            inflater=(LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             adapter = _adapter;
         }
 
@@ -109,7 +124,7 @@ public class MenuActivity extends ListActivity {
             return position;
         }
 
-        public View getView(int arg0, View convertview, ViewGroup arg2) {
+        public View getView(int pos, View convertview, ViewGroup arg2) {
             ViewHolder viewHolder;
             if(convertview==null)
             {
@@ -120,10 +135,17 @@ public class MenuActivity extends ListActivity {
                 viewHolder.sp = (Spinner) convertview.findViewById(R.id.listrow_menu_spinner);
                 viewHolder.sp.setAdapter(adapter);
 
-                // setup textview
-                viewHolder.tv = (TextView) convertview.findViewById(R.id.listrow_menu_tv);
-                String meal_name = mealList.get(arg0).meal_name;
-                viewHolder.tv.setText(meal_name);
+                // setup textview meal name
+                viewHolder.tv_name = (TextView) convertview.findViewById(R.id.listrow_menu_tv);
+                String meal_name = mealList.get(pos).meal_name;
+                viewHolder.tv_name.setText(meal_name);
+
+                viewHolder.tv_price = (TextView) convertview.findViewById(R.id.tv_listrow_price);
+                int meal_price = mealList.get(pos).meal_price;
+                viewHolder.tv_price.setText(""+meal_price);
+
+
+                convertview.setTag(viewHolder);
             }
             else
             {
@@ -131,11 +153,7 @@ public class MenuActivity extends ListActivity {
             }
             return convertview;
         }
-        public class ViewHolder
-        {
-            Spinner sp;
-            TextView tv;
-        }
+
 
     }
 

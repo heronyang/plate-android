@@ -1,7 +1,75 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ConfirmOrder"
     tools:ignore="MergeRootFrame" />
+    -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="250dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="57dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:id="@+id/tv_time"
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restaurant"
+            android:id="@+id/tv_rest"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/tv_time"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Order and Total"
+            android:id="@+id/tv_your_order"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/tv_rest"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="17dp" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   取消   "
+            android:id="@+id/bt_cancel"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignTop="@+id/bt_ok"
+            android:layout_toLeftOf="@+id/bt_ok" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    確認   "
+            android:id="@+id/bt_ok"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="26dp" />
+
+
+    </RelativeLayout>
+</RelativeLayout>
