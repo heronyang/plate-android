@@ -9,40 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="26dp"
-        android:text="TextView"
+        android:text="訂單"
         android:layout_marginTop="29dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         />
-    <TextView
-        android:id="@+id/tvNumSlip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:text="Slip Num"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/tvReceipt"
-        android:layout_toLeftOf="@+id/tvReceipt"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Ordered meal and prices"
-        android:id="@+id/tv_order"
-        android:layout_marginTop="34dp"
-        android:layout_below="@+id/tvNumSlip"
-        android:layout_alignLeft="@+id/tvNumSlip" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="目前號碼"
-        android:id="@+id/bt_currentNum"
-        android:layout_below="@+id/tv_order"
-        android:layout_alignRight="@+id/tv_order"
-        android:layout_marginTop="57dp" />
-
 
 </RelativeLayout>
