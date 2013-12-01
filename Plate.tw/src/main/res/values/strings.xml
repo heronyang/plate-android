@@ -5,11 +5,20 @@
     <string name="tab_location">選餐</string>
     <string name="tab_transaction">訂單</string>
     <string name="action_settings">Settings</string>
+    <string name="action_submit">送出</string>
     <string name="your_number_message">你的號碼牌：</string>
     <string name="title_activity_restaurant">RestaurantActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="action_confirm">確認</string>
     <string name="title_activity_confirm_order">ConfirmOrder</string>
+    <string name="title_activity_login">Login</string>
+    <string name="example_phone_number">0912321321</string>
+    <string name="login_message">請輸入你的電話號碼後收驗證簡訊以開通，若沒有收到可重複在此輸入號碼以重發。</string>
+    <string name="register_success_message">已經成功送出，請收簡訊</string>
+    <string name="register_success_title">收簡訊啦</string>
+    <string name="ok">OK!</string>
+    <string name="cancel">NOPE!</string>
+    <string name="title_activity_register">註冊</string>
 
 </resources>
