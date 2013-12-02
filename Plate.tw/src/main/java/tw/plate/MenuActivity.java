@@ -31,12 +31,17 @@ import retrofit.client.Response;
 public class MenuActivity extends ListActivity {
 
     private List<PlateService.Meal> mealList = new ArrayList<PlateService.Meal>();
+    private ArrayList<String> mealNames = new ArrayList<String>();
+    private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
+            , mealID = new ArrayList<Integer>()
+            , mealAmount = new ArrayList<Integer>();
+
     int restId;
     String restName;
     private CustomAdapter customAdapter;
 
     // private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();
-    private OrderList orderList = new OrderList();
+    // private OrderList orderList = new OrderList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,12 +176,10 @@ public class MenuActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView lv, View view, int position, long id) {
         super.onListItemClick(lv, view, position, id);
-        //
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
@@ -204,14 +207,17 @@ public class MenuActivity extends ListActivity {
         collectResults();
 
         // for test
-        int s = orderList.size();
+        int s = mealNames.size();
         Log.d(Constants.LOG_TAG, "Final List in this page (menu)");
         for( int i=0 ; i<s ; i++ ){
-            Log.d(Constants.LOG_TAG, "meal name: " + orderList.getOrderList(i).first.meal_name + "\tamount : " + orderList.getOrderList(i).second);
+            Log.d(Constants.LOG_TAG, "meal name: " + mealNames.get(i) + "\tamount : " + mealAmount.get(i));
         }
 
-        // FIXME: next step here
-        confirmOrderIntent.putExtra("order",orderList);
+        confirmOrderIntent.putStringArrayListExtra("orderMealNames", mealNames);
+        confirmOrderIntent.putIntegerArrayListExtra("orderMealPrice", mealPrices);
+        confirmOrderIntent.putIntegerArrayListExtra("orderMealID", mealID);
+        confirmOrderIntent.putIntegerArrayListExtra("orderMealAmount", mealAmount);
+
         startActivity(confirmOrderIntent);
     }
 
@@ -222,60 +228,15 @@ public class MenuActivity extends ListActivity {
         for(int i=0 ; i<s ; i++) {
             int amount = customAdapter.getSelectedAmountAtPosition(i);
             if (amount != 0) {
-                orderList.setOrderList(mealList.get(i),amount);
+                mealNames.add(mealList.get(i).meal_name);
+                mealPrices.add(mealList.get(i).meal_price);
+                mealID.add(mealList.get(i).meal_id);
+                mealAmount.add(amount);
             }
         }
 
     }
 //    private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();
-
-    public static class OrderList implements Parcelable{
-        private List<Pair<PlateService.Meal, Integer>> data;
-
-        //Constructor
-        public OrderList(){
-            data = new ArrayList<Pair<PlateService.Meal, Integer>>();
-        }
-
-        public void setOrderList(PlateService.Meal meal, int num){
-            Pair<PlateService.Meal, Integer> orderItem = new Pair(meal, num);
-            data.add(orderItem);
-        }
-
-        public Pair<PlateService.Meal,Integer> getOrderList(int pos){
-            return data.get(pos);
-        }
-
-        public int size(){ return data.size(); }
-
-        private OrderList(Parcel in){
-            //private List<Pair<PlateService.Meal, Integer>> data = new ArrayList<Pair<PlateService.Meal, Integer>>();
-            List<Pair<PlateService.Meal, Integer>> inData  = new ArrayList<Pair<PlateService.Meal, Integer>>();
-            in.readList(inData, null);
-            data = inData;
-        }
-        public int describeContents() {
-            return 0;
-        }
-
-        public void writeToParcel(Parcel out, int flags){
-            Log.d(Constants.LOG_TAG,"write to Parcel "+ flags);
-            //out.writeValue(data);
-            out.writeList(data);
-        }
-
-        public static final Parcelable.Creator<OrderList> CREATOR = new Creator<OrderList>(){
-            public OrderList createFromParcel(Parcel in){
-                return new OrderList(in);
-            }
-
-            public OrderList[] newArray(int size){
-                return new OrderList[size];
-            }
-        };
-
-
-    }
 
     /**
      * A placeholder fragment containing a simple view.

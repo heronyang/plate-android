@@ -18,23 +18,38 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ConfirmOrder extends ActionBarActivity {
     //TEST Data Only
     String serverTime = "11:30";
     String restName = "元氣";
     String myOrder;
     String popupWarning = "This is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \n";
-    MenuActivity.OrderList passedOrderList;
+    //OrderList passedOrderList;
+    private ArrayList<String> mealNames = new ArrayList<String>();
+    private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
+            , mealID = new ArrayList<Integer>()
+            , mealAmount = new ArrayList<Integer>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
 
-        //Intent intent = getIntent();
+        Intent intent = getIntent();
+        Log.d(Constants.LOG_TAG,"Confirm order Activity");
         //TODO Receive the data getStringArrayExtra
-        Bundle data = getIntent().getExtras();
-        passedOrderList = (MenuActivity.OrderList) data.getParcelable("order");
-        Log.d(Constants.LOG_TAG,"Passed order at postition 0: Meal Name: "+passedOrderList.getOrderList(0).first.meal_name +"Amount: "+passedOrderList.getOrderList(0).second +"pieces");
+        //Bundle data = getIntent().getExtras();
+        //passedOrderList = (OrderList) data.getParcelable("order");
+        //Log.d(Constants.LOG_TAG,"Passed order at postition 0: Meal Name: "+passedOrderList.getMealOrderList(0).meal_name +"Amount: "+passedOrderList.getAmountOrderList(0) +"pieces");
+        mealNames = intent.getStringArrayListExtra("orderMealNames");
+        mealPrices = intent.getIntegerArrayListExtra("orderMealPrice");
+        mealID = intent.getIntegerArrayListExtra("orderMealID");
+        mealAmount = intent.getIntegerArrayListExtra("orderMealAmount");
+
+        for(int i=0; i<mealNames.size(); i++)
+            Log.d(Constants.LOG_TAG,"Passed order at postition 0: Meal Name: "+mealNames.get(i) +"Amount: "+ mealAmount.get(i) +"pieces" );
 
         TextView tv_time = (TextView) findViewById(R.id.tv_time);
         TextView tv_rest = (TextView) findViewById(R.id.tv_rest);

@@ -54,6 +54,12 @@ public class PlateService {
         public int meal_price;
         public String meal_name;
         public int meal_id;
+        public Meal(){}
+        public Meal(Meal m){
+            this.meal_id = m.meal_id;
+            this.meal_price = m.meal_price;
+            this.meal_name = m.meal_name;
+        }
     }
     public class MenuResponse {
         public int success;
@@ -108,6 +114,7 @@ public class PlateService {
     }
 
     public class OrderItemV1 {
+        public OrderItemV1(){}
         public Meal meal;
         public int amount;
     }
