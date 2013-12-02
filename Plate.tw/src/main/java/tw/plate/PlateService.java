@@ -124,6 +124,9 @@ public class PlateService {
         void login(@Field("username") String username,
                    @Field("password") String password,
                    Callback<Response> cb);
+
+        @GET("/1/order")
+        void order(Callback<OrderGetResponse> cb);
     }
 
     interface PlateTWOldAPI {
