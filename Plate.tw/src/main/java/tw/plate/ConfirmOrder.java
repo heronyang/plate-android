@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,14 +24,18 @@ public class ConfirmOrder extends ActionBarActivity {
     String restName = "元氣";
     String myOrder;
     String popupWarning = "This is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \nThis is popup warning \n";
-
+    MenuActivity.OrderList passedOrderList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         //TODO Receive the data getStringArrayExtra
+        Bundle data = getIntent().getExtras();
+        passedOrderList = (MenuActivity.OrderList) data.getParcelable("order");
+        Log.d(Constants.LOG_TAG,"Passed order at postition 0: Meal Name: "+passedOrderList.getOrderList(0).first.meal_name +"Amount: "+passedOrderList.getOrderList(0).second +"pieces");
+
         TextView tv_time = (TextView) findViewById(R.id.tv_time);
         TextView tv_rest = (TextView) findViewById(R.id.tv_rest);
         TextView tv_myOrder = (TextView) findViewById(R.id.tv_your_order);
