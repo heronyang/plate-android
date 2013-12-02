@@ -93,6 +93,25 @@ public class PlateService {
         }
     }
 
+    // API1: new added
+    public class OrderGetResponse {
+        public OrderV1 last_order;
+        public List<OrderItemV1> order_items;
+    }
+
+    public class OrderV1 {
+        public Date ctime;
+        public Date mtime;
+        public Restaurant restaurant;
+        public int pos_slip_number;
+        public int status;
+    }
+
+    public class OrderItemV1 {
+        public Meal meal;
+        public int amount;
+    }
+
     interface PlateTWAPI1 {
         @FormUrlEncoded
         @POST("/1/register")
