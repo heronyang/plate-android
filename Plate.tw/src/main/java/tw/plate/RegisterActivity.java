@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -28,6 +29,25 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Intent intent = getIntent();
+        int message_type = intent.getIntExtra("message_type", 0);
+
+        String message;
+        switch (message_type) {
+            case Constants.FIRST_TIME:
+                message = getString(R.string.register_first_time);
+                break;
+            case Constants.SP_SAVED_BUT_LOGIN_FAIL:
+                message = getString(R.string.register_sp_saved_but_login_fail);
+                break;
+            default:
+                message = getString(R.string.register_default);
+                break;
+        }
+
+        TextView tv = (TextView)findViewById(R.id.tvRegisterMessage);
+        tv.setText(message);
     }
 
     @Override

@@ -27,6 +27,10 @@
     <string name="register_wrong_input_format_message">電話號碼格式錯誤</string>
     <string name="register_wrong_input_format_title">錯了啦</string>
 
+    <string name="register_first_time">歡迎使用，欲使用訂餐服務請先輸入電話號碼後收簡訊確認信</string>
+    <string name="register_sp_saved_but_login_fail">簡訊已經寄出，請點選簡訊內容以啓動帳號，再次輸入以重發簡訊</string>
+    <string name="register_default">請輸入電話號碼</string>
+
     <string name="ok">好啦</string>
     <string name="cancel">不好誒</string>
 

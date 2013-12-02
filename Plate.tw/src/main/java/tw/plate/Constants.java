@@ -18,5 +18,8 @@ final public class Constants {
     /* Settings */
     public static final String PASSWORD_TYPE = "raw";
 
+    /* Enum */
+    public static final int FIRST_TIME = 0, SP_SAVED_BUT_LOGIN_FAIL = 1;
+
     private Constants(){}
 }
