@@ -1,65 +1,86 @@
 package tw.plate;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-
-/**
- * Created by Hung on 11/23/13.
- */
 public class ReceiptFragment extends Fragment{
-    //Sent from database
-    String restName = "姊妹\n";
-    String myNumSlip = "\n15";
-    String myMeal = "豬排飯  1*70 NT \n雞腿飯  2*70 \n總價:   210\n";
-    String orderTime = "\n訂餐時間: 11:40";
-    String currNum = "10";
-
-    String myOrder = restName + myMeal + orderTime;
-
-    //Some private constant variable
-    private static final String ARG_FRAGMENT_MESSAGE = "fragment_msg";
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.receipt_frag, container, false);
-        //Writing the welcome message at the top
-        TextView tv = (TextView) v.findViewById(R.id.tvReceipt);
-        tv.setText(getArguments().getString(ARG_FRAGMENT_MESSAGE));
-
-        //Display the your number slip
-        TextView tv_numberSlip = (TextView) v.findViewById(R.id.tvNumSlip);
-        tv_numberSlip.setText(getString(R.string.your_number_message)+ myNumSlip);
-
-        //Display the Ordered meal
-        TextView tv_orderedMeal = (TextView) v.findViewById(R.id.tv_order);
-        tv_orderedMeal.setText(myOrder);
-
-        //CurrentNumber button OnClickListener
-        Button currBut = (Button) v.findViewById(R.id.bt_currentNum);
-        /*
-        currBut.setOnClickListener(new View.OnClickListener() {
-            public void OnClick(View arg0){
-                //FIX ME: Add toast and show the current number
-                String server_currNum = "2";
-                Toast.makeText(this,server_currNum,Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
         return v;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.d(Constants.LOG_TAG, "Time to setup login");
+            loginSession();
+        } else {
+            // Do your Work
+        }
+    }
+
+    private void loginSession() {
+        if (accountInAppNotSet()) {
+            Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
+            startActivity(registerInent);
+        } else {
+            // get user's phone_number and password to login
+            SharedPreferences sp = getActivity().getSharedPreferences("account", 0);
+            String phone_number = sp.getString(Constants.SP_TAG_PHONE_NUMBER, null);
+            String password = sp.getString(Constants.SP_TAG_PASSWORD, null);
+
+            Log.d(Constants.LOG_TAG, "Account Info is already set: PN:" + phone_number + "\tPW:" + password);
+            login(phone_number, password);
+        }
+    }
+
+    private void login(String phone_number, String password) {
+        PlateService.PlateTWOldAPI plateTW;
+        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
+
+        PlateService.PlateTWAPI1 plateTWV1;
+        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
+
+        plateTWV1.login(phone_number, password, new Callback<Response>() {
+            @Override public void success(Response r, Response response) {
+                updateReceiptContent();
+            }
+
+            @Override public void failure(RetrofitError error) {
+                Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(registerInent);
+            }
+        });
+    }
+
+    private void updateReceiptContent() {
+        TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
+        tv.setText("Login Succeeded!");
+    }
+
+    private boolean accountInAppNotSet() {
+        SharedPreferences sp = getActivity().getSharedPreferences("account",
+                0);
+        return !(sp.contains(Constants.SP_TAG_PHONE_NUMBER) &&
+                 sp.contains(Constants.SP_TAG_PASSWORD));
     }
 
     @Override
@@ -71,10 +92,6 @@ public class ReceiptFragment extends Fragment{
 
     public static ReceiptFragment newInstance(){
         ReceiptFragment receiptFragment = new ReceiptFragment();
-        Bundle b = new Bundle();
-        b.putString(ARG_FRAGMENT_MESSAGE, "123");
-
-        receiptFragment.setArguments(b);
         return receiptFragment;
     }
 }

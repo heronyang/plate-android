@@ -49,6 +49,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.plate.MenuActivity" />
         </activity>
+        <activity
+            android:name="tw.plate.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName="tw.plate.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
+        <activity
+            android:name="tw.plate.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName="tw.plate.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
     </application>
 
 </manifest>

@@ -100,6 +100,11 @@ public class PlateService {
                       @Field("password") String password,
                       @Field("password_type") String password_type,
                       Callback<Response> cb);
+        @FormUrlEncoded
+        @POST("/1/login")
+        void login(@Field("username") String username,
+                   @Field("password") String password,
+                   Callback<Response> cb);
     }
 
     interface PlateTWOldAPI {
