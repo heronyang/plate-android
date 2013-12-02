@@ -6,16 +6,25 @@
 
     <TextView
         android:gravity="left"
-        android:layout_width="200dp"
+        android:layout_width="100dp"
+        android:text="Name"
         android:layout_height="wrap_content"
         android:id="@+id/listrow_menu_tv"
         android:textIsSelectable="false"
         android:textSize="20sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:textSize="15sp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/tv_listrow_price" />
+
     <Spinner
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
+        android:layout_width="100dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginRight="20dp"
         android:id="@+id/listrow_menu_spinner"/>
 

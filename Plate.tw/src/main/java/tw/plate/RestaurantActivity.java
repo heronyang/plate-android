@@ -57,6 +57,7 @@ public class RestaurantActivity extends ListActivity {
         Log.d(Constants.LOG_TAG, "clicked on : " + Integer.toString(position));
         Intent menuIntent = new Intent(view.getContext(), MenuActivity.class);
         menuIntent.putExtra("restId", restaurantList.get(position).rest_id);
+        menuIntent.putExtra("restName", restaurantList.get(position).name);
         startActivity(menuIntent);
     }
 
