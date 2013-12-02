@@ -8,7 +8,7 @@
         android:id="@+id/tvReceipt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="26dp"
+        android:textSize="26sp"
         android:text="訂單"
         android:layout_marginTop="29dp"
         android:layout_alignParentTop="true"

@@ -9,6 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ReceiptFragment extends Fragment{
 
@@ -47,7 +53,27 @@ public class ReceiptFragment extends Fragment{
     }
 
     private void login(String phone_number, String password) {
+        PlateService.PlateTWOldAPI plateTW;
+        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
 
+        PlateService.PlateTWAPI1 plateTWV1;
+        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
+
+        plateTWV1.login(phone_number, password, new Callback<Response>() {
+            @Override public void success(Response r, Response response) {
+                updateReceiptContent();
+            }
+
+            @Override public void failure(RetrofitError error) {
+                Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(registerInent);
+            }
+        });
+    }
+
+    private void updateReceiptContent() {
+        TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
+        tv.setText("Login Succeeded!");
     }
 
     private boolean accountInAppNotSet() {

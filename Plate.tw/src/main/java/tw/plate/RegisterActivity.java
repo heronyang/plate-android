@@ -77,7 +77,7 @@ public class RegisterActivity extends Activity {
 
         if (!checkAndReceiveInputPhoneNumber()) {
             // wrong input
-            Log.d(Constants.LOG_TAG, "Wrong phone number input");
+            popupWrongInputMessage();
             return;
         }
 
@@ -116,6 +116,26 @@ public class RegisterActivity extends Activity {
             }
         });
 
+    }
+
+    private void popupWrongInputMessage() {
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setMessage(R.string.register_wrong_input_format_message)
+                .setTitle(R.string.register_wrong_input_format_title);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        // 3. Get the AlertDialog from create()
+        AlertDialog dialog = builder.create();
+
+        // 4. Show
+        dialog.show();
     }
 
     private void popupMessageAndExit() {
