@@ -49,7 +49,7 @@ public class ConfirmOrder extends ActionBarActivity {
         mealAmount = intent.getIntegerArrayListExtra("orderMealAmount");
 
         for(int i=0; i<mealNames.size(); i++)
-            Log.d(Constants.LOG_TAG,"Passed order at postition 0: Meal Name: "+mealNames.get(i) +"Amount: "+ mealAmount.get(i) +"pieces" );
+            Log.d(Constants.LOG_TAG,"Passed order at postition" +i+ ": Meal Name: "+mealNames.get(i) +"Amount: "+ mealAmount.get(i) +"pieces" );
 
         TextView tv_time = (TextView) findViewById(R.id.tv_time);
         TextView tv_rest = (TextView) findViewById(R.id.tv_rest);
