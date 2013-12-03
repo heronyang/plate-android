@@ -1,5 +1,6 @@
 package tw.plate;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +26,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ConfirmOrder extends ActionBarActivity {
+public class ConfirmOrder extends Activity {
 
     //OrderList passedOrderList;
     private ArrayList<String> mealNames = new ArrayList<String>();
@@ -45,11 +46,6 @@ public class ConfirmOrder extends ActionBarActivity {
         mealPrices = intent.getIntegerArrayListExtra("orderMealPrice");
         mealID = intent.getIntegerArrayListExtra("orderMealID");
         mealAmount = intent.getIntegerArrayListExtra("orderMealAmount");
-
-        intent.removeExtra("orderMealNames");
-        intent.removeExtra("orderMealPrice");
-        intent.removeExtra("orderMealID");
-        intent.removeExtra("orderMealAmount");
 
         //
         for(int i=0; i<mealNames.size(); i++)
@@ -138,11 +134,21 @@ public class ConfirmOrder extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(Constants.LOG_TAG, "home pressed");
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(Constants.LOG_TAG, "system back pressed");
+        finish();
+    }
 }
