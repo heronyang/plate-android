@@ -35,6 +35,11 @@
     <string name="confirm_order_warning_title">注意啊</string>
     <string name="confirm_order_warning_message">你要注意的事項：1. 2. 3.</string>
 
+    <string name="final_info_success_title">終於好了</string>
+    <string name="final_info_success_message">訂餐順利送出啦</string>
+    <string name="final_info_fail_title">完了</string>
+    <string name="final_info_fail_message">有問題所以無法送出訂單</string>
+
     <string name="ok">好啦</string>
     <string name="cancel">不好誒</string>
 

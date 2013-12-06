@@ -54,12 +54,6 @@ public class PlateService {
         public int meal_price;
         public String meal_name;
         public int meal_id;
-        public Meal(){}
-        public Meal(Meal m){
-            this.meal_id = m.meal_id;
-            this.meal_price = m.meal_price;
-            this.meal_name = m.meal_name;
-        }
     }
     public class MenuResponse {
         public int success;
@@ -106,17 +100,21 @@ public class PlateService {
     }
 
     public class OrderV1 {
-        public Date ctime;
-        public Date mtime;
+        /* FIXME: ctime, mtime should be in Data format */
+        public String ctime;
+        public String mtime;
         public Restaurant restaurant;
         public int pos_slip_number;
         public int status;
     }
 
     public class OrderItemV1 {
-        public OrderItemV1(){}
         public Meal meal;
         public int amount;
+    }
+
+    public class OrderPostResponse {
+        public int number_slip;
     }
 
     interface PlateTWAPI1 {
@@ -132,8 +130,13 @@ public class PlateService {
                    @Field("password") String password,
                    Callback<Response> cb);
 
-        @GET("/1/order")
-        void order(Callback<OrderGetResponse> cb);
+        @GET("/1/order_get")
+        void orderGet(Callback<OrderGetResponse> cb);
+
+        @FormUrlEncoded
+        @POST("/1/order_post")
+        void orderPost(@Field("order") String order,
+                       Callback<OrderPostResponse> cb);
     }
 
     interface PlateTWOldAPI {

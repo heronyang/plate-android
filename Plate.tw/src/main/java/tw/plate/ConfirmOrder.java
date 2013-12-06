@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.preference.DialogPreference;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -24,7 +25,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ConfirmOrder extends Activity {
 
@@ -34,12 +43,12 @@ public class ConfirmOrder extends Activity {
             , mealID = new ArrayList<Integer>()
             , mealAmount = new ArrayList<Integer>();
 
+    String orderJsonRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
-
         Intent intent = getIntent();
 
         mealNames = intent.getStringArrayListExtra("orderMealNames");
@@ -105,8 +114,12 @@ public class ConfirmOrder extends Activity {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivityIntent);
+
+                orderJsonRequest = buildOrderJsonString();
+                Log.d(Constants.LOG_TAG, "request : " + orderJsonRequest);
+
+                loginThenSubmitFinalOrder();
+
             }
         });
 
@@ -118,6 +131,116 @@ public class ConfirmOrder extends Activity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void loginThenSubmitFinalOrder() {
+        loginSession();
+    }
+
+    private void submitFinalOrder(){
+        Log.d(Constants.LOG_TAG, "Order Submit Starts, Order String : " + orderJsonRequest);
+
+        PlateService.PlateTWOldAPI plateTW;
+        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
+
+        PlateService.PlateTWAPI1 plateTWV1;
+        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
+
+        plateTWV1.orderPost(orderJsonRequest, new Callback<PlateService.OrderPostResponse>() {
+            @Override
+            public void success(PlateService.OrderPostResponse r, Response response) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrder.this);
+                builder.setMessage(R.string.final_info_success_message)
+                        .setTitle(R.string.final_info_success_title);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(mainActivityIntent);
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(Constants.LOG_TAG, error.getResponse().getReason());
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrder.this);
+                builder.setMessage(R.string.final_info_fail_message)
+                        .setTitle(R.string.final_info_fail_title);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+    }
+
+    // ----------- Login Related Functions : END ------------
+    // FIXME: there may be better way to make this part be seperated
+
+    private void loginSession() {
+        if (accountInAppNotSet()) {
+            View view = findViewById(android.R.id.content);
+            Intent registerInent = new Intent(view.getContext(), RegisterActivity.class);
+            registerInent.putExtra("message_type", Constants.FIRST_TIME);
+            startActivity(registerInent);
+        } else {
+            // get user's phone_number and password to login
+            SharedPreferences sp = getSharedPreferences("account", 0);
+            String phone_number = sp.getString(Constants.SP_TAG_PHONE_NUMBER, null);
+            String password = sp.getString(Constants.SP_TAG_PASSWORD, null);
+
+            Log.d(Constants.LOG_TAG, "Account Info is already set: PN:" + phone_number + "\tPW:" + password);
+            login(phone_number, password);
+        }
+    }
+
+    private void login(String phone_number, String password) {
+        CookieHandler.setDefault(new CookieManager());
+
+        PlateService.PlateTWOldAPI plateTW;
+        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
+
+        PlateService.PlateTWAPI1 plateTWV1;
+        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
+
+        plateTWV1.login(phone_number, password, new Callback<Response>() {
+            @Override public void success(Response r, Response response) {
+                submitFinalOrder();
+            }
+
+            @Override public void failure(RetrofitError error) {
+                View view = findViewById(android.R.id.content);
+                Intent registerInent = new Intent(view.getContext(), RegisterActivity.class);
+                registerInent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
+                startActivity(registerInent);
+            }
+        });
+    }
+
+    private boolean accountInAppNotSet() {
+        SharedPreferences sp = getSharedPreferences("account", 0);
+        return !(sp.contains(Constants.SP_TAG_PHONE_NUMBER) &&
+                sp.contains(Constants.SP_TAG_PASSWORD));
+    }
+    // ----------- Login Related Functions : END ------------
+
+    private String buildOrderJsonString() {
+
+        JSONObject object = new JSONObject();
+        String result = "[";
+        int s = mealNames.size(), i;
+        for (i=0 ; i<s ; i++) {
+            result += "{\"amount\":" + mealAmount.get(i) + ", \"meal_id\": " + mealID.get(i) + "}";
+            if (i != s-1)   result += ", ";
+        }
+        result += "]";
+
+        return result;
     }
 
 
@@ -143,7 +266,6 @@ public class ConfirmOrder extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     public void onBackPressed() {
