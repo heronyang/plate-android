@@ -19,7 +19,6 @@
     <string name="title_activity_restaurant">餐廳列表</string>
     <string name="title_activity_menu">菜單</string>
     <string name="title_activity_confirm_order">確認訂單</string>
-    <string name="title_activity_login">登入</string>
     <string name="title_activity_register">註冊</string>
 
     <!-- for register page -->

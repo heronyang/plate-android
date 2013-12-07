@@ -1,7 +1,3 @@
-/**
- * Created by heron on 11/25/13.
- */
-
 package tw.plate;
 
 import com.google.gson.Gson;
