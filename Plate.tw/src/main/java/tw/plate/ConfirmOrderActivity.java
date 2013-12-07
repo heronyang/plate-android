@@ -35,7 +35,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ConfirmOrder extends Activity {
+public class ConfirmOrderActivity extends Activity {
 
     //OrderList passedOrderList;
     private ArrayList<String> mealNames = new ArrayList<String>();
@@ -106,7 +106,7 @@ public class ConfirmOrder extends Activity {
     }
 
     private void popupDoubleConfirmMessage () {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrder.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
 
         builder.setMessage(R.string.confirm_order_warning_message)
                 .setTitle(R.string.confirm_order_warning_title);
@@ -149,7 +149,7 @@ public class ConfirmOrder extends Activity {
         plateTWV1.orderPost(orderJsonRequest, new Callback<PlateService.OrderPostResponse>() {
             @Override
             public void success(PlateService.OrderPostResponse r, Response response) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrder.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
                 builder.setMessage(R.string.final_info_success_message)
                         .setTitle(R.string.final_info_success_title);
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -165,7 +165,7 @@ public class ConfirmOrder extends Activity {
             @Override
             public void failure(RetrofitError error) {
                 Log.d(Constants.LOG_TAG, error.getResponse().getReason());
-                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrder.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
                 builder.setMessage(R.string.final_info_fail_message)
                         .setTitle(R.string.final_info_fail_title);
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

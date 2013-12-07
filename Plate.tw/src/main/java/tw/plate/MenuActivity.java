@@ -93,8 +93,8 @@ public class MenuActivity extends ListActivity {
     {
         LayoutInflater inflater;
         ArrayAdapter<String> spAdapter;
-	int [] amounts = new int[mealList.size()];
-        
+        int [] amounts = new int[mealList.size()];
+
         public class ViewHolder
         {
             Spinner sp;
@@ -207,7 +207,7 @@ public class MenuActivity extends ListActivity {
 
     private void confirmOrder() {
         View view = findViewById(android.R.id.content);
-        Intent confirmOrderIntent = new Intent(view.getContext(), ConfirmOrder.class);
+        Intent confirmOrderIntent = new Intent(view.getContext(), ConfirmOrderActivity.class);
         collectResults();
 
         // for test
@@ -244,7 +244,6 @@ public class MenuActivity extends ListActivity {
                 mealAmount.add(amount);
             }
         }
-
     }
 
 //    private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();
