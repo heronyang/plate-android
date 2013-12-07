@@ -38,6 +38,7 @@ public class ReceiptFragment extends Fragment{
     private void loginSession() {
         if (accountInAppNotSet()) {
             Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
+            registerInent.putExtra("message_type", Constants.FIRST_TIME);
             startActivity(registerInent);
         } else {
             // get user's phone_number and password to login
@@ -64,6 +65,7 @@ public class ReceiptFragment extends Fragment{
 
             @Override public void failure(RetrofitError error) {
                 Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
+                registerInent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
                 startActivity(registerInent);
             }
         });

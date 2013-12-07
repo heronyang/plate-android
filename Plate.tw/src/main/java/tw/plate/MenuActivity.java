@@ -71,6 +71,10 @@ public class MenuActivity extends ListActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     private void updateMenuList() {
         ListView lv = (ListView) findViewById(android.R.id.list);
@@ -213,6 +217,7 @@ public class MenuActivity extends ListActivity {
             Log.d(Constants.LOG_TAG, "meal name: " + mealNames.get(i) + "\tamount : " + mealAmount.get(i));
         }
 
+        // put
         confirmOrderIntent.putStringArrayListExtra("orderMealNames", mealNames);
         confirmOrderIntent.putIntegerArrayListExtra("orderMealPrice", mealPrices);
         confirmOrderIntent.putIntegerArrayListExtra("orderMealID", mealID);
@@ -225,6 +230,11 @@ public class MenuActivity extends ListActivity {
         int s = mealList.size();
         Log.d(Constants.LOG_TAG, "s = " + s);
 
+        mealNames.clear();
+        mealPrices.clear();
+        mealID.clear();
+        mealAmount.clear();
+
         for(int i=0 ; i<s ; i++) {
             int amount = customAdapter.getSelectedAmountAtPosition(i);
             if (amount != 0) {
@@ -236,22 +246,7 @@ public class MenuActivity extends ListActivity {
         }
 
     }
+
 //    private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
-            return rootView;
-        }
-    }
 
 }
