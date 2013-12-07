@@ -1,0 +1,188 @@
+package tw.plate;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.Query;
+
+public class PlateService {
+	public class Recommendation {
+		public String name;
+		public String pic_uri;
+		public int price;
+		public String restaurant_name;
+	}
+	public class RecommendationResponse {
+		public int success;
+		public List<Recommendation> list;
+	}
+
+	public class Restaurant {
+		public int location;
+		public String name;
+		public int rest_id;
+	}
+	public class RestaurantResponse {
+		public int success;
+		public List<Restaurant> list;
+	}
+
+	public class Meal {
+		public int meal_price;
+		public String meal_name;
+		public int meal_id;
+	}
+	public class MenuResponse {
+		public int success;
+		public List<Meal> meal_list;
+	}
+
+	public class Order {
+		public int number_slip;
+		public int number_slip_index;
+		public int rest_id;
+		public String rest_name;
+		public int status;
+		public Date time;
+	}
+	public class StatusResponse {
+		public boolean success;
+		public List<Order> list;
+	}
+
+	public class OrderItem {
+		public int amount;
+		public int meal_id;
+		public String meal_name;
+		public int meal_price;
+	}
+	public class StatusDetailResponse {
+		public boolean success;
+		public List<OrderItem> list;
+	}
+
+	public static class MealAmount {
+		public int meal_id;
+		public int amount;
+		public MealAmount(int meal_id, int amount) {
+			this.meal_id = meal_id;
+			this.amount = amount;
+		}
+	}
+
+	public interface PlateTWAPI1 {
+		@FormUrlEncoded
+		@POST("/1/register")
+		void register(@Field("phone_number") String phone_number,
+		              @Field("password") String password,
+		              @Field("password_type") String password_type,
+		              Callback<Response> cb);
+	}
+
+	interface PlateTWOldAPI {
+		@GET("/suggestions.php")
+		void recommendations(Callback<RecommendationResponse> cb);
+
+		@GET("/restaurants.php")
+		void restaurants(@Query("location") int location, Callback<RestaurantResponse> cb);
+
+		@GET("/menu.php")
+		void menu(@Query("rest_id") int rest_id, Callback<MenuResponse> cb);
+
+		@FormUrlEncoded
+		@POST("/status.php")
+		void status(@Field("username") String username, Callback<StatusResponse> cb);
+
+		@FormUrlEncoded
+		@POST("/status_detail.php")
+		void status_detail(@Field("number_slip_index") int number_slip_index, Callback<StatusDetailResponse> cb);
+
+		@FormUrlEncoded
+		@POST("/order.php")
+		void order(@Field("username") String username,
+		           @Field("rest_id") int rest_id,
+		           @Field("order") /* json: [ (meal_id, amount) ...] */ String orders,
+		           Callback<Response> cb);
+
+		@FormUrlEncoded
+		@POST("/cancel.php")
+		void cancel(@Field("number_slip_index") int number_slip_index,
+		            Callback<Response> cb);
+	}
+
+	public static final String TEST_USERNAME = "android@plate.tw";
+
+	private static RestAdapter restAdapter, restAdapterV1;
+	private static PlateTWOldAPI plateTW;
+	private static PlateTWAPI1 plateTWV1;
+
+	private static class DateTimeDeserializer implements JsonDeserializer<Date> {
+		private SimpleDateFormat sdf;
+
+		public DateTimeDeserializer() {
+			/* http://stackoverflow.com/questions/7910734/gsonbuilder-setdateformat-for-2011-10-26t202959-0700
+			 * http://developer.android.com/reference/java/text/SimpleDateFormat.html
+			 * http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+			 * */
+			String fmt;
+			if (System.getProperty("java.runtime.name").equals("Android Runtime")) {
+				fmt = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+			} else {
+				fmt = "yyyy-MM-dd'T'HH:mm:ssX";
+			}
+			sdf = new SimpleDateFormat(fmt, Locale.US);
+		}
+
+		public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx)
+				throws JsonParseException {
+			try {
+				return sdf.parse(json.getAsJsonPrimitive().getAsString());
+			} catch (ParseException e) {
+				throw new JsonParseException(e.getMessage());
+			}
+		}
+	}
+
+	public static PlateTWOldAPI getOldAPI(String uri) {
+		Gson gson = new GsonBuilder()
+				.registerTypeAdapter(Date.class, new DateTimeDeserializer())
+				.create();
+		restAdapter = new RestAdapter.Builder()
+				.setServer(uri)
+				.setConverter(new GsonConverter(gson))
+				.build();
+		plateTW = restAdapter.create(PlateTWOldAPI.class);
+		return plateTW;
+	}
+
+	public static PlateTWAPI1 getAPI1(String uri) {
+		Gson gson = new GsonBuilder()
+				.registerTypeAdapter(Date.class, new DateTimeDeserializer())
+				.create();
+		restAdapterV1 = new RestAdapter.Builder()
+				.setServer(uri)
+				.setConverter(new GsonConverter(gson))
+				.build();
+		plateTWV1 = restAdapterV1.create(PlateTWAPI1.class);
+		return plateTWV1;
+	}
+}
