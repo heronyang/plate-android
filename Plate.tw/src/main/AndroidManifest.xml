@@ -8,6 +8,8 @@
         android:minSdkVersion="9"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -15,12 +17,43 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="tw.plate.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="tw.plate.RestaurantActivity"
+            android:label="@string/title_activity_restaurant"
+            android:parentActivityName="tw.plate.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
+        <activity
+            android:name="tw.plate.MenuActivity"
+            android:label="@string/title_activity_menu"
+            android:parentActivityName="tw.plate.RestaurantActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tw.plate.RestaurantActivity" />
+        </activity>
+        <activity
+            android:name="tw.plate.ConfirmOrderActivity"
+            android:label="@string/title_activity_confirm_order"
+            android:parentActivityName="tw.plate.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tw.plate.MenuActivity" />
+        </activity>
+        <activity
+            android:name="tw.plate.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName="tw.plate.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
         </activity>
     </application>
 
