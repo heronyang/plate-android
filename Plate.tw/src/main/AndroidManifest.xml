@@ -41,7 +41,7 @@
                 android:value="tw.plate.RestaurantActivity" />
         </activity>
         <activity
-            android:name="tw.plate.ConfirmOrder"
+            android:name="tw.plate.ConfirmOrderActivity"
             android:label="@string/title_activity_confirm_order"
             android:parentActivityName="tw.plate.MenuActivity"
             android:theme="@style/Theme.AppCompat.Light" >

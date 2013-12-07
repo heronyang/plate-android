@@ -10,11 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ReceiptFragment extends Fragment{
+public class ReceiptFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +80,46 @@ public class ReceiptFragment extends Fragment{
     private void updateReceiptContent() {
         TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
         tv.setText("Login Succeeded!");
+
+        PlateService.PlateTWOldAPI plateTW;
+        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
+
+        PlateService.PlateTWAPI1 plateTWV1;
+        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
+
+        plateTWV1.orderGet(new Callback<PlateService.OrderGetResponse>() {
+            @Override
+            public void success(PlateService.OrderGetResponse orderGetResponse, Response response) {
+                TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
+
+                // if empty
+                Log.d(Constants.LOG_TAG, "Ok, success!");
+                if (response.getStatus() == 204) {
+                    tv.setText("No Order!");
+                }
+                // if show
+                else {
+                    PlateService.OrderV1 lo = orderGetResponse.last_order;
+                    Log.d(Constants.LOG_TAG, String.format("%s %s %s %d %d", lo.ctime, lo.mtime, lo.restaurant.name, lo.pos_slip_number, lo.status));
+
+                    String outputString = "";
+                    List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
+                    int nOrderItem = orderItems.size(), i;
+                    for ( i=0 ; i<nOrderItem ; i++ ) {
+                        PlateService.Meal meal = orderItems.get(i).meal;
+                        int amount = orderItems.get(i).amount;
+                        outputString += meal.meal_name + " * " + amount + "\n";
+                    }
+
+                    tv.setText(lo.restaurant.name + "\n" + outputString);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(Constants.LOG_TAG, "Failed! " + error.getMessage()  + error.getResponse().getStatus());
+            }
+        });
     }
 
     private boolean accountInAppNotSet() {
@@ -86,8 +132,7 @@ public class ReceiptFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        CookieHandler.setDefault(new CookieManager());
     }
 
     public static ReceiptFragment newInstance(){

@@ -43,8 +43,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);     // turn off display
+        actionBar.setDisplayShowTitleEnabled(false);    // turn off display
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -70,17 +70,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // the adapter. Also specify this Activity object, which implements
             // the TabListener interface, as the callback (listener) for when
             // this tab is selected.
+            int[] tabsResources= new int[]{R.drawable.tab_location_trans,R.drawable.tab_bill_trans};
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
+                            //.setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setTabListener(this)
+                            .setIcon(getResources().getDrawable(tabsResources[i]))
+
+            );
+
         }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -132,14 +136,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            //begin: aje
             //    return PlaceholderFragment.newInstance(position + 1);
             switch(position){
-                case 0: return LocationFragment.newInstance("Where to eat? ");
+                case 0: return LocationFragment.newInstance();
                 case 1: return ReceiptFragment.newInstance();
-                default: return LocationFragment.newInstance("Where to eat? ");
+                default: return LocationFragment.newInstance();
             }
-            //end:aje
+
         }
 
         @Override

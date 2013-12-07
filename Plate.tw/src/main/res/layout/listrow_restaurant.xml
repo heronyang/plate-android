@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/rest_lv_height">
+
+        <TextView
+            android:layout_width="@dimen/rest_box_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/box_padding"
+            android:textColor="@color/white"
+            android:text="New Text"
+            android:id="@+id/tv_listrow_restaurant"
+            android:background="@drawable/rectangle_frame"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <!-- android:textSize="@dimen/box_textsize" -->
+    </RelativeLayout>
+
+</LinearLayout>

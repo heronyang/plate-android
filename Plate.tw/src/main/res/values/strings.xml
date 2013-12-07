@@ -1,41 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- app -->
     <string name="app_name">Plate</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- tabs -->
     <string name="tab_location">選餐</string>
     <string name="tab_transaction">訂單</string>
 
-    <string name="your_number_message">你的號碼牌：</string>
-
+    <!-- action bar buttons -->
     <string name="action_settings">設定</string>
     <string name="action_submit">送出</string>
     <string name="action_confirm">確認</string>
     <string name="action_cancel">取消</string>
 
+    <!-- title for activities -->
     <string name="title_activity_restaurant">餐廳列表</string>
     <string name="title_activity_menu">菜單</string>
     <string name="title_activity_confirm_order">確認訂單</string>
     <string name="title_activity_login">登入</string>
     <string name="title_activity_register">註冊</string>
 
+    <!-- for register page -->
     <string name="example_phone_number">0912321321</string>
 
-    <string name="login_message">目前沒有可登入帳號，請輸入電話號碼並接收確認簡訊以完成登入</string>
     <string name="register_success_message">已經成功送出，請收簡訊</string>
     <string name="register_success_title">收簡訊啦</string>
     <string name="register_wrong_input_format_message">電話號碼格式錯誤</string>
     <string name="register_wrong_input_format_title">錯了啦</string>
 
+    <string name="register_default">請輸入電話號碼</string>
     <string name="register_first_time">歡迎使用，欲使用訂餐服務請先輸入電話號碼後收簡訊確認信</string>
     <string name="register_sp_saved_but_login_fail">簡訊已經寄出，請點選簡訊內容以啓動帳號，再次輸入以重發簡訊</string>
-    <string name="register_default">請輸入電話號碼</string>
 
+    <!-- warning popup -->
     <string name="confirm_order_warning_title">注意啊</string>
     <string name="confirm_order_warning_message">你要注意的事項：1. 2. 3.</string>
 
+    <!-- last confirmation -->
+    <string name="final_info_success_title">終於好了</string>
+    <string name="final_info_success_message">訂餐順利送出啦</string>
+    <string name="final_info_fail_title">完了</string>
+    <string name="final_info_fail_message">有問題所以無法送出訂單</string>
+
+    <!-- for popup dialog -->
     <string name="ok">好啦</string>
     <string name="cancel">不好誒</string>
+
+    <!-- for location fragment -->
+    <string name="location_welcome_message">選擇餐廳位置</string>
+
+    <!-- for restaurant activity -->
+    <string name="restaurant_welcome_message">選 擇 餐 廳</string>
+
+
 
 </resources>

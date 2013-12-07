@@ -3,4 +3,22 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    </resources>
+    <!-- for listrow.xml -->
+    <dimen name="box_width"> 200dp </dimen>
+    <dimen name="box_height"> 80dp </dimen>
+    <dimen name="lv_height"> 100dp </dimen>
+    <dimen name="box_padding"> 10dp </dimen>
+    <dimen name="box_textsize"> 25dp </dimen>
+
+    <dimen name="title_textsize"> 25dp </dimen>
+    <dimen name="title_margin"> 25dp </dimen>
+    <dimen name="frame_list_thickness"> 2dp </dimen>
+
+    <!-- Restaurant -->
+    <dimen name="rest_box_width"> 200dp </dimen>
+    <dimen name="rest_textsize"> 20dp </dimen>
+    <dimen name="rest_lv_height"> 60dp </dimen>
+
+
+
+</resources>
