@@ -7,8 +7,16 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    <item android:id="@+id/action_confirm"
-        android:title="@string/action_confirm"
+
+    <item android:id="@+id/action_bar_title"
+
         android:showAsAction="ifRoom" />
+
+
+    <item android:id="@+id/action_confirm"
+        android:icon="@drawable/bt_ok"
+        android:showAsAction="ifRoom" />
+<!-- android:title="@string/action_confirm" -->
+
     <!-- FIXME: it should not be 'ifRoom' -->
 </menu>

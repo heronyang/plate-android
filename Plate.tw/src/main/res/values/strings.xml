@@ -57,6 +57,13 @@
     <!-- for restaurant activity -->
     <string name="restaurant_welcome_message">選 擇 餐 廳</string>
     <string name="error_config">異常錯誤</string>
+    <!-- for menu activity -->
+    <string name="menu_list_category">全 部 菜 單</string>
+
+    <!-- for confirm order-->
+    <string name="total_amount">合 計: </string>
+    <string name="co_message"> 訂 單 確 認 </string>
+
 
 
 </resources>

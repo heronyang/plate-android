@@ -1,8 +1,12 @@
 package tw.plate;
 
+import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -77,7 +81,10 @@ public class MenuActivity extends ListActivity {
     }
 
     private void updateMenuList() {
+        TextView tv_category = (TextView) findViewById(R.id.tv_category);
         ListView lv = (ListView) findViewById(android.R.id.list);
+
+        tv_category.setText(getResources().getString(R.string.menu_list_category));
 
         ArrayAdapter<String> spAdapter;
         String [] spinnerItems = new String[Constants.MAX_AMOUNT];
@@ -154,22 +161,30 @@ public class MenuActivity extends ListActivity {
             viewHolder.tv_name.setText(meal_name);
             int meal_price = mealList.get(arg0).meal_price;
             viewHolder.tv_price.setText(""+meal_price+" NTD");
+            viewHolder.tv_price.setTextColor(getResources().getColor(R.color.foreground_1));
+
             viewHolder.sp.setAdapter(spAdapter);
             viewHolder.sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                     amounts[arg0] = position;
-                    Log.d(Constants.LOG_TAG,"pos: " + arg0 +"amount: "+ amounts[arg0]);
+                    Log.d(Constants.LOG_TAG, "pos: " + arg0 + "amount: " + amounts[arg0]);
+                    if(amounts[arg0]!=0){
+                        ((TextView)parentView.getChildAt(0)).setTextColor(getResources().getColor(R.color.background_3));
+                    }else{
+                        ((TextView)parentView.getChildAt(0)).setTextColor(getResources().getColor(R.color.gray_unseen));
+
+                    }
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
+
                     // Callback method to be invoked when the selection disappears from this view.
                     // The selection can disappear for instance when touch is activated or when the adapter becomes empty.
                 }
             });
             viewHolder.sp.setSelection(amounts[arg0]);
-
             return convertview;
         }
 
@@ -181,10 +196,16 @@ public class MenuActivity extends ListActivity {
         super.onListItemClick(lv, view, position, id);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+        //menu.findItem(R.id.action_bar_title).setTitle(restName);
+        String title = getActionBar().getTitle().toString();
+        title += ":    "+restName;
+        getActionBar().setTitle(title);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light_gray)));
         return true;
     }
 
@@ -221,6 +242,7 @@ public class MenuActivity extends ListActivity {
         confirmOrderIntent.putIntegerArrayListExtra("orderMealPrice", mealPrices);
         confirmOrderIntent.putIntegerArrayListExtra("orderMealID", mealID);
         confirmOrderIntent.putIntegerArrayListExtra("orderMealAmount", mealAmount);
+        confirmOrderIntent.putExtra("restName",restName);
 
         startActivity(confirmOrderIntent);
     }

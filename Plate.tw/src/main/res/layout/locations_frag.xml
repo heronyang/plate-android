@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/title_margin"
-        android:textColor="@color/dark_orange"
+        android:textColor="@color/foreground_1"
         />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,6 +23,7 @@
         android:layout_below="@+id/tv_location"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/title_margin"
         />
 
