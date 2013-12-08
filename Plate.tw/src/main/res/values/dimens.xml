@@ -37,5 +37,11 @@
     <dimen name="co_totalamount_size"> 25dp </dimen>
     <dimen name="co_padding"> 10dp </dimen>
 
+    <!-- receipt -->>
+    <dimen name="rec_line_padding"> 20dp </dimen>
+    <dimen name="rec_title_padding"> 20dp </dimen>
+    <dimen name="slip_num_size"> 40dp </dimen>
+    <dimen name="restname_text_size"> 25dp </dimen>
+    <dimen name="item_text_size"> 20dp </dimen>
 
 </resources>

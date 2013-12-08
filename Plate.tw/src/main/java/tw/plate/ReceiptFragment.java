@@ -81,6 +81,7 @@ public class ReceiptFragment extends Fragment {
         TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
         tv.setText("Login Succeeded!");
 
+
         PlateService.PlateTWOldAPI plateTW;
         plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
 
@@ -91,6 +92,12 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void success(PlateService.OrderGetResponse orderGetResponse, Response response) {
                 TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
+                TextView tv_welcome = (TextView) getView().findViewById(R.id.tv_receipt_welcome);
+                TextView tv_number = (TextView) getView().findViewById(R.id.tv_slip_num);
+                TextView tv_rest = (TextView) getView().findViewById(R.id.tv_rec_restaurant);
+                tv_welcome.setText(getResources().getString(R.string.receipt_message));
+
+                TextView tv_time = (TextView) getView().findViewById(R.id.tv_order_time);
 
                 // if empty
                 Log.d(Constants.LOG_TAG, "Ok, success!");
@@ -105,13 +112,20 @@ public class ReceiptFragment extends Fragment {
                     String outputString = "";
                     List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
                     int nOrderItem = orderItems.size(), i;
+                    int totalPrice=0;
                     for ( i=0 ; i<nOrderItem ; i++ ) {
                         PlateService.Meal meal = orderItems.get(i).meal;
                         int amount = orderItems.get(i).amount;
-                        outputString += meal.meal_name + " * " + amount + "\n";
+                        int price = amount*orderItems.get(i).meal.meal_price;
+                        totalPrice+=price;
+                        outputString += meal.meal_name + " * " + amount +"個    " +price + "元\n";
                     }
-
-                    tv.setText(lo.restaurant.name + "\n" + outputString);
+                    outputString += "\n\n"+getString(R.string.total_amount)+" "+totalPrice+"元\n";
+                   // int slipNumber = lo.pos_slip_number;
+                    tv_time.setText(lo.ctime);
+                    tv_number.setText(""+lo.pos_slip_number);
+                    tv_rest.setText(lo.restaurant.name);
+                    tv.setText(outputString);
                 }
             }
 
