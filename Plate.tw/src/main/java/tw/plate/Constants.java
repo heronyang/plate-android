@@ -16,7 +16,7 @@ final public class Constants {
     public static final String SP_TAG_PHONE_NUMBER = "MY_PHONE_NUMBER";
 
     /* Settings */
-    public static final String PASSWORD_TYPE = "raw";
+    public static final String PASSWORD_TYPE = "registration_id";
 
     /* Enum */
     public static final int FIRST_TIME = 0, SP_SAVED_BUT_LOGIN_FAIL = 1;

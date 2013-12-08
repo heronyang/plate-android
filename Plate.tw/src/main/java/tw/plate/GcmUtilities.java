@@ -24,9 +24,8 @@ import android.content.Intent;
 public final class GcmUtilities {
 
     /**
-     * Base URL of the Demo Server (such as http://my_host:8080/gcm-demo)
      */
-    static final String SERVER_URL = "http://api.plate.tw/gcm/";
+    static final String SERVER_URL = "http://api.plate.tw/gcm_register";
 
     /**
      * Google API project id registered to use GCM.

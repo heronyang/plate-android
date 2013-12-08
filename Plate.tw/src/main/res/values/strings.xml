@@ -63,7 +63,8 @@
     <!-- for confirm order-->
     <string name="total_amount">合 計: </string>
     <string name="co_message"> 訂 單 確 認 </string>
-
+    <string name="register_wait_for_play_service_message">等候Google Play Service設定完成再按確認</string>
+    <string name="register_wait_for_play_service_title">等一下</string>
 
 
 </resources>
