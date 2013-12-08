@@ -10,11 +10,11 @@
         android:layout_height="@dimen/lv_height">
 
         <TextView
-            android:layout_width="@dimen/box_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/box_height"
             android:gravity="center"
             android:padding="@dimen/box_padding"
-            android:textColor="@color/white"
+            android:textColor="@color/foreground_3"
             android:text="New Text"
             android:id="@+id/tv_listrow_location"
             android:background="@drawable/rectangle_frame"

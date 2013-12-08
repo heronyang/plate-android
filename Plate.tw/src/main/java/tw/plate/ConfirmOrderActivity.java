@@ -44,6 +44,7 @@ public class ConfirmOrderActivity extends Activity {
             , mealAmount = new ArrayList<Integer>();
 
     String orderJsonRequest;
+    String restName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class ConfirmOrderActivity extends Activity {
         mealPrices = intent.getIntegerArrayListExtra("orderMealPrice");
         mealID = intent.getIntegerArrayListExtra("orderMealID");
         mealAmount = intent.getIntegerArrayListExtra("orderMealAmount");
+        restName = intent.getStringExtra("restName");
 
         //
         for(int i=0; i<mealNames.size(); i++)
@@ -76,13 +78,15 @@ public class ConfirmOrderActivity extends Activity {
             rowData[i] = mealNames.get(i) + " " + mealPrices.get(i) + "NTD * " + mealAmount.get(i);
             totalAmount += mealPrices.get(i) * mealAmount.get(i);
         }
+        TextView tv_restaurant = (TextView) findViewById(R.id.tv_co_rest_name);
+        tv_restaurant.setText(restName);
 
         ArrayAdapter<String> adapter;
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rowData);
         lv.setAdapter(adapter);
 
         TextView tv = (TextView)findViewById(R.id.tvTotalAmount);
-        tv.setText(totalAmount + " NTD");
+        tv.setText(getResources().getString(R.string.total_amount) + totalAmount + " 元 ");
     }
 
     private void buttonSetup() {

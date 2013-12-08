@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/box_padding"
-            android:textColor="@color/white"
+            android:textColor="@color/foreground_3"
             android:text="New Text"
             android:id="@+id/tv_listrow_restaurant"
             android:background="@drawable/rectangle_frame"

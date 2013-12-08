@@ -2,12 +2,27 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 style="@style/gray_version"
-    >
+>
+    <TextView
+        style="@style/margin_left_right"
+        android:id="@+id/tv_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/rest_textsize"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/title_margin"
+        android:textColor="@color/black"
+        android:background="@color/foreground_4"
+        />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/margin_left_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@android:id/list"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/tv_category"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
