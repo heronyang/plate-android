@@ -43,6 +43,10 @@
     <string name="final_info_fail_title">完了</string>
     <string name="final_info_fail_message">有問題所以無法送出訂單</string>
 
+    <!-- require for play service popup-->
+    <string name="require_google_service_title">裝一下</string>
+    <string name="require_google_service_message">裝一下Google PlayService，不然你會收不到通知</string>
+
     <!-- for popup dialog -->
     <string name="ok">好啦</string>
     <string name="cancel">不好誒</string>
@@ -52,7 +56,7 @@
 
     <!-- for restaurant activity -->
     <string name="restaurant_welcome_message">選 擇 餐 廳</string>
-
+    <string name="error_config">異常錯誤</string>
 
 
 </resources>
