@@ -60,6 +60,9 @@
     <string name="total_amount">合 計: </string>
     <string name="co_message"> 訂 單 確 認 </string>
 
+    <!-- for receipt fragment-->
+    <string name="receipt_message"> 號 碼 牌 </string>
+    <string name="receipt_button_text"> 現在叫號 </string>
 
 
 </resources>

@@ -173,7 +173,6 @@ public class MenuActivity extends ListActivity {
                         ((TextView)parentView.getChildAt(0)).setTextColor(getResources().getColor(R.color.background_3));
                     }else{
                         ((TextView)parentView.getChildAt(0)).setTextColor(getResources().getColor(R.color.gray_unseen));
-
                     }
                 }
 
