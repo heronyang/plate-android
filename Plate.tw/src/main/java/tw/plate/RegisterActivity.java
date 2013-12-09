@@ -21,6 +21,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -139,7 +140,8 @@ public class RegisterActivity extends Activity {
     private void sendRegistrationIdToBackend() {
         // Your implementation here.
         // Heron: send the registered ID back to api.plate.tw
-
+        // NOTE: Since registration ID is required for registration,
+        // we only submit the register API if regid is got
     }
 
     /**
@@ -291,12 +293,11 @@ public class RegisterActivity extends Activity {
 
         if (!checkAndReceiveInputPhoneNumber()) {
             // wrong input
-            popupWrongInputMessage();
+            popupMessage(getString(R.string.register_wrong_input_format_title), getString(R.string.register_wrong_input_format_message));
             return;
         }
 
         // NOTE: use registration ID as password (fast implementation)
-        //String password = new BigInteger(130, random).toString(32);
         if (regid.equals("")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.register_wait_for_play_service_message)
@@ -310,7 +311,10 @@ public class RegisterActivity extends Activity {
             dialog.show();
             return;
         }
-        String password = regid;
+
+        SecureRandom random = new SecureRandom();
+        String password = new BigInteger(130, random).toString(32);
+        // String password = regid;
 
         // save back
         SharedPreferences sp = getSharedPreferences("account", MODE_PRIVATE);
@@ -333,41 +337,27 @@ public class RegisterActivity extends Activity {
         PlateService.PlateTWAPI1 plateTWV1;
         plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
 
-        plateTWV1.register(phone_number, password, Constants.PASSWORD_TYPE, new Callback<Response>() {
-            @Override public void success(Response r, Response response) {
-                popupMessageAndExit();
+        Log.d(Constants.LOG_TAG, "regid >> " + regid);
+        plateTWV1.register(phone_number, password, Constants.PASSWORD_TYPE, regid, new Callback<Response>() {
+            @Override
+            public void success(Response r, Response response) {
+                popupMessage(getString(R.string.register_success_title), getString(R.string.register_success_message));
             }
 
-            @Override public void failure(RetrofitError error) {
-                Log.d(Constants.LOG_TAG, "Can't Register");
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(Constants.LOG_TAG, "Can't Register, status code = " + error.getResponse().getStatus());
+                popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.regist_submit_api_error_message));
             }
         });
 
     }
-
-    private void popupWrongInputMessage() {
+    private void popupMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.register_wrong_input_format_message)
-                .setTitle(R.string.register_wrong_input_format_title);
+        builder.setMessage(message)
+                .setTitle(title);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void popupMessageAndExit() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.register_success_message)
-                .setTitle(R.string.register_success_title);
-
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivityIntent);
             }
         });
 

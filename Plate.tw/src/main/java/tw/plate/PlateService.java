@@ -119,6 +119,7 @@ public class PlateService {
         void register(@Field("phone_number") String phone_number,
                       @Field("password") String password,
                       @Field("password_type") String password_type,
+                      @Field("gcm_registration_id") String gcm_registration_id,
                       Callback<Response> cb);
         @FormUrlEncoded
         @POST("/1/login")
