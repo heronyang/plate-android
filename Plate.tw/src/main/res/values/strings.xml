@@ -65,11 +65,12 @@
     <string name="co_message"> 訂 單 確 認 </string>
     <string name="register_wait_for_play_service_message">等候Google Play Service設定完成再按確認</string>
     <string name="register_wait_for_play_service_title">等一下</string>
+    <string name="register_submit_api_error_title">與主機連線失敗</string>
+    <string name="register_submit_api_error_message">在和我們主機連線過程中出現問題</string>
 
     <!-- for receipt fragment-->
     <string name="receipt_message"> 號 碼 牌 </string>
     <string name="receipt_button_text"> 現在叫號 </string>
-    <string name="register_submit_api_error_title">與主機連線失敗</string>
-    <string name="regist_submit_api_error_message">在和我們主機連線過程中出現問題</string>
+
 
 </resources>

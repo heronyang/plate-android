@@ -77,6 +77,8 @@ public class RegisterActivity extends Activity {
         if (regid.isEmpty()) {
             registerInBackground();
         }
+
+        Log.d(Constants.LOG_TAG, "regid = " + regid);
     }
 
     /**
@@ -142,6 +144,7 @@ public class RegisterActivity extends Activity {
         // Heron: send the registered ID back to api.plate.tw
         // NOTE: Since registration ID is required for registration,
         // we only submit the register API if regid is got
+        Log.d(Constants.LOG_TAG, "regid = " + regid);
     }
 
     /**
@@ -179,7 +182,7 @@ public class RegisterActivity extends Activity {
                     // Require the user to click a button again, or perform
                     // exponential back-off.
                 }
-                Log.d(Constants.LOG_TAG, "regid = " + SENDER_ID);
+                Log.d(Constants.LOG_TAG, msg + "\n");
                 return msg;
             }
 
@@ -347,7 +350,7 @@ public class RegisterActivity extends Activity {
             @Override
             public void failure(RetrofitError error) {
                 Log.d(Constants.LOG_TAG, "Can't Register, status code = " + error.getResponse().getStatus());
-                popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.regist_submit_api_error_message));
+                popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.register_submit_api_error_message));
             }
         });
 
