@@ -115,17 +115,6 @@ public class RestaurantActivity extends ListActivity {
                 viewHolder.tv_restaurant = (TextView) convertview.findViewById(R.id.tv_listrow_restaurant);
                 viewHolder.tv_restaurant.setTextSize(getResources().getDimension(R.dimen.rest_textsize));
 
-                viewHolder.tv_restaurant.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent menuIntent = new Intent(view.getContext(), MenuActivity.class);
-                        menuIntent.putExtra("restId", restaurantList.get(arg0).rest_id);
-                        menuIntent.putExtra("restName", restaurantList.get(arg0).name);
-                        view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
-                        startActivity(menuIntent);
-                    }
-                });
-
                 convertview.setTag(viewHolder);
             }
             else
@@ -135,6 +124,17 @@ public class RestaurantActivity extends ListActivity {
             // set values
             String restName = restaurantNames[arg0];
             viewHolder.tv_restaurant.setText(restName);
+
+            viewHolder.tv_restaurant.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent menuIntent = new Intent(view.getContext(), MenuActivity.class);
+                    menuIntent.putExtra("restId", restaurantList.get(arg0).rest_id);
+                    menuIntent.putExtra("restName", restaurantList.get(arg0).name);
+                    view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
+                    startActivity(menuIntent);
+                }
+            });
 
             return convertview;
         }

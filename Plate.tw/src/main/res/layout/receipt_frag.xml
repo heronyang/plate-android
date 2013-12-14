@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:layout_margin="@dimen/rec_title_padding"
+        android:layout_marginTop="@dimen/rec_title_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_textsize"
@@ -17,7 +17,6 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_margin="@dimen/co_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/receipt_button_text"
@@ -27,7 +26,7 @@
 
     <LinearLayout
         android:background="@color/foreground_2"
-        android:layout_marginBottom="@dimen/co_margin_buttom"
+        android:layout_marginBottom="@dimen/co_margin_side"
         android:layout_marginLeft="@dimen/co_margin_side"
         android:layout_marginRight="@dimen/co_margin_side"
         android:layout_marginTop="@dimen/rec_line_padding"
@@ -38,18 +37,17 @@
         android:layout_alignParentLeft="true">
 
         <TextView
-            android:layout_margin="@dimen/co_padding"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".15"
             android:textColor="@color/foreground_3"
             android:id="@+id/tv_order_time"
-            android:layout_gravity="right" />
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="@dimen/slip_num_size"
             android:textStyle="bold"
             android:shadowColor="@color/background_1"
             android:id="@+id/tv_slip_num"
@@ -57,27 +55,26 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/restname_text_size"
+            android:layout_height="0dp"
+            android:layout_weight=".15"
             android:id="@+id/tv_rec_restaurant"
             android:layout_gravity="center_horizontal" />
 
         <View
-            android:layout_marginTop="@dimen/rec_line_padding"
             android:layout_width="fill_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:background="#000000" />
 
         <ScrollView
-            style="@style/margin_left_right_top"
+            style="@style/margin_left_right"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".70"
             android:layout_gravity="center_horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/item_text_size"
                 android:id="@+id/tvReceipt"
                 android:layout_gravity="center_horizontal" />
 

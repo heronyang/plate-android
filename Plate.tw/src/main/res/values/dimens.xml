@@ -44,4 +44,13 @@
     <dimen name="restname_text_size"> 25dp </dimen>
     <dimen name="item_text_size"> 20dp </dimen>
 
+    <!-- register activity-->
+    <dimen name="reg_box_padding_up_down"> 50dp </dimen>
+    <dimen name="reg_box_padding_side"> 20dp </dimen>
+
+
+    <dimen name="small_margin"> 10dp </dimen>
+
+
+
 </resources>
