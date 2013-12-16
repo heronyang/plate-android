@@ -220,7 +220,7 @@ public class PlateService {
                 .setServer(url)
                 .setConverter(new GsonConverter(gson))
                 .build();
-        plateTWV1 = restAdapter.create(PlateTWAPI1.class);
+        plateTWV1 = restAdapterV1.create(PlateTWAPI1.class);
         return plateTWV1;
     }
 }
