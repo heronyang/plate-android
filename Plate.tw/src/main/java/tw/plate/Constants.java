@@ -6,8 +6,8 @@ final public class Constants {
     /* Names */
     public static final String[] CANTEEN_LIST = new String[]{"  第 二 餐 廳  ", "  女 二 餐 廳  ", "  第 一 餐 廳  ", "  其  他  "};
     //public static final String API_URI_PREFIX = "http://10.0.2.2:8000"; // Developing Mode
-    public static final String API_URI_PREFIX = "http://192.168.1.28:8080"; // Heron's Local Developing Mode
-    //public static final String API_URI_PREFIX = "http://192.168.0.113:8080"; // Heron's Local Developing Mode
+    //public static final String API_URI_PREFIX = "http://192.168.1.28:8080"; // Heron's Local Developing Mode
+    public static final String API_URI_PREFIX = "http://192.168.0.115:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://api.plate.tw"; // Release Mode
 
     /* Numbers */
