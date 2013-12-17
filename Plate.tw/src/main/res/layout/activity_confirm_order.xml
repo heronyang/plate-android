@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_marginLeft="@dimen/co_margin_side"
         android:layout_marginRight="@dimen/co_margin_side"
-        android:layout_marginTop="@dimen/co_margin_buttom"
-        android:layout_marginBottom="@dimen/co_margin_buttom"
+        android:layout_marginTop="@dimen/co_margin_side"
+        android:layout_marginBottom="@dimen/co_margin_side"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -19,20 +19,41 @@
         android:background="@color/foreground_2"
         >
 
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".10"
             android:text="RestName"
             android:textColor="@color/background_3"
             android:layout_margin="@dimen/co_padding"
             android:id="@+id/tv_co_rest_name"
-            android:textSize="@dimen/co_restname_size"
             android:layout_gravity="center_horizontal" />
 
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="0dp"
+            android:layout_weight=".60"
+            android:layout_width="wrap_content"
+
+            android:id="@android:id/list"
+            android:textAlignment="center"
+            android:textSize="@dimen/co_text_size"
+            android:textFilterEnabled="false" />
+
+        <TextView
+            android:text="--- NTD"
+            android:layout_height="0dp"
+            android:layout_weight=".10"
+            android:layout_width="wrap_content"
+            android:id="@+id/tvTotalAmount"
+            android:layout_above="@+id/bt_ok"
+            android:layout_toLeftOf="@+id/bt_cancel"
+            android:layout_gravity="center_horizontal" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".20"
             android:layout_marginBottom="@dimen/co_padding"
             >
 
@@ -56,32 +77,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 />
-
-            <TextView
-                android:text="--- NTD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvTotalAmount"
-                android:textSize="@dimen/co_totalamount_size"
-                android:layout_above="@+id/bt_ok"
-                android:layout_toLeftOf="@+id/bt_cancel" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@+id/tvTotalAmount"
-                android:layout_alignRight="@+id/bt_ok">
-
-                <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@android:id/list"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/co_text_size"
-                    android:textFilterEnabled="false" />
-
-                </LinearLayout>
 
         </RelativeLayout>
 

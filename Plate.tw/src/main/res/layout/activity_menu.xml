@@ -6,6 +6,7 @@ style="@style/gray_version"
     <TextView
         style="@style/margin_left_right"
         android:id="@+id/tv_category"
+        android:padding="@dimen/small_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/rest_textsize"

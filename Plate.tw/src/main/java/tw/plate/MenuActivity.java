@@ -4,27 +4,23 @@ import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +40,9 @@ public class MenuActivity extends ListActivity {
     String restName;
     private CustomAdapter customAdapter;
 
-    // private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();
-    // private OrderList orderList = new OrderList();
+    public enum Animation {
+        CURL, TWIRL, ZIPPER, FADE, FLY, REVERSE_FLY, FLIP, CARDS, GROW, WAVE;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,14 +90,19 @@ public class MenuActivity extends ListActivity {
         spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         customAdapter = new CustomAdapter(this, spAdapter);
+        customAdapter.setAnimation(Animation.CARDS);
         lv.setAdapter(customAdapter);
     }
 
     private class CustomAdapter extends BaseAdapter // listview
     {
-        LayoutInflater inflater;
-        ArrayAdapter<String> spAdapter;
+        private final LayoutInflater inflater;
+        private ArrayAdapter<String> spAdapter;
         int [] amounts = new int[mealList.size()];
+        private int displayWidth;
+        private int prevPosition;
+        private Animation animation;
+
 
         public class ViewHolder
         {
@@ -116,6 +118,9 @@ public class MenuActivity extends ListActivity {
 
         }
 
+        public void setAnimation(Animation animation){
+            this.animation = animation;
+        }
         public int getCount() {
             // TODO Auto-generated method stub
             return mealList.size();
@@ -123,7 +128,7 @@ public class MenuActivity extends ListActivity {
 
         public Object getItem(int position) {
             // TODO Auto-generated method stub
-            return position;
+            return mealList.get(position);
         }
 
         public int getSelectedAmountAtPosition(int position) {
@@ -136,9 +141,15 @@ public class MenuActivity extends ListActivity {
             return position;
         }
 
+        public int getDisplayWidth(Context context) {
+            final Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+            return display.getWidth();
+        }
+
         public View getView(final int arg0, View convertview, ViewGroup arg2) {
-            ViewHolder viewHolder = null;
+            ViewHolder viewHolder;
             Log.d(Constants.LOG_TAG, "arg0 >> " + arg0);
+
             if(convertview == null)
             {
                 convertview = inflater.inflate(R.layout.listrow_menu, null);
@@ -154,7 +165,6 @@ public class MenuActivity extends ListActivity {
             {
                 viewHolder=(ViewHolder)convertview.getTag();
             }
-
 
             // set values
             String meal_name = mealList.get(arg0).meal_name;
@@ -183,11 +193,87 @@ public class MenuActivity extends ListActivity {
                     // The selection can disappear for instance when touch is activated or when the adapter becomes empty.
                 }
             });
+            selectAnimation(convertview,arg0, animation);
+
             viewHolder.sp.setSelection(amounts[arg0]);
             return convertview;
         }
 
+        private void selectAnimation( View convertview, int arg0, Animation animation){
+            switch (animation) {
+                case CARDS:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doCards(convertview, arg0, prevPosition);
+                    }else{
+                        AnimationFactory2.doCards(convertview, arg0, prevPosition);
+                    }
+                    break;
+                case CURL:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doCurl(convertview, arg0, prevPosition, displayWidth);
+                    }else{
+                        AnimationFactory2.doCurl(convertview, arg0, prevPosition, displayWidth);
+                    }
+                    break;
+                case FADE:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doFade(convertview);
+                    }else{
+                        AnimationFactory2.doFade(convertview);
+                    }
+                    break;
+                case FLIP:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doFlip(convertview, arg0, prevPosition);
+                    }else{
+                        AnimationFactory2.doFlip(convertview, arg0, prevPosition);
+                    }
+                    break;
+                case FLY:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doFly(convertview, arg0, prevPosition);
+                    }else{
+                        AnimationFactory2.doFly(convertview, arg0, prevPosition);
+                    }
+                    break;
+                case GROW:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doGrow(convertview);
+                    }else{
+                        AnimationFactory2.doGrow(convertview);
+                    }
+                    break;
+                case REVERSE_FLY:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doReverseFly(convertview, arg0, prevPosition);
+                    }else{
+                        AnimationFactory2.doReverseFly(convertview, arg0, prevPosition);
+                    }
+                    break;
+                case TWIRL:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doTwirl(convertview, arg0, prevPosition);
+                    }else{
+                        AnimationFactory2.doTwirl(convertview, arg0, prevPosition);
+                    }
+                    break;
+                case ZIPPER:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doZipper(convertview, arg0, displayWidth);
+                    }else{
+                        AnimationFactory2.doZipper(convertview, arg0, displayWidth);
+                    }
+                    break;
+                case WAVE:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+                        AnimationFactory.doWave(convertview, displayWidth);
+                    }else{
+                        AnimationFactory2.doWave(convertview, displayWidth);
+                    }
+                    break;
+            }
 
+        }
     }
 
     @Override
@@ -216,6 +302,10 @@ public class MenuActivity extends ListActivity {
 
         // Handle presses on the action bar items
         switch (item.getItemId()) {
+            case android.R.id.home:{
+                this.finish();
+                return true;
+            }
             case R.id.action_confirm:
                 confirmOrder();
                 return true;
@@ -244,6 +334,8 @@ public class MenuActivity extends ListActivity {
         confirmOrderIntent.putExtra("restName",restName);
 
         startActivity(confirmOrderIntent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
     }
 
     private void collectResults() {

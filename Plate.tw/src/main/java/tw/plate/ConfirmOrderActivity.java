@@ -159,6 +159,7 @@ public class ConfirmOrderActivity extends Activity {
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        mainActivityIntent.putExtra("fragPosition", 1);
                         startActivity(mainActivityIntent);
                     }
                 });

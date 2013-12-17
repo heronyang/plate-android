@@ -1,20 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    style="@style/gray_version"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <TextView
-        android:id="@+id/tvRegisterMessage"
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/phone_number_et"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/example_phone_number"
-        android:maxLength="10"
-        android:inputType="phone" />
+        android:layout_marginTop="@dimen/reg_box_padding_up_down"
+        android:layout_marginBottom="@dimen/reg_box_padding_up_down"
+        android:layout_marginLeft="@dimen/reg_box_padding_side"
+        android:layout_marginRight="@dimen/reg_box_padding_side"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/background_2"
+        >
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvRegisterMessage"
+            android:text="TEXT"
+            android:layout_gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/phone_number_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/example_phone_number"
+            android:maxLength="10"
+            android:inputType="phone"
+            android:layout_below="@+id/tvRegisterMessage"
+            android:layout_alignParentLeft="true" />
+
+
+    </RelativeLayout>
+</RelativeLayout>

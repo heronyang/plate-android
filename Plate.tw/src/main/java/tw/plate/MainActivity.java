@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -78,6 +79,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setIcon(getResources().getDrawable(tabsResources[i]))
             );
         }
+
+        Intent intent = getIntent();
+        int position = intent.getIntExtra("fragPosition",0);
+        mViewPager.setCurrentItem(position);
     }
 
 
