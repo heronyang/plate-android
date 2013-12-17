@@ -1,6 +1,8 @@
 package tw.plate;
 
-import java.util.Locale;
+import java.io.IOException;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -17,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -36,11 +37,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    //================================================================================
+    // Layout Setup
+    //================================================================================
+    private void layout_setup() {
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -78,7 +78,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this)
                             .setIcon(getResources().getDrawable(tabsResources[i]))
             );
-
         }
 
         Intent intent = getIntent();
@@ -86,6 +85,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setCurrentItem(position);
     }
 
+
+    //================================================================================
+    // Runtime Override Events
+    //================================================================================
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        layout_setup();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,6 +131,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    //================================================================================
+    // Fragments
+    //================================================================================
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -204,4 +217,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
+    //================================================================================
+    // End
+    //================================================================================
 }

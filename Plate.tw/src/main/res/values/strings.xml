@@ -43,6 +43,10 @@
     <string name="final_info_fail_title">完了</string>
     <string name="final_info_fail_message">有問題所以無法送出訂單</string>
 
+    <!-- require for play service popup-->
+    <string name="require_google_service_title">裝一下</string>
+    <string name="require_google_service_message">裝一下Google PlayService，不然你會收不到通知</string>
+
     <!-- for popup dialog -->
     <string name="ok">好啦</string>
     <string name="cancel">不好誒</string>
@@ -52,13 +56,17 @@
 
     <!-- for restaurant activity -->
     <string name="restaurant_welcome_message">選 擇 餐 廳</string>
-
+    <string name="error_config">異常錯誤</string>
     <!-- for menu activity -->
     <string name="menu_list_category">全 部 菜 單</string>
 
     <!-- for confirm order-->
     <string name="total_amount">合 計: </string>
     <string name="co_message"> 訂 單 確 認 </string>
+    <string name="register_wait_for_play_service_message">等候Google Play Service設定完成再按確認</string>
+    <string name="register_wait_for_play_service_title">等一下</string>
+    <string name="register_submit_api_error_title">與主機連線失敗</string>
+    <string name="register_submit_api_error_message">在和我們主機連線過程中出現問題</string>
 
     <!-- for receipt fragment-->
     <string name="receipt_message"> 號 碼 牌 </string>

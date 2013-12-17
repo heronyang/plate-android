@@ -119,6 +119,7 @@ public class PlateService {
         void register(@Field("phone_number") String phone_number,
                       @Field("password") String password,
                       @Field("password_type") String password_type,
+                      @Field("gcm_registration_id") String gcm_registration_id,
                       Callback<Response> cb);
         @FormUrlEncoded
         @POST("/1/login")
@@ -219,7 +220,7 @@ public class PlateService {
                 .setServer(url)
                 .setConverter(new GsonConverter(gson))
                 .build();
-        plateTWV1 = restAdapter.create(PlateTWAPI1.class);
+        plateTWV1 = restAdapterV1.create(PlateTWAPI1.class);
         return plateTWV1;
     }
 }
