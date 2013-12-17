@@ -131,8 +131,9 @@ public class RestaurantActivity extends ListActivity {
                     Intent menuIntent = new Intent(view.getContext(), MenuActivity.class);
                     menuIntent.putExtra("restId", restaurantList.get(arg0).rest_id);
                     menuIntent.putExtra("restName", restaurantList.get(arg0).name);
-                    view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
+                    //view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
                     startActivity(menuIntent);
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }
             });
 

@@ -15,6 +15,7 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.CookieStore;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -92,6 +93,7 @@ public class ReceiptFragment extends Fragment {
             @Override
             public void success(PlateService.OrderGetResponse orderGetResponse, Response response) {
                 TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
+                TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
                 TextView tv_welcome = (TextView) getView().findViewById(R.id.tv_receipt_welcome);
                 TextView tv_number = (TextView) getView().findViewById(R.id.tv_slip_num);
                 TextView tv_rest = (TextView) getView().findViewById(R.id.tv_rec_restaurant);
@@ -110,6 +112,7 @@ public class ReceiptFragment extends Fragment {
                     Log.d(Constants.LOG_TAG, String.format("%s %s %s %d %d", lo.ctime, lo.mtime, lo.restaurant.name, lo.pos_slip_number, lo.status));
 
                     String outputString = "";
+                    String stringPrice = "";
                     List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
                     int nOrderItem = orderItems.size(), i;
                     int totalPrice=0;
@@ -118,7 +121,8 @@ public class ReceiptFragment extends Fragment {
                         int amount = orderItems.get(i).amount;
                         int price = amount*orderItems.get(i).meal.meal_price;
                         totalPrice+=price;
-                        outputString += meal.meal_name + " * " + amount +"個    " +price + "元\n";
+                        outputString += meal.meal_name + " * " + amount +"個\n";
+                        stringPrice +=  price + "元\n";
                     }
                     outputString += "\n\n"+getString(R.string.total_amount)+" "+totalPrice+"元\n";
                    // int slipNumber = lo.pos_slip_number;
@@ -126,12 +130,13 @@ public class ReceiptFragment extends Fragment {
                     tv_number.setText(""+lo.pos_slip_number);
                     tv_rest.setText(lo.restaurant.name);
                     tv.setText(outputString);
+                    tv_price.setText(stringPrice);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d(Constants.LOG_TAG, "Failed! " + error.getMessage()  + error.getResponse().getStatus());
+                Log.d(Constants.LOG_TAG, "Failed! retrofit  " + error.getMessage()  + error.getResponse().getStatus());
             }
         });
     }

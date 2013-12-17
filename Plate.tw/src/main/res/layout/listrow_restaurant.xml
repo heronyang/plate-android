@@ -16,7 +16,7 @@
             android:textColor="@color/foreground_3"
             android:text="New Text"
             android:id="@+id/tv_listrow_restaurant"
-            android:background="@drawable/rectangle_frame"
+            android:background="@drawable/onclick_background_selector"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 

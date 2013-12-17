@@ -79,7 +79,8 @@ public class LocationFragment extends Fragment{
                         Intent restIntent = new Intent(view.getContext(),RestaurantActivity.class);
                         restIntent.putExtra("locationId", arg0);
                         startActivity(restIntent);
-                        view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
+                        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                        //view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
                         Log.d("PlateLog", "clicked");
 
                     }
