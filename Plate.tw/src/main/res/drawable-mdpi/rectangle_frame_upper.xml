@@ -4,18 +4,17 @@
     android:shape="rectangle" >
     <solid android:color="@color/foreground_2" />
 
-    <corners android:bottomLeftRadius="10dp"
+    <corners android:bottomLeftRadius="0dp"
         android:topLeftRadius="10dp"
-        android:bottomRightRadius="10dp"
+        android:bottomRightRadius="0dp"
         android:topRightRadius="10dp" />
 
     <gradient
         android:angle="270"
         android:endColor="@color/foreground_2"
-        android:startColor="@color/foreground_2" />
-
-    <!--    android:centerColor="@color/foreground_2_grad" -->
+        android:startColor="#f8e089" />
 
     <stroke android:width="@dimen/frame_list_thickness" android:color="@color/white"/>
 
 </shape>
+

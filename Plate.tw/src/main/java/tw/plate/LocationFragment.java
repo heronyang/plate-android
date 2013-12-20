@@ -29,9 +29,6 @@ public class LocationFragment extends Fragment{
     }
 
     private void updateLocationList(){
-        TextView tv = (TextView) v.findViewById(R.id.tv_location);
-        tv.setText(R.string.location_welcome_message);
-
         ListView lv = (ListView) v.findViewById(R.id.lv_canteen);
         customAdapter = new CustomAdapter(this.getActivity());
         lv.setAdapter(customAdapter);

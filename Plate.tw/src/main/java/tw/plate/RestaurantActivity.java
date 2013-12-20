@@ -72,10 +72,7 @@ public class RestaurantActivity extends ListActivity {
             restaurantNames[i] = restaurantList.get(i).name;
         }
         //Displaying Items
-        TextView tv = (TextView) findViewById(R.id.tv_rest_welcome_message);
         ListView lv = (ListView) findViewById(android.R.id.list);
-
-        tv.setText(R.string.restaurant_welcome_message);
 
         customAdapter = new CustomAdapter(this);
         lv.setAdapter(customAdapter);

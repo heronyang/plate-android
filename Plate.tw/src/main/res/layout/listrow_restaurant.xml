@@ -2,18 +2,20 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    >
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="@dimen/rest_lv_height">
-
         <TextView
-            android:layout_width="@dimen/rest_box_width"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/box_height"
             android:gravity="center"
             android:padding="@dimen/box_padding"
-            android:textColor="@color/foreground_3"
+            android:layout_marginRight="@dimen/box_padding_side"
+            android:layout_marginLeft="@dimen/box_padding_side"
+            android:textColor="@color/main_text_color"
             android:text="New Text"
             android:id="@+id/tv_listrow_restaurant"
             android:background="@drawable/onclick_background_selector"

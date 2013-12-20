@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <color name="deep_gray">#474747</color>
+<!--    <color name="deep_gray">#474747</color>
     <color name="light_gray">#dcdcdc</color>
     <color name="dark_orange">#dc8700</color>
     <color name="fresh_orange">#ff9a00</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
-
+-->
     <color name="gray_unseen">#b6b6b6</color>
+    <color name="main_text_color">#000000</color>
+    <color name="theme_color">#5f3209</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 
+<!--
     <color name="background_1">#474747</color>
     <color name="background_2">#dcdcdc</color>
     <color name="background_3">#000000</color>
@@ -18,5 +23,26 @@
     <color name="foreground_2">#ff9a00</color>
     <color name="foreground_3">#ffffff</color>
     <color name="foreground_4">#ffca00</color>
+-->
+    <color name="background_1">#5f3209</color>
+    <color name="background_2">#dcdcdc</color>
+    <color name="background_3">#000000</color>
+
+    <color name="foreground_1">#dc8700</color>
+    <color name="foreground_2">#f4cc3b</color>
+    <color name="foreground_2_grad">#f8e089</color>
+    <color name="foreground_3">#ffffff</color>
+
+    <color name="on_pressed">#f8e089</color>
+
+    <color name="color_5">#ec6941</color>
+    <color name="color_6">#d20101</color>
+
+    <color name="color_7_grad1">#d7d7d7</color>
+    <color name="color_7_grad2">#ffffff</color>
+
+    <color name="spinner_background">#ffffff</color>
+
+
 
 </resources>

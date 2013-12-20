@@ -4,20 +4,21 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- for listrow.xml -->
-    <dimen name="box_width"> 200dp </dimen>
-    <dimen name="box_height"> 80dp </dimen>
-    <dimen name="lv_height"> 100dp </dimen>
-    <dimen name="box_padding"> 10dp </dimen>
-    <dimen name="box_textsize"> 25dp </dimen>
+<!--    <dimen name="box_width"> "match_parent"</dimen> -->
+    <dimen name="box_height"> 60dp </dimen>
+    <dimen name="lv_height"> 62dp </dimen>
+    <dimen name="box_padding"> 15dp </dimen>
+    <dimen name="box_textsize"> 20dp </dimen>
+    <dimen name="box_padding_side"> 15dp </dimen>
 
     <dimen name="title_textsize"> 25dp </dimen>
     <dimen name="title_margin"> 25dp </dimen>
-    <dimen name="frame_list_thickness"> 2dp </dimen>
+    <dimen name="frame_list_thickness"> 0dp </dimen>
 
     <!-- Restaurant -->
-    <dimen name="rest_box_width"> 200dp </dimen>
+<!--    <dimen name="rest_box_width"> "match_parent" </dimen> -->
     <dimen name="rest_textsize"> 20dp </dimen>
-    <dimen name="rest_lv_height"> 60dp </dimen>
+    <dimen name="rest_lv_height"> 62dp </dimen>
 
     <!-- Menu -->
     <dimen name="menu_margin_left"> 20dp </dimen>

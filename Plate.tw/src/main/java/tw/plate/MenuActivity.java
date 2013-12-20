@@ -90,7 +90,7 @@ public class MenuActivity extends ListActivity {
         spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         customAdapter = new CustomAdapter(this, spAdapter);
-        customAdapter.setAnimation(Animation.CARDS);
+        customAdapter.setAnimation(Animation.GROW);
         lv.setAdapter(customAdapter);
     }
 
@@ -171,7 +171,6 @@ public class MenuActivity extends ListActivity {
             viewHolder.tv_name.setText(meal_name);
             int meal_price = mealList.get(arg0).meal_price;
             viewHolder.tv_price.setText(""+meal_price+" NTD");
-            viewHolder.tv_price.setTextColor(getResources().getColor(R.color.foreground_1));
 
             viewHolder.sp.setAdapter(spAdapter);
             viewHolder.sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -290,7 +289,7 @@ public class MenuActivity extends ListActivity {
         String title = getActionBar().getTitle().toString();
         title += ":    "+restName;
         getActionBar().setTitle(title);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light_gray)));
+        //getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light_gray)));
         return true;
     }
 

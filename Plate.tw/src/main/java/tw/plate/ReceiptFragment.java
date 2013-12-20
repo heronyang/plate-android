@@ -83,8 +83,8 @@ public class ReceiptFragment extends Fragment {
         tv.setText("Login Succeeded!");
 
 
-        //PlateService.PlateTWOldAPI plateTW;
-        //plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
+        PlateService.PlateTWOldAPI plateTW;
+        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
 
         PlateService.PlateTWAPI1 plateTWV1;
         plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);

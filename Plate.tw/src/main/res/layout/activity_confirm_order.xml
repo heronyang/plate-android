@@ -16,9 +16,8 @@
         android:layout_below="@+id/tv_confirm_order"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/foreground_2"
+        android:background="@drawable/rectangle_frame"
         >
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,30 +53,37 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight=".20"
-            android:layout_marginBottom="@dimen/co_padding"
             >
+            <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true">
 
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:background="@drawable/bt_cancel_confirm_order"
-                android:id="@+id/bt_cancel"
-                android:layout_toLeftOf="@+id/bt_ok"
-                android:layout_marginLeft="@dimen/co_padding"
-                android:layout_marginRight="@dimen/co_padding"
-                android:layout_marginBottom="@dimen/co_padding"
-                android:layout_alignTop="@+id/bt_ok" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight=".50"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_cancel_background_selector"
+                    android:id="@+id/bt_cancel"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true" />
 
-            <Button
-                android:layout_margin="@dimen/co_padding"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:background="@drawable/bt_ok_confirm_order"
-                android:id="@+id/bt_ok"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight=".49"
+                    android:layout_marginRight="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_ok_background_selector"
+                    android:id="@+id/bt_ok"
+                    android:layout_alignTop="@+id/bt_cancel"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                     />
 
+            </LinearLayout>
         </RelativeLayout>
 
 

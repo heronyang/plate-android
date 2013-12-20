@@ -13,8 +13,8 @@ style="@style/gray_version"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/title_margin"
-        android:textColor="@color/black"
-        android:background="@color/foreground_4"
+        android:textColor="@color/main_text_color"
+        android:background="@drawable/rectangle_frame_upper"
         />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"

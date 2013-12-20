@@ -6,7 +6,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-   
     <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -14,7 +13,7 @@
     </style>
 
     <style name="gray_version">
-        <item name="android:background">@color/deep_gray</item>
+        <item name="android:background">@color/theme_color</item>
     </style>
 
     <style name="margin_left_right">
@@ -26,6 +25,14 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="customize_bar" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle" >@style/customize_bar_style</item>
+    </style>
+
+    <style name="customize_bar_style" parent="android:Widget.Holo.ActionBar">
+        <item name="android:height">50dp</item>
     </style>
 
 </resources>
