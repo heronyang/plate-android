@@ -338,9 +338,6 @@ public class RegisterActivity extends Activity {
 
     private void callRegisterAPI(String phone_number, String password) {
 
-        PlateService.PlateTWOldAPI plateTW;
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-
         PlateService.PlateTWAPI1 plateTWV1;
         plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
 

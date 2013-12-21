@@ -20,9 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/receipt_button_text"
-        android:id="@+id/button"
+        android:id="@+id/bn_current_ns"
         android:layout_below="@+id/tv_receipt_welcome"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <LinearLayout
         android:background="@color/foreground_2"
@@ -33,7 +33,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/button"
+        android:layout_below="@+id/bn_current_ns"
         android:layout_alignParentLeft="true">
 
         <TextView

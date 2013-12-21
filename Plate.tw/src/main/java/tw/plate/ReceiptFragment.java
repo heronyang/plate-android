@@ -3,11 +3,13 @@ package tw.plate;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.net.CookieHandler;
@@ -23,12 +25,59 @@ import retrofit.client.Response;
 
 public class ReceiptFragment extends Fragment {
 
+    private int rest_id = Constants.ORDER_EMPTY;
+    private int current_ns = Constants.ORDER_EMPTY;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.receipt_frag, container, false);
 
+        final View button = v.findViewById(R.id.bn_current_ns);
+        button.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /* DO SOMETHING UPON THE CLICK */
+                    Log.d(Constants.LOG_TAG, "clicked");
+
+                    PlateService.PlateTWAPI1 plateTWV1;
+                    plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
+
+                    plateTWV1.current_ns(rest_id, new Callback<PlateService.CurrentNSResponse>() {
+                        @Override
+                        public void success(PlateService.CurrentNSResponse r, Response response) {
+                            current_ns = r.current_ns;
+                            showCurrentNS();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d(Constants.LOG_TAG, "Can't get the current ns" + error.getResponse().getStatus());
+                        }
+                    });
+
+                }
+            }
+        );
+
         return v;
+    }
+
+    private void showCurrentNS() {
+        final Button button = (Button)getView().findViewById(R.id.bn_current_ns);
+        button.setText("No. " + current_ns);
+
+        // flip back
+        int delay_time = Constants.FLIP_BACK_TIME;
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                button.setText(getString(R.string.receipt_button_text));
+            }
+        }, delay_time);
     }
 
     @Override
@@ -66,11 +115,13 @@ public class ReceiptFragment extends Fragment {
         plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
 
         plateTWV1.login(phone_number, password, new Callback<Response>() {
-            @Override public void success(Response r, Response response) {
+            @Override
+            public void success(Response r, Response response) {
                 updateReceiptContent();
             }
 
-            @Override public void failure(RetrofitError error) {
+            @Override
+            public void failure(RetrofitError error) {
                 Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
                 registerInent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
                 startActivity(registerInent);
@@ -92,7 +143,7 @@ public class ReceiptFragment extends Fragment {
         plateTWV1.orderGet(new Callback<PlateService.OrderGetResponse>() {
             @Override
             public void success(PlateService.OrderGetResponse orderGetResponse, Response response) {
-                TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
+                TextView tv = (TextView) getView().findViewById(R.id.tvReceipt);
                 TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
                 TextView tv_welcome = (TextView) getView().findViewById(R.id.tv_receipt_welcome);
                 TextView tv_number = (TextView) getView().findViewById(R.id.tv_slip_num);
@@ -115,20 +166,21 @@ public class ReceiptFragment extends Fragment {
                     String stringPrice = "";
                     List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
                     int nOrderItem = orderItems.size(), i;
-                    int totalPrice=0;
-                    for ( i=0 ; i<nOrderItem ; i++ ) {
+                    int totalPrice = 0;
+                    for (i = 0; i < nOrderItem; i++) {
                         PlateService.Meal meal = orderItems.get(i).meal;
                         int amount = orderItems.get(i).amount;
-                        int price = amount*orderItems.get(i).meal.meal_price;
-                        totalPrice+=price;
-                        outputString += meal.meal_name + " * " + amount +"個\n";
-                        stringPrice +=  price + "元\n";
+                        int price = amount * orderItems.get(i).meal.meal_price;
+                        totalPrice += price;
+                        outputString += meal.meal_name + " * " + amount + "個\n";
+                        stringPrice += price + "元\n";
                     }
-                    outputString += "\n\n"+getString(R.string.total_amount)+" "+totalPrice+"元\n";
-                   // int slipNumber = lo.pos_slip_number;
+                    outputString += "\n\n" + getString(R.string.total_amount) + " " + totalPrice + "元\n";
+                    // int slipNumber = lo.pos_slip_number;
                     tv_time.setText(lo.ctime);
-                    tv_number.setText(""+lo.pos_slip_number);
+                    tv_number.setText("" + lo.pos_slip_number);
                     tv_rest.setText(lo.restaurant.name);
+                    rest_id = lo.restaurant.rest_id;
                     tv.setText(outputString);
                     tv_price.setText(stringPrice);
                 }
@@ -136,7 +188,7 @@ public class ReceiptFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d(Constants.LOG_TAG, "Failed! retrofit  " + error.getMessage()  + error.getResponse().getStatus());
+                Log.d(Constants.LOG_TAG, "Failed! retrofit  " + error.getMessage() + error.getResponse().getStatus());
             }
         });
     }

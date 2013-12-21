@@ -23,6 +23,10 @@ final public class Constants {
 
     /* Enum */
     public static final int FIRST_TIME = 0, SP_SAVED_BUT_LOGIN_FAIL = 1;
+    public static final int ORDER_EMPTY = -1;
+
+    /* Time */
+    public static final int FLIP_BACK_TIME = 3000; // ms
 
     private Constants(){}
 }

@@ -113,6 +113,10 @@ public class PlateService {
         public int number_slip;
     }
 
+    public class CurrentNSResponse {
+        public int current_ns;
+    }
+
     interface PlateTWAPI1 {
         @FormUrlEncoded
         @POST("/1/register")
@@ -134,6 +138,10 @@ public class PlateService {
         @POST("/1/order_post")
         void orderPost(@Field("order") String order,
                        Callback<OrderPostResponse> cb);
+
+        @GET("/1/current_ns")
+        void current_ns(@Query("rest_id") int rest_id,
+                        Callback<CurrentNSResponse> cb);
     }
 
     interface PlateTWOldAPI {
