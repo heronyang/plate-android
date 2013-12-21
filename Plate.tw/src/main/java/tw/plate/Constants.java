@@ -8,7 +8,6 @@ final public class Constants {
     //public static final String API_URI_PREFIX = "http://10.0.2.2:8000"; // Developing Mode
     //public static final String API_URI_PREFIX = "http://192.168.1.28:8080"; // Heron's Local Developing Mode
     public static final String API_URI_PREFIX = "http://192.168.0.115:8080"; // Heron's Local Developing Mode
-    //public static final String API_URI_PREFIX = "http://106.187.89.91:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://api.plate.tw"; // Release Mode
 
     /* Numbers */

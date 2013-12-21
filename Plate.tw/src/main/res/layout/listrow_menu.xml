@@ -2,12 +2,13 @@
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@color/background_2"
+        android:background="@drawable/silver_gradient"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true">
+
         <TextView
             android:gravity="left"
             android:text="Name "
@@ -17,7 +18,7 @@
             android:textIsSelectable="false"
             android:textSize="@dimen/menu_text_size"
             android:layout_width="0dp"
-            android:layout_weight=".60"
+            android:layout_weight=".65"
              />
 
         <TextView
@@ -28,13 +29,15 @@
             android:id="@+id/tv_listrow_price"
             android:layout_width="0dp"
             android:layout_weight=".20"
+            android:textColor="@color/color_5"
             />
+
         <Spinner
             android:layout_margin="@dimen/small_margin"
             android:layout_height="wrap_content"
             android:id="@+id/listrow_menu_spinner"
             android:layout_width="0dp"
-            android:layout_weight=".20"
+            android:layout_weight=".15"
             />
 
     </LinearLayout>
