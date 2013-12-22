@@ -71,23 +71,51 @@ public class ConfirmOrderActivity extends Activity {
 
         int totalAmount = 0;
 
-        ListView lv = (ListView) findViewById(android.R.id.list);
+        //ListView lv = (ListView) findViewById(android.R.id.list);
+        //ListView lv_price =(ListView) findViewById(R.id.lv_confirm_price);
+        TextView tv_mealname = (TextView) findViewById(R.id.tv_mealname);
+        TextView tv_amount = (TextView) findViewById(R.id.tv_amount);
+        TextView tv_price = (TextView) findViewById(R.id.tv_price);
+
         int l = mealNames.size(), i;
-        String [] rowData = new String[l];
+        String mealnameString = "";
+        String amountString = "";
+        String priceString = "";
+        //String [] priceData = new String[l];
         for( i=0 ; i<l ; i++) {
-            rowData[i] = mealNames.get(i) + " " + mealPrices.get(i) + "NTD * " + mealAmount.get(i);
+            //rowData[i] = rowDataFormat;
+            mealnameString += mealNames.get(i) + "\n";
+            amountString += mealAmount.get(i) + "份\n";
+            priceString += mealPrices.get(i) + "元\n";
+
             totalAmount += mealPrices.get(i) * mealAmount.get(i);
         }
         TextView tv_restaurant = (TextView) findViewById(R.id.tv_co_rest_name);
         tv_restaurant.setText(restName);
 
+        /*
         ArrayAdapter<String> adapter;
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rowData);
+        lv.setDivider(null);
+        lv.setDividerHeight(0);
         lv.setAdapter(adapter);
-
+        */
+    //    setupListview(lv,rowData);
+        //setupListview(lv_price,priceData);
+        tv_mealname.setText(mealnameString);
+        tv_amount.setText(amountString);
+        tv_price.setText(priceString);
         TextView tv = (TextView)findViewById(R.id.tvTotalAmount);
-        tv.setText(getResources().getString(R.string.total_amount) + totalAmount + " 元 ");
+        tv.setText(totalAmount + " 元  ");
     }
+
+    /*private void setupListview(ListView lv, String[] data){
+        ArrayAdapter<String> adapter;
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
+        lv.setDivider(null);
+        lv.setDividerHeight(0);
+        lv.setAdapter(adapter);
+    }*/
 
     private void buttonSetup() {
 

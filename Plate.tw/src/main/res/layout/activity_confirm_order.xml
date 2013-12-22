@@ -22,44 +22,93 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight=".10"
+            android:layout_weight=".15"
             android:text="RestName"
             android:textColor="@color/background_3"
-            android:layout_margin="@dimen/co_padding"
+            android:textSize="@dimen/co_restname_size"
+            android:paddingTop="@dimen/padding_top"
             android:id="@+id/tv_co_rest_name"
             android:layout_gravity="center_horizontal" />
 
-        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_height="0dp"
-            android:layout_weight=".60"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/white" />
 
-            android:id="@android:id/list"
-            android:textAlignment="center"
-            android:textSize="@dimen/co_text_size"
-            android:textFilterEnabled="false" />
-
-        <TextView
-            android:text="--- NTD"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".10"
-            android:layout_width="wrap_content"
-            android:id="@+id/tvTotalAmount"
-            android:layout_above="@+id/bt_ok"
-            android:layout_toLeftOf="@+id/bt_cancel"
-            android:layout_gravity="center_horizontal" />
+            android:layout_weight=".60">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".80"
+                >
+
+                <TextView
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:textSize="@dimen/menu_text_size"
+                    android:layout_width="0dp"
+                    android:layout_weight=".60"
+                    android:layout_height="wrap_content"
+                    android:text="meal name"
+                    android:gravity="center"
+                    android:id="@+id/tv_mealname" />
+
+                <TextView
+                    android:textSize="@dimen/menu_text_size"
+                    android:layout_width="0dp"
+                    android:layout_weight=".20"
+                    android:layout_height="wrap_content"
+                    android:text="price"
+                    android:id="@+id/tv_price" />
+
+                <TextView
+                    android:textSize="@dimen/menu_text_size"
+                    android:layout_width="0dp"
+                    android:layout_weight=".20"
+                    android:layout_height="wrap_content"
+                    android:text="amount"
+                    android:id="@+id/tv_amount" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                android:layout_gravity="bottom" />
+
+            <TextView
+                android:text="--- NTD"
+                android:layout_height="0dp"
+                android:layout_weight=".20"
+                android:textSize="@dimen/co_totalamount_size"
+                android:textColor="@color/color_6"
+                android:layout_width="wrap_content"
+                android:id="@+id/tvTotalAmount"
+                android:layout_above="@+id/bt_ok"
+                android:textStyle="bold"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+
+
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".20"
+            android:layout_weight=".15"
             >
             <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true">
+                android:layout_alignParentLeft="true">
 
                 <Button
                     android:layout_width="0dp"
@@ -89,14 +138,4 @@
 
     </LinearLayout>
 
-    <TextView
-        style="@style/margin_left_right_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/co_message"
-        android:textSize="@dimen/title_textsize"
-        android:id="@+id/tv_confirm_order"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/foreground_1"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    style="@style/gray_version"
+    android:background="@color/background_1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -16,6 +16,7 @@
 
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/margin_left_right"
         android:id="@+id/lv_canteen"
         android:layout_width="match_parent"
         android:layout_height="0dp"

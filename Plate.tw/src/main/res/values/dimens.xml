@@ -5,8 +5,8 @@
 
     <!-- for listrow.xml -->
 <!--    <dimen name="box_width"> "match_parent"</dimen> -->
-    <dimen name="box_height"> 60dp </dimen>
-    <dimen name="lv_height"> 62dp </dimen>
+    <dimen name="box_height"> 70dp </dimen>
+    <dimen name="lv_height"> 72dp </dimen>
     <dimen name="box_padding"> 15dp </dimen>
     <dimen name="box_textsize"> 20dp </dimen>
     <dimen name="box_padding_side"> 15dp </dimen>
@@ -37,12 +37,14 @@
     <dimen name="co_text_size"> 25dp </dimen>
     <dimen name="co_totalamount_size"> 25dp </dimen>
     <dimen name="co_padding"> 10dp </dimen>
+    <dimen name="padding_top"> 25dp </dimen>
+
 
     <!-- receipt -->>
     <dimen name="rec_line_padding"> 20dp </dimen>
     <dimen name="rec_title_padding"> 20dp </dimen>
-    <dimen name="slip_num_size"> 40dp </dimen>
-    <dimen name="restname_text_size"> 25dp </dimen>
+    <dimen name="slip_num_size"> 60dp </dimen>
+    <dimen name="restname_text_size"> 30dp </dimen>
     <dimen name="item_text_size"> 20dp </dimen>
 
     <!-- register activity-->
@@ -51,6 +53,7 @@
 
 
     <dimen name="small_margin"> 10dp </dimen>
+    <dimen name="small_small_margin"> 10dp </dimen>
 
 
 

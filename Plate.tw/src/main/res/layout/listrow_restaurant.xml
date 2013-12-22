@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
+
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/rest_lv_height">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/box_height"
-            android:gravity="center"
-            android:padding="@dimen/box_padding"
-            android:layout_marginRight="@dimen/box_padding_side"
-            android:layout_marginLeft="@dimen/box_padding_side"
-            android:textColor="@color/main_text_color"
-            android:text="New Text"
-            android:id="@+id/tv_listrow_restaurant"
-            android:background="@drawable/onclick_background_selector"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+        android:layout_height="@dimen/lv_height"
+        >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/box_height">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:padding="@dimen/box_padding"
+                android:textColor="@color/main_text_color"
+                android:text="New Text"
+                android:id="@+id/tv_listrow_restaurant"
+                android:background="@drawable/onclick_background_selector"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </FrameLayout>
 
         <!-- android:textSize="@dimen/box_textsize" -->
     </RelativeLayout>

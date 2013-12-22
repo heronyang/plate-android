@@ -38,11 +38,29 @@
     <color name="color_5">#ec6941</color>
     <color name="color_6">#d20101</color>
 
+    <!--
     <color name="color_7_grad1">#d7d7d7</color>
     <color name="color_7_grad2">#ffffff</color>
+    -->
+    <color name="color_7_grad1">#F9E498</color>
+    <color name="color_7_grad2">#fcf3d0</color>
 
-    <color name="spinner_background">#ffffff</color>
 
+    <color name="spinner_background">#5f3209</color>
+
+    <color name="black_text">#000000</color>
+    <color name="actionbar_color">#5f3209</color>
+    <color name="actionbar_text_color">#ffffff</color>
+
+
+    <color name="tab_unselect">#5f3209</color>
+    <color name="tab_select">#f4cc3b</color>
+    <color name="tab_touch">#f4cc3b</color>
+
+    <color name="test1">#0a0aaa</color>
+    <color name="test2">#aa0abb</color>
+    <color name="test3">#00FF00</color>
+    <color name="test4">#00FFFF</color>
 
 
 </resources>

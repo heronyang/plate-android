@@ -11,8 +11,8 @@
 
     <gradient
         android:angle="270"
-        android:endColor="@color/foreground_2"
-        android:startColor="@color/foreground_2" />
+        android:startColor="@color/foreground_2"
+        android:endColor="@color/foreground_2_grad" />
 
     <!--    android:centerColor="@color/foreground_2_grad" -->
 

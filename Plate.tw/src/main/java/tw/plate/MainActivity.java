@@ -77,6 +77,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             //.setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this)
                             .setIcon(getResources().getDrawable(tabsResources[i]))
+
             );
         }
 
@@ -111,6 +112,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+   //         selectIP();
             return true;
         }
         return super.onOptionsItemSelected(item);

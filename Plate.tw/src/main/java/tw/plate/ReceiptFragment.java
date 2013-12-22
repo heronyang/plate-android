@@ -94,10 +94,8 @@ public class ReceiptFragment extends Fragment {
             public void success(PlateService.OrderGetResponse orderGetResponse, Response response) {
                 TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
                 TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
-                TextView tv_welcome = (TextView) getView().findViewById(R.id.tv_receipt_welcome);
                 TextView tv_number = (TextView) getView().findViewById(R.id.tv_slip_num);
                 TextView tv_rest = (TextView) getView().findViewById(R.id.tv_rec_restaurant);
-                tv_welcome.setText(getResources().getString(R.string.receipt_message));
 
                 TextView tv_time = (TextView) getView().findViewById(R.id.tv_order_time);
 
@@ -122,9 +120,9 @@ public class ReceiptFragment extends Fragment {
                         int price = amount*orderItems.get(i).meal.meal_price;
                         totalPrice+=price;
                         outputString += meal.meal_name + " * " + amount +"個\n";
-                        stringPrice +=  price + "元\n";
+                        stringPrice +=  price + " 元\n";
                     }
-                    outputString += "\n\n"+getString(R.string.total_amount)+" "+totalPrice+"元\n";
+                    stringPrice += "\n\n"+getString(R.string.total_amount)+" "+totalPrice+" 元\n";
                    // int slipNumber = lo.pos_slip_number;
                     tv_time.setText(lo.ctime);
                     tv_number.setText(""+lo.pos_slip_number);
