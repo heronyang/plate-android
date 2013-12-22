@@ -115,7 +115,6 @@ public class MenuActivity extends ListActivity {
         {
             inflater = LayoutInflater.from(context);
             spAdapter = _adapter;
-
         }
 
         public void setAnimation(Animation animation){

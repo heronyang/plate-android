@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     style="@style/gray_version"
     >
-
     <LinearLayout
         android:background="@drawable/rectangle_frame"
         android:layout_marginBottom="@dimen/small_small_margin"
@@ -19,8 +18,6 @@
         android:layout_weight=".70"
         android:layout_alignParentLeft="true"
         android:id="@+id/linearLayout">
-
-
 
         <FrameLayout
             android:layout_width="fill_parent"
@@ -113,7 +110,7 @@
     <Button
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:id="@+id/button"
+        android:id="@+id/bn_current_ns"
         android:background="@drawable/circle_frame"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"

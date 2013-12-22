@@ -55,7 +55,7 @@
                     android:layout_weight=".60"
                     android:layout_height="wrap_content"
                     android:text="meal name"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:id="@+id/tv_mealname" />
 
                 <TextView
@@ -64,6 +64,7 @@
                     android:layout_weight=".20"
                     android:layout_height="wrap_content"
                     android:text="price"
+                    android:gravity="right"
                     android:id="@+id/tv_price" />
 
                 <TextView

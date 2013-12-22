@@ -85,8 +85,8 @@ public class ConfirmOrderActivity extends Activity {
         for( i=0 ; i<l ; i++) {
             //rowData[i] = rowDataFormat;
             mealnameString += mealNames.get(i) + "\n";
-            amountString += mealAmount.get(i) + "份\n";
-            priceString += mealPrices.get(i) + "元\n";
+            amountString += mealAmount.get(i) + " 份\n";
+            priceString += mealPrices.get(i) + " 元\n";
 
             totalAmount += mealPrices.get(i) * mealAmount.get(i);
         }
