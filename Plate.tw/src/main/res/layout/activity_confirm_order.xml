@@ -26,7 +26,6 @@
             android:text="RestName"
             android:textColor="@color/background_3"
             android:textSize="@dimen/co_restname_size"
-            android:paddingTop="@dimen/padding_top"
             android:id="@+id/tv_co_rest_name"
             android:layout_gravity="center_horizontal" />
 

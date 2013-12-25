@@ -105,8 +105,10 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("fragPosition",1);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                intent, 0);
 
         Uri ringtonePath = Uri.parse("android.resource://tw.plate/" + R.raw.ringtone_finish);
         NotificationCompat.Builder mBuilder =
