@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                actionBar.setNavigationMode(position);
             }
         });
 
@@ -80,6 +80,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             );
         }
+/*        actionBar.addTab(
+                actionBar.newTab()
+                        .setText("dummy")
+                        .setTabListener(this)
+
+        );*/
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("fragPosition",0);

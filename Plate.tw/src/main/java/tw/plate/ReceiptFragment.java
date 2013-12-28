@@ -1,21 +1,28 @@
 package tw.plate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.CookieStore;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -27,11 +34,11 @@ public class ReceiptFragment extends Fragment {
 
     private int rest_id = Constants.ORDER_EMPTY;
     private int current_ns = Constants.ORDER_EMPTY;
-
+    View v;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.receipt_frag, container, false);
+        v = inflater.inflate(R.layout.receipt_frag, container, false);
 
         final View button = v.findViewById(R.id.bn_current_ns);
         button.setOnClickListener(
@@ -143,44 +150,19 @@ public class ReceiptFragment extends Fragment {
         plateTWV1.orderGet(new Callback<PlateService.OrderGetResponse>() {
             @Override
             public void success(PlateService.OrderGetResponse orderGetResponse, Response response) {
-                TextView tv = (TextView) getView().findViewById(R.id.tvReceipt);
-                TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
-                TextView tv_number = (TextView) getView().findViewById(R.id.tv_slip_num);
-                TextView tv_rest = (TextView) getView().findViewById(R.id.tv_rec_restaurant);
-
-                TextView tv_time = (TextView) getView().findViewById(R.id.tv_order_time);
-
                 // if empty
                 Log.d(Constants.LOG_TAG, "Ok, success!");
                 if (response.getStatus() == 204) {
-                    tv.setText("No Order!");
+                    TextView tv = (TextView) getView().findViewById(R.id.tv_message);
+                    tv.setText(getString(R.string.receipt_noorder));
                 }
                 // if show
                 else {
                     PlateService.OrderV1 lo = orderGetResponse.last_order;
+                    List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
                     Log.d(Constants.LOG_TAG, String.format("%s %s %s %d %d", lo.ctime, lo.mtime, lo.restaurant.name, lo.pos_slip_number, lo.status));
 
-                    String outputString = "";
-                    String stringPrice = "";
-                    List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
-                    int nOrderItem = orderItems.size(), i;
-                    int totalPrice = 0;
-                    for (i = 0; i < nOrderItem; i++) {
-                        PlateService.Meal meal = orderItems.get(i).meal;
-                        int amount = orderItems.get(i).amount;
-                        int price = amount*orderItems.get(i).meal.meal_price;
-                        totalPrice+=price;
-                        outputString += meal.meal_name + " * " + amount +"個\n";
-                        stringPrice +=  price + " 元\n";
-                    }
-                    stringPrice += "\n\n"+getString(R.string.total_amount)+" "+totalPrice+" 元\n";
-                   // int slipNumber = lo.pos_slip_number;
-                    tv_time.setText(lo.ctime);
-                    tv_number.setText("" + lo.pos_slip_number);
-                    tv_rest.setText(lo.restaurant.name);
-                    rest_id = lo.restaurant.rest_id;
-                    tv.setText(outputString);
-                    tv_price.setText(stringPrice);
+                    displayResponse(orderItems,lo);
                 }
             }
 
@@ -189,6 +171,47 @@ public class ReceiptFragment extends Fragment {
                 Log.d(Constants.LOG_TAG, "Failed! retrofit  " + error.getMessage() + error.getResponse().getStatus());
             }
         });
+    }
+    private void displayResponse(List<PlateService.OrderItemV1> orderItems,PlateService.OrderV1 lo){
+        //TextView tv = (TextView) getView().findViewById(R.id.tvReceipt);
+        //TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
+        TextView tv_number = (TextView) getView().findViewById(R.id.tv_slip_num);
+        TextView tv_rest = (TextView) getView().findViewById(R.id.tv_rec_restaurant);
+        TextView tv_time = (TextView) getView().findViewById(R.id.tv_order_time);
+        TextView tv_total = (TextView) getView().findViewById(R.id.tv_total);
+        ListView lv = (ListView) v.findViewById(R.id.lv_receipt);
+
+        List<String> mealString = new ArrayList<String>();
+        List<String> amountString = new ArrayList<String>();
+        List<String> priceString = new ArrayList<String>();
+        int nOrderItem = orderItems.size(), i;
+        int totalPrice = 0;
+        for (i = 0; i < nOrderItem; i++) {
+            PlateService.Meal meal = orderItems.get(i).meal;
+            int amount = orderItems.get(i).amount;
+            int price = amount*orderItems.get(i).meal.meal_price;
+            totalPrice+=price;
+            mealString.add(i,meal.meal_name + " ");
+            amountString.add(i,amount+" 份");
+            priceString.add(i,price+" 元");
+        }
+        String stringTotalPrice = getString(R.string.total_amount)+" "+totalPrice+" 元\n";
+        // int slipNumber = lo.pos_slip_number;
+
+        tv_time.setText(lo.ctime);
+        tv_number.setText("" + lo.pos_slip_number);
+        tv_rest.setText(lo.restaurant.name);
+        rest_id = lo.restaurant.rest_id;
+        tv_total.setText(stringTotalPrice);
+
+        CustomAdapter customAdapter = new CustomAdapter(this.getActivity(),mealString,amountString,priceString);
+        lv.setAdapter(customAdapter);
+        lv.setDivider(null);
+        lv.setDividerHeight(0);
+        //tv.setText(outputString);
+        //tv_price.setText(stringPrice);
+
+
     }
 
     private boolean accountInAppNotSet() {
@@ -208,4 +231,69 @@ public class ReceiptFragment extends Fragment {
         ReceiptFragment receiptFragment = new ReceiptFragment();
         return receiptFragment;
     }
+
+    public void onBackPressed() {
+        Intent mainIntent = new Intent(getActivity(),MainActivity.class);
+        startActivity(mainIntent);
+        return;
+    }
+
+    private class CustomAdapter extends BaseAdapter {
+        LayoutInflater inflater;
+        List<String> mealName = new ArrayList<String>();
+        List<String> mealAmount = new ArrayList<String>();
+        List<String> mealPrice = new ArrayList<String>();
+
+        public class ViewHolder{
+            TextView tv_mealname;
+            TextView tv_mealamount;
+            TextView tv_mealprice;
+        }
+        public CustomAdapter(Context context, List<String> mealName, List<String> mealAmount, List<String> mealPrice){
+            inflater = LayoutInflater.from(context);
+            this.mealName = mealName;
+            this.mealAmount = mealAmount;
+            this.mealPrice = mealPrice;
+        }
+        //to disable listview click
+        @Override
+        public boolean isEnabled(int position) {
+            return false;
+        }
+        public int getCount(){
+            return mealName.size();
+        }
+        public Object getItem(int position){
+            return mealName.get(position);
+        }
+        public long getItemId(int position){
+            return position;
+        }
+        public View getView(final int arg0, View convertview, ViewGroup arg2) {
+            ViewHolder viewHolder = null;
+            if(convertview == null)
+            {
+                convertview = inflater.inflate(R.layout.listrow_receipt, null);
+
+                viewHolder=new ViewHolder();
+                viewHolder.tv_mealname = (TextView) convertview.findViewById(R.id.tvReceipt);
+                viewHolder.tv_mealamount = (TextView) convertview.findViewById(R.id.tvAmount);
+                viewHolder.tv_mealprice = (TextView) convertview.findViewById(R.id.tv_receipt_price);
+
+                convertview.setTag(viewHolder);
+            }
+            else
+            {
+                viewHolder=(ViewHolder)convertview.getTag();
+            }
+            // set values
+            viewHolder.tv_mealname.setText(mealName.get(arg0));
+            viewHolder.tv_mealamount.setText(mealAmount.get(arg0));
+            viewHolder.tv_mealprice.setText(mealPrice.get(arg0));
+
+            return convertview;
+        }
+
+    }
+
 }

@@ -72,6 +72,7 @@
     <!-- for receipt fragment-->
     <string name="receipt_message"> 號 碼 牌 </string>
     <string name="receipt_button_text"> 現在叫號 </string>
+    <string name="receipt_noorder"> No Order </string>
 
 
 </resources>

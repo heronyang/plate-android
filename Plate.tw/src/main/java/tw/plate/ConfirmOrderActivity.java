@@ -2,6 +2,7 @@ package tw.plate;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -71,51 +74,33 @@ public class ConfirmOrderActivity extends Activity {
 
         int totalAmount = 0;
 
-        //ListView lv = (ListView) findViewById(android.R.id.list);
-        //ListView lv_price =(ListView) findViewById(R.id.lv_confirm_price);
-        TextView tv_mealname = (TextView) findViewById(R.id.tv_mealname);
-        TextView tv_amount = (TextView) findViewById(R.id.tv_amount);
-        TextView tv_price = (TextView) findViewById(R.id.tv_price);
+        ListView lv = (ListView) findViewById(R.id.lv_confim);
+        TextView tv_restaurant = (TextView) findViewById(R.id.tv_co_rest_name);
+        TextView tv_total_amount = (TextView)findViewById(R.id.tvTotalAmount);
 
         int l = mealNames.size(), i;
-        String mealnameString = "";
-        String amountString = "";
-        String priceString = "";
+        List<String> mealString = new ArrayList<String>();
+        List<String> amountString = new ArrayList<String>();
+        List<String> priceString = new ArrayList<String>();
         //String [] priceData = new String[l];
         for( i=0 ; i<l ; i++) {
             //rowData[i] = rowDataFormat;
-            mealnameString += mealNames.get(i) + "\n";
-            amountString += mealAmount.get(i) + " 份\n";
-            priceString += mealPrices.get(i) + " 元\n";
-
+            mealString.add(mealNames.get(i) + " ");
+            amountString.add(mealAmount.get(i) + " 份");
+            priceString.add(mealPrices.get(i) + " 元");
             totalAmount += mealPrices.get(i) * mealAmount.get(i);
         }
-        TextView tv_restaurant = (TextView) findViewById(R.id.tv_co_rest_name);
+
         tv_restaurant.setText(restName);
 
-        /*
-        ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rowData);
+        CustomAdapter customAdapter = new CustomAdapter(this,mealString,amountString,priceString);
+        lv.setAdapter(customAdapter);
         lv.setDivider(null);
         lv.setDividerHeight(0);
-        lv.setAdapter(adapter);
-        */
-    //    setupListview(lv,rowData);
-        //setupListview(lv_price,priceData);
-        tv_mealname.setText(mealnameString);
-        tv_amount.setText(amountString);
-        tv_price.setText(priceString);
-        TextView tv = (TextView)findViewById(R.id.tvTotalAmount);
-        tv.setText(totalAmount + " 元  ");
+
+        tv_total_amount.setText(totalAmount + " 元  ");
     }
 
-    /*private void setupListview(ListView lv, String[] data){
-        ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
-        lv.setDivider(null);
-        lv.setDividerHeight(0);
-        lv.setAdapter(adapter);
-    }*/
 
     private void buttonSetup() {
 
@@ -305,5 +290,63 @@ public class ConfirmOrderActivity extends Activity {
         super.onBackPressed();
         Log.d(Constants.LOG_TAG, "system back pressed");
         finish();
+    }
+
+    private class CustomAdapter extends BaseAdapter {
+        LayoutInflater inflater;
+        List<String> mealName = new ArrayList<String>();
+        List<String> mealAmount = new ArrayList<String>();
+        List<String> mealPrice = new ArrayList<String>();
+
+        public class ViewHolder{
+            TextView tv_mealname;
+            TextView tv_mealamount;
+            TextView tv_mealprice;
+        }
+        public CustomAdapter(Context context, List<String> mealName, List<String> mealAmount, List<String> mealPrice){
+            inflater = LayoutInflater.from(context);
+            this.mealName = mealName;
+            this.mealAmount = mealAmount;
+            this.mealPrice = mealPrice;
+        }
+        //to disable listview click
+        @Override
+        public boolean isEnabled(int position) {
+            return false;
+        }
+        public int getCount(){
+            return mealName.size();
+        }
+        public Object getItem(int position){
+            return mealName.get(position);
+        }
+        public long getItemId(int position){
+            return position;
+        }
+        public View getView(final int arg0, View convertview, ViewGroup arg2) {
+            ViewHolder viewHolder = null;
+            if(convertview == null)
+            {
+                convertview = inflater.inflate(R.layout.listrow_confirm_order, null);
+
+                viewHolder=new ViewHolder();
+                viewHolder.tv_mealname = (TextView) convertview.findViewById(R.id.tv_mealname);
+                viewHolder.tv_mealamount = (TextView) convertview.findViewById(R.id.tv_amount);
+                viewHolder.tv_mealprice = (TextView) convertview.findViewById(R.id.tv_price);
+
+                convertview.setTag(viewHolder);
+            }
+            else
+            {
+                viewHolder=(ViewHolder)convertview.getTag();
+            }
+            // set values
+            viewHolder.tv_mealname.setText(mealName.get(arg0));
+            viewHolder.tv_mealamount.setText(mealAmount.get(arg0));
+            viewHolder.tv_mealprice.setText(mealPrice.get(arg0));
+
+            return convertview;
+        }
+
     }
 }

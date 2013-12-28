@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/tv_confirm_order"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@drawable/rectangle_frame"
@@ -23,11 +22,13 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight=".15"
+            android:layout_gravity="center"
             android:text="RestName"
             android:textColor="@color/background_3"
             android:textSize="@dimen/co_restname_size"
             android:id="@+id/tv_co_rest_name"
-            android:layout_gravity="center_horizontal" />
+            android:textAlignment="gravity"
+            android:gravity="center" />
 
         <View
             android:layout_width="fill_parent"
@@ -47,40 +48,14 @@
                 android:layout_weight=".80"
                 >
 
-                <TextView
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:textSize="@dimen/menu_text_size"
-                    android:layout_width="0dp"
-                    android:layout_weight=".60"
-                    android:layout_height="wrap_content"
-                    android:text="meal name"
-                    android:gravity="left"
-                    android:id="@+id/tv_mealname" />
+                <ListView
+                    style="@style/margin_left_right_top"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
 
-                <TextView
-                    android:textSize="@dimen/menu_text_size"
-                    android:layout_width="0dp"
-                    android:layout_weight=".20"
-                    android:layout_height="wrap_content"
-                    android:text="price"
-                    android:gravity="right"
-                    android:id="@+id/tv_price" />
-
-                <TextView
-                    android:textSize="@dimen/menu_text_size"
-                    android:layout_width="0dp"
-                    android:layout_weight=".20"
-                    android:layout_height="wrap_content"
-                    android:text="amount"
-                    android:id="@+id/tv_amount" />
+                    android:id="@+id/lv_confim" />
 
             </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@color/white"
-                android:layout_gravity="bottom" />
 
             <TextView
                 android:text="--- NTD"
@@ -93,49 +68,35 @@
                 android:layout_above="@+id/bt_ok"
                 android:textStyle="bold"
                 android:layout_gravity="right" />
-
         </LinearLayout>
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                android:layout_gravity="bottom" />
 
-
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".15"
-            >
-            <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-                android:layout_alignParentLeft="true">
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_weight=".50"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button_cancel_background_selector"
-                    android:id="@+id/bt_cancel"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_weight=".49"
-                    android:layout_marginRight="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button_ok_background_selector"
-                    android:id="@+id/bt_ok"
-                    android:layout_alignTop="@+id/bt_cancel"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                     />
-
-            </LinearLayout>
-        </RelativeLayout>
-
-
+        <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".15"
+        android:layout_alignParentLeft="true">
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight=".50"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_cancel_background_selector"
+                android:id="@+id/bt_cancel" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight=".49"
+                android:layout_marginRight="1dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_ok_background_selector"
+                android:id="@+id/bt_ok"
+                 />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:layout_weight=".50"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvReceipt"
+        android:text="等一下囉, 快好了!"
+        android:textSize="@dimen/menu_text_size"
+        />
+
+    <TextView
+        android:layout_weight=".20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAmount"
+        android:text="3pcs"
+        android:textSize="@dimen/menu_text_size"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight=".30"
+        android:paddingRight="@dimen/small_small_margin"
+        android:layout_height="wrap_content"
+        android:text="price"
+        android:textSize="@dimen/menu_text_size"
+        android:id="@+id/tv_receipt_price" />
+
+
+</LinearLayout>

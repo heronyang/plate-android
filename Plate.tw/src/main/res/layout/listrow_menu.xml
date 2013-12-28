@@ -18,7 +18,7 @@
             android:textIsSelectable="false"
             android:textSize="@dimen/menu_text_size"
             android:layout_width="0dp"
-            android:layout_weight=".65"
+            android:layout_weight=".55"
              />
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/listrow_menu_spinner"
             android:layout_width="0dp"
-            android:layout_weight=".15"
+            android:layout_weight=".25"
             />
 
     </LinearLayout>
