@@ -71,25 +71,26 @@ public class LocationFragment extends Fragment{
                 viewHolder.tv_location = (TextView) convertview.findViewById(R.id.tv_listrow_location);
                 viewHolder.tv_location.setTextSize(getResources().getDimension(R.dimen.box_textsize));
 
-                viewHolder.tv_location.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent restIntent = new Intent(view.getContext(),RestaurantActivity.class);
-                        restIntent.putExtra("locationId", arg0);
-                        startActivity(restIntent);
-                        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                        //view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
-                        Log.d("PlateLog", "clicked");
-
-                    }
-                });
-
                 convertview.setTag(viewHolder);
             }
             else
             {
                 viewHolder=(ViewHolder)convertview.getTag();
             }
+
+            viewHolder.tv_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent restIntent = new Intent(view.getContext(),RestaurantActivity.class);
+                    restIntent.putExtra("locationId", arg0);
+                    startActivity(restIntent);
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    //view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
+                    Log.d("PlateLog", "clicked");
+
+                }
+            });
+
             // set values
             String locationName = Constants.CANTEEN_LIST[arg0];
             viewHolder.tv_location.setText(locationName);

@@ -9,6 +9,7 @@ final public class Constants {
     //public static final String API_URI_PREFIX = "http://192.168.1.28:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://172.18.80.3:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://api.plate.tw"; // Release Mode
+    //public static final String API_URI_PREFIX = "http://api-dev.plate.tw:8080"; // Release Mode
 
     /* Numbers */
     public static final int MAX_AMOUNT = 4;

@@ -31,7 +31,7 @@
                 android:textColor="@color/black_text"
                 android:id="@+id/tv_order_time"
                 android:gravity="right"
-                android:layout_gravity="right|bottom" />
+                android:layout_gravity="center_horizontal|top" />
         </FrameLayout>
 
         <FrameLayout
@@ -71,7 +71,7 @@
 
         </FrameLayout>
 
-        <ScrollView
+        <LinearLayout
             style="@style/margin_left_right"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
@@ -79,32 +79,29 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginBottom="@dimen/small_margin"
+            android:orientation="vertical"
             >
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-                <TextView
-                    android:layout_weight=".70"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvReceipt"
-                    android:text="等一下囉, 快好了!"
-                    android:textSize="@dimen/menu_text_size"
-                    />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/tv_message" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight=".30"
-                    android:paddingRight="@dimen/small_small_margin"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="@dimen/menu_text_size"
-                    android:id="@+id/tv_receipt_price" />
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".80"
+                android:id="@+id/lv_receipt" />
 
-            </LinearLayout>
-        </ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".20"
+                android:text=""
+                android:id="@+id/tv_total"
+                android:layout_gravity="right" />
+        </LinearLayout>>
     </LinearLayout>
 
     <Button
