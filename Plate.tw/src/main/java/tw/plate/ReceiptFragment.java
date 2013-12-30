@@ -137,7 +137,7 @@ public class ReceiptFragment extends Fragment {
     }
 
     private void updateReceiptContent() {
-        TextView tv = (TextView)getView().findViewById(R.id.tvReceipt);
+        TextView tv = (TextView)getView().findViewById(R.id.tv_rec_restaurant);
         tv.setText("Login Succeeded!");
 
 

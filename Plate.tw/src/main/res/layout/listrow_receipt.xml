@@ -20,13 +20,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvAmount"
         android:text="3pcs"
+        android:paddingRight="@dimen/small_small_margin"
         android:textSize="@dimen/menu_text_size"
         />
 
     <TextView
+        android:paddingRight="@dimen/small_small_margin"
         android:layout_width="0dp"
         android:layout_weight=".30"
-        android:paddingRight="@dimen/small_small_margin"
         android:layout_height="wrap_content"
         android:text="price"
         android:textSize="@dimen/menu_text_size"
