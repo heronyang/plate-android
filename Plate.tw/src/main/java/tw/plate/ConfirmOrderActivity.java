@@ -173,6 +173,7 @@ public class ConfirmOrderActivity extends Activity {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
                         mainActivityIntent.putExtra("fragPosition", 1);
+                        mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainActivityIntent);
                     }
                 });

@@ -269,7 +269,7 @@ public class ReceiptFragment extends Fragment {
         public long getItemId(int position){
             return position;
         }
-        public View getView(final int arg0, View convertview, ViewGroup arg2) {
+        public View getView(int arg0, View convertview, ViewGroup arg2) {
             ViewHolder viewHolder = null;
             if(convertview == null)
             {
