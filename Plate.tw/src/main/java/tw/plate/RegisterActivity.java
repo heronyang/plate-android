@@ -11,8 +11,10 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -312,6 +314,7 @@ public class RegisterActivity extends Activity {
 
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+
                 }
             });
             AlertDialog dialog = builder.create();
@@ -362,6 +365,7 @@ public class RegisterActivity extends Activity {
                 .setTitle(title);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                finish();
             }
         });
 

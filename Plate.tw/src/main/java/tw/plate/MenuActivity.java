@@ -21,6 +21,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -320,20 +322,24 @@ public class MenuActivity extends ListActivity {
         // for test
         int s = mealNames.size();
         Log.d(Constants.LOG_TAG, "Final List in this page (menu)");
-        for( int i=0 ; i<s ; i++ ){
-            Log.d(Constants.LOG_TAG, "meal name: " + mealNames.get(i) + "\tamount : " + mealAmount.get(i));
+        if(s <= 0){
+            pleaseOrder();
         }
+        else{
+            for( int i=0 ; i<s ; i++ ){
+                Log.d(Constants.LOG_TAG, "meal name: " + mealNames.get(i) + "\tamount : " + mealAmount.get(i));
+            }
 
-        // put
-        confirmOrderIntent.putStringArrayListExtra("orderMealNames", mealNames);
-        confirmOrderIntent.putIntegerArrayListExtra("orderMealPrice", mealPrices);
-        confirmOrderIntent.putIntegerArrayListExtra("orderMealID", mealID);
-        confirmOrderIntent.putIntegerArrayListExtra("orderMealAmount", mealAmount);
-        confirmOrderIntent.putExtra("restName",restName);
+            // put
+            confirmOrderIntent.putStringArrayListExtra("orderMealNames", mealNames);
+            confirmOrderIntent.putIntegerArrayListExtra("orderMealPrice", mealPrices);
+            confirmOrderIntent.putIntegerArrayListExtra("orderMealID", mealID);
+            confirmOrderIntent.putIntegerArrayListExtra("orderMealAmount", mealAmount);
+            confirmOrderIntent.putExtra("restName",restName);
 
-        startActivity(confirmOrderIntent);
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
+            startActivity(confirmOrderIntent);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        }
     }
 
     private void collectResults() {
@@ -354,6 +360,11 @@ public class MenuActivity extends ListActivity {
                 mealAmount.add(amount);
             }
         }
+    }
+
+    private void pleaseOrder(){
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.menu_no_order),
+                Toast.LENGTH_SHORT).show();
     }
 
 //    private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();

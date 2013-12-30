@@ -59,6 +59,8 @@
     <string name="error_config">異常錯誤</string>
     <!-- for menu activity -->
     <string name="menu_list_category">全 部 菜 單</string>
+    <string name="menu_no_order">你目前沒有訂單哦！</string>
+
 
     <!-- for confirm order-->
     <string name="total_amount">合 計: </string>
