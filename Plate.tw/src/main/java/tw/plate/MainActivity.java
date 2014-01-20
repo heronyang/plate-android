@@ -2,9 +2,13 @@ package tw.plate;
 
 import java.io.IOException;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -19,8 +23,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, PlateServiceManager.PlateManagerCallback {
+
+    PlateServiceManager plateServiceManager;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -101,6 +108,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CookieHandler.setDefault(new CookieManager());
+        plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
+
+        // if first time use this app, welcome activity is fired
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        if (!sp.contains("first_time")) {
+            Log.d(Constants.LOG_TAG, "first time using this app");
+            Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
+            welcomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(welcomeIntent);
+            finish();
+        }
 
         layout_setup();
     }
@@ -225,6 +245,95 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return rootView;
         }
     }
+
+    /*
+    Helper Tools
+     */
+    private static String makeFragmentName(int viewId, int index) {
+        return "android:switcher:" + viewId + ":" + index;
+    }
+
+    private ReceiptFragment getReceiptFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        String tag;
+
+        // inform receiptFragment the user is logged in
+        tag = makeFragmentName(R.id.pager, 1);
+        ReceiptFragment receiptFragment = (ReceiptFragment)fm.findFragmentByTag(tag);
+        return receiptFragment;
+    }
+
+    /*
+    PlateServiceManager Callbacks
+     */
+    @Override
+    public void loginSucceed() {
+        getReceiptFragment().loginSucceed();
+        // get the last order
+        plateServiceManager.orderGet(this);
+    };
+
+    @Override
+    public void loginFailed() {
+        //
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        registerIntent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
+        startActivity(registerIntent);
+
+        //
+        getReceiptFragment().waitForRegisterCompleted();
+    }
+
+    @Override
+    public void notRegistered() {
+        // go to register page
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        registerIntent.putExtra("message_type", Constants.FIRST_TIME);
+        startActivity(registerIntent);
+
+        // NOTE: this may also happen when the user is not registered
+        getReceiptFragment().notRegistered();
+    }
+    @Override
+    public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) {
+        Log.d(Constants.LOG_TAG, "order get succeed");
+        getReceiptFragment().orderGetSucceed(orderGetResponse);
+    }
+
+    @Override
+    public void orderGetSucceedEmpty() {
+        Log.d(Constants.LOG_TAG, "order get empty");
+        getReceiptFragment().orderGetSucceedEmpty();
+    }
+
+    @Override
+    public void orderGetFailed() {
+        // do nothing so far
+        // NOTE: this should be an error
+        Log.d(Constants.LOG_TAG, "order get failed");
+
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        registerIntent.putExtra("message_type", Constants.SECOND_CHANCE_TO_REGISTER);
+        startActivity(registerIntent);
+
+        // NOTE: this may also happen when the user is not registered
+        getReceiptFragment().waitForRegisterCompleted();
+    }
+
+
+    @Override
+    public void updateRestaurantList() { throw new UnsupportedOperationException(); }
+    @Override
+    public void updateMenuList() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderPostSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderPostFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void registerSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void registerFailed() { throw new UnsupportedOperationException(); }
 
     //================================================================================
     // End

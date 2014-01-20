@@ -30,13 +30,14 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MenuActivity extends ListActivity {
+public class MenuActivity extends ListActivity implements PlateServiceManager.PlateManagerCallback{
 
-    private List<PlateService.Meal> mealList = new ArrayList<PlateService.Meal>();
     private ArrayList<String> mealNames = new ArrayList<String>();
     private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
             , mealID = new ArrayList<Integer>()
             , mealAmount = new ArrayList<Integer>();
+
+    PlateServiceManager plateServiceManager;
 
     int restId;
     String restName;
@@ -55,7 +56,10 @@ public class MenuActivity extends ListActivity {
         restId = intent.getIntExtra("restId", 0);
         restName = intent.getStringExtra("restName");
 
-        //
+        plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
+        plateServiceManager.menu(restId, this);
+
+        /*
         PlateService.PlateTWOldAPI plateTW;
         plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
         plateTW.menu(restId, new Callback<PlateService.MenuResponse>() {
@@ -72,6 +76,7 @@ public class MenuActivity extends ListActivity {
                 Log.d(Constants.LOG_TAG, "menu: failure");
             }
         });
+        */
     }
 
     @Override
@@ -79,27 +84,11 @@ public class MenuActivity extends ListActivity {
         super.onResume();
     }
 
-    private void updateMenuList() {
-        TextView tv_category = (TextView) findViewById(R.id.tv_category);
-        ListView lv = (ListView) findViewById(android.R.id.list);
-
-        tv_category.setText(getResources().getString(R.string.menu_list_category));
-
-        ArrayAdapter<String> spAdapter;
-        String [] spinnerItems = new String[Constants.MAX_AMOUNT];
-        for(int i=0 ; i<spinnerItems.length ; i++)  spinnerItems[i] = "" + i;
-        spAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, spinnerItems);
-        spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        customAdapter = new CustomAdapter(this, spAdapter);
-        customAdapter.setAnimation(Animation.GROW);
-        lv.setAdapter(customAdapter);
-    }
-
     private class CustomAdapter extends BaseAdapter // listview
     {
         private final LayoutInflater inflater;
         private ArrayAdapter<String> spAdapter;
+        List<PlateService.Meal> mealList = plateServiceManager.getMealList();
         int [] amounts = new int[mealList.size()];
         private int displayWidth;
         private int prevPosition;
@@ -343,6 +332,7 @@ public class MenuActivity extends ListActivity {
     }
 
     private void collectResults() {
+        List<PlateService.Meal> mealList = plateServiceManager.getMealList();
         int s = mealList.size();
         Log.d(Constants.LOG_TAG, "s = " + s);
 
@@ -367,6 +357,52 @@ public class MenuActivity extends ListActivity {
                 Toast.LENGTH_SHORT).show();
     }
 
-//    private List<Pair<PlateService.Meal, Integer>> orderList = new ArrayList<Pair<PlateService.Meal, Integer>>();
+    /*
+        Override for PlateServiceManager's Callbacks
+     */
+    @Override
+    public void updateRestaurantList() {
+        // do nothing
+    }
 
+    @Override
+    public void updateMenuList() {
+        TextView tv_category = (TextView) findViewById(R.id.tv_category);
+        ListView lv = (ListView) findViewById(android.R.id.list);
+
+        tv_category.setText(getResources().getString(R.string.menu_list_category));
+
+        ArrayAdapter<String> spAdapter;
+        String [] spinnerItems = new String[Constants.MAX_AMOUNT];
+        for(int i=0 ; i<spinnerItems.length ; i++)  spinnerItems[i] = "" + i;
+        spAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, spinnerItems);
+        spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        customAdapter = new CustomAdapter(this, spAdapter);
+        customAdapter.setAnimation(Animation.GROW);
+        lv.setAdapter(customAdapter);
+    }
+
+    @Override
+    public void loginSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void loginFailed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void notRegistered() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void orderPostSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderPostFailed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetSucceedEmpty() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void registerSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void registerFailed() { throw new UnsupportedOperationException(); }
 }

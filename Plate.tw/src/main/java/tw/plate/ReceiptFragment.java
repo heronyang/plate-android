@@ -1,5 +1,6 @@
 package tw.plate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +31,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ReceiptFragment extends Fragment {
+public class ReceiptFragment extends Fragment{
+
 
     private int rest_id = Constants.ORDER_EMPTY;
     private int current_ns = Constants.ORDER_EMPTY;
@@ -71,6 +73,7 @@ public class ReceiptFragment extends Fragment {
         return v;
     }
 
+
     private void showCurrentNS() {
         final Button button = (Button)getView().findViewById(R.id.bn_current_ns);
         button.setText("No. " + current_ns);
@@ -92,12 +95,16 @@ public class ReceiptFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             Log.d(Constants.LOG_TAG, "Time to setup login");
-            loginSession();
+            //loginSession();
+            PlateServiceManager plateServiceManager;
+            plateServiceManager = ((Plate)(getActivity().getApplication())).getPlateServiceManager();
+            plateServiceManager.login(getActivity());
         } else {
             // Do your Work
         }
     }
 
+    /*
     private void loginSession() {
         if (accountInAppNotSet()) {
             Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
@@ -137,8 +144,6 @@ public class ReceiptFragment extends Fragment {
     }
 
     private void updateReceiptContent() {
-        TextView tv = (TextView)getView().findViewById(R.id.tv_rec_restaurant);
-        tv.setText("Login Succeeded!");
 
 
         PlateService.PlateTWOldAPI plateTW;
@@ -172,6 +177,7 @@ public class ReceiptFragment extends Fragment {
             }
         });
     }
+    */
     private void displayResponse(List<PlateService.OrderItemV1> orderItems,PlateService.OrderV1 lo){
         //TextView tv = (TextView) getView().findViewById(R.id.tvReceipt);
         //TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
@@ -214,17 +220,18 @@ public class ReceiptFragment extends Fragment {
 
     }
 
+    /*
     private boolean accountInAppNotSet() {
         SharedPreferences sp = getActivity().getSharedPreferences("account",
                 0);
         return !(sp.contains(Constants.SP_TAG_PHONE_NUMBER) &&
                  sp.contains(Constants.SP_TAG_PASSWORD));
     }
+    */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CookieHandler.setDefault(new CookieManager());
     }
 
     public static ReceiptFragment newInstance(){
@@ -296,4 +303,34 @@ public class ReceiptFragment extends Fragment {
 
     }
 
+    public void loginSucceed() {
+        // OrderGet here
+        /*
+        TextView tv = (TextView)getView().findViewById(R.id.tv_rec_restaurant);
+        tv.setText("Login Succeeded!");
+        */
+    };
+
+    public void orderGetSucceedEmpty() {
+        TextView tv = (TextView) getView().findViewById(R.id.tv_message);
+        tv.setText(getString(R.string.receipt_noorder));
+    }
+
+    public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) {
+        PlateService.OrderV1 lo = orderGetResponse.last_order;
+        List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
+        Log.d(Constants.LOG_TAG, String.format("%s %s %s %d %d", lo.ctime, lo.mtime, lo.restaurant.name, lo.pos_slip_number, lo.status));
+
+        displayResponse(orderItems, lo);
+    }
+
+    public void notRegistered() {
+        TextView tv = (TextView) getView().findViewById(R.id.tv_message);
+        tv.setText(getString(R.string.notRegistered));
+    }
+
+    public void waitForRegisterCompleted() {
+        TextView tv = (TextView) getView().findViewById(R.id.tv_message);
+        tv.setText(getString(R.string.waitForRegisterCompleted));
+    }
 }

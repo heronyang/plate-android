@@ -23,7 +23,7 @@ final public class Constants {
     public static final String PASSWORD_TYPE = "raw";
 
     /* Enum */
-    public static final int FIRST_TIME = 0, SP_SAVED_BUT_LOGIN_FAIL = 1;
+    public static final int FIRST_TIME = 0, SP_SAVED_BUT_LOGIN_FAIL = 1, SECOND_CHANCE_TO_REGISTER = 2;
     public static final int ORDER_EMPTY = -1;
 
     /* Time */

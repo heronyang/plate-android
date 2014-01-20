@@ -39,9 +39,9 @@ import static tw.plate.GcmUtilities.PROPERTY_APP_VERSION;
 import static tw.plate.GcmUtilities.PROPERTY_REG_ID;
 
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends Activity implements PlateServiceManager.PlateManagerCallback{
 
-    private String phone_number;
+    private String phone_number, password;
 
     //================================================================================
     // GCM
@@ -233,6 +233,9 @@ public class RegisterActivity extends Activity {
             case Constants.SP_SAVED_BUT_LOGIN_FAIL:
                 message = getString(R.string.register_sp_saved_but_login_fail);
                 break;
+            case Constants.SECOND_CHANCE_TO_REGISTER:
+                message = getString(R.string.register_second_chance_to_register);
+                break;
             default:
                 message = getString(R.string.register_default);
                 break;
@@ -323,17 +326,8 @@ public class RegisterActivity extends Activity {
         }
 
         SecureRandom random = new SecureRandom();
-        String password = new BigInteger(130, random).toString(32);
+        password = new BigInteger(130, random).toString(32);
         // String password = regid;
-
-        // save back
-        SharedPreferences sp = getSharedPreferences("account", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sp.edit();
-        ed.clear();
-        ed.putString(Constants.SP_TAG_PASSWORD, password).commit();
-        ed.putString(Constants.SP_TAG_PHONE_NUMBER, phone_number).commit();
-
-        Log.d(Constants.LOG_TAG, "phone_number = " + phone_number + "\tPS = " + password);
 
         // register
         callRegisterAPI(phone_number, password);
@@ -341,6 +335,10 @@ public class RegisterActivity extends Activity {
 
     private void callRegisterAPI(String phone_number, String password) {
 
+        PlateServiceManager plateServiceManager = ((Plate)this.getApplication()).getPlateServiceManager();
+        plateServiceManager.register(phone_number, password, Constants.PASSWORD_TYPE, regid, this);
+
+        /*
         PlateService.PlateTWAPI1 plateTWV1;
         plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
 
@@ -357,6 +355,7 @@ public class RegisterActivity extends Activity {
                 popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.register_submit_api_error_message));
             }
         });
+        */
 
     }
     private void popupMessage(String title, String message) {
@@ -365,6 +364,7 @@ public class RegisterActivity extends Activity {
                 .setTitle(title);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                intentMain();
                 finish();
             }
         });
@@ -373,4 +373,51 @@ public class RegisterActivity extends Activity {
         dialog.show();
     }
 
+    private void intentMain() {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(mainIntent);
+    }
+
+    /* Callbacks */
+    @Override
+    public void updateRestaurantList() { throw new UnsupportedOperationException(); };
+    @Override
+    public void updateMenuList() { throw new UnsupportedOperationException(); };
+
+    @Override
+    public void loginSucceed() { throw new UnsupportedOperationException(); };
+    @Override
+    public void loginFailed() { throw new UnsupportedOperationException(); };
+    @Override
+    public void notRegistered() { throw new UnsupportedOperationException(); };
+
+    @Override
+    public void orderPostSucceed() { throw new UnsupportedOperationException(); };
+    @Override
+    public void orderPostFailed() { throw new UnsupportedOperationException(); };
+    @Override
+    public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetSucceedEmpty() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void registerSucceed() {
+        // save back
+        SharedPreferences sp = getSharedPreferences("account", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.clear();
+        ed.putString(Constants.SP_TAG_PASSWORD, password).commit();
+        ed.putString(Constants.SP_TAG_PHONE_NUMBER, phone_number).commit();
+
+        Log.d(Constants.LOG_TAG, "phone_number = " + phone_number + "\tPS = " + password);
+
+        popupMessage(getString(R.string.register_success_title), getString(R.string.register_success_message));
+    };
+    @Override
+    public void registerFailed() {
+        popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.register_submit_api_error_message));
+    };
 }

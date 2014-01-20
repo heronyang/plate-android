@@ -23,12 +23,10 @@
 
     <!-- for register page -->
     <string name="example_phone_number">0912321321</string>
-
     <string name="register_success_message">已經成功送出，請收簡訊</string>
     <string name="register_success_title">收簡訊啦</string>
     <string name="register_wrong_input_format_message">電話號碼格式錯誤</string>
     <string name="register_wrong_input_format_title">錯了啦</string>
-
     <string name="register_default">請輸入電話號碼</string>
     <string name="register_first_time">歡迎使用，欲使用訂餐服務請先輸入電話號碼後收簡訊確認信</string>
     <string name="register_sp_saved_but_login_fail">簡訊已經寄出，請點選簡訊內容以啓動帳號，再次輸入以重發簡訊</string>
@@ -43,7 +41,7 @@
     <string name="final_info_fail_title">完了</string>
     <string name="final_info_fail_message">有問題所以無法送出訂單</string>
 
-    <!-- require for play service popup-->
+    <!-- require for play service popup -->
     <string name="require_google_service_title">裝一下</string>
     <string name="require_google_service_message">裝一下Google PlayService，不然你會收不到通知</string>
 
@@ -61,20 +59,23 @@
     <string name="menu_list_category">全 部 菜 單</string>
     <string name="menu_no_order">你目前沒有訂單哦！</string>
 
-
-    <!-- for confirm order-->
+    <!-- for confirm order -->
     <string name="total_amount">合 計: </string>
     <string name="co_message"> 訂 單 確 認 </string>
     <string name="register_wait_for_play_service_message">等候Google Play Service設定完成再按確認</string>
     <string name="register_wait_for_play_service_title">等一下</string>
     <string name="register_submit_api_error_title">與主機連線失敗</string>
     <string name="register_submit_api_error_message">在和我們主機連線過程中出現問題</string>
-    <string name="current_number">現在 \n 叫好</string>
+    <string name="current_number">現在 \n 叫號</string>
 
-    <!-- for receipt fragment-->
+    <!-- for receipt fragment -->
     <string name="receipt_message"> 號 碼 牌 </string>
     <string name="receipt_button_text"> 現在叫號 </string>
     <string name="receipt_noorder"> No Order </string>
-
+    <string name="notRegistered">尚未登入</string>
+    <string name="register_second_chance_to_register">請輸入電話號碼後收確認簡訊以開啟訂餐功能</string>
+    <string name="waitForRegisterCompleted">尚未登入，請收驗證簡訊</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="next">下一步</string>
 
 </resources>

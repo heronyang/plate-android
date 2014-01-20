@@ -38,7 +38,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ConfirmOrderActivity extends Activity {
+public class ConfirmOrderActivity extends Activity implements PlateServiceManager.PlateManagerCallback{
 
     //OrderList passedOrderList;
     private ArrayList<String> mealNames = new ArrayList<String>();
@@ -49,9 +49,14 @@ public class ConfirmOrderActivity extends Activity {
     String orderJsonRequest;
     String restName;
 
+    PlateServiceManager plateServiceManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
+
         setContentView(R.layout.activity_confirm_order);
         Intent intent = getIntent();
 
@@ -151,9 +156,12 @@ public class ConfirmOrderActivity extends Activity {
     }
 
     private void loginThenSubmitFinalOrder() {
-        loginSession();
+        //loginSession();
+        SharedPreferences sp = getSharedPreferences("account", 0);
+        plateServiceManager.login(this);
     }
 
+    /*
     private void submitFinalOrder(){
         Log.d(Constants.LOG_TAG, "Order Submit Starts, Order String : " + orderJsonRequest);
 
@@ -247,6 +255,7 @@ public class ConfirmOrderActivity extends Activity {
                 sp.contains(Constants.SP_TAG_PASSWORD));
     }
     // ----------- Login Related Functions : END ------------
+    */
 
     private String buildOrderJsonString() {
 
@@ -294,6 +303,7 @@ public class ConfirmOrderActivity extends Activity {
     }
 
     private class CustomAdapter extends BaseAdapter {
+
         LayoutInflater inflater;
         List<String> mealName = new ArrayList<String>();
         List<String> mealAmount = new ArrayList<String>();
@@ -350,4 +360,75 @@ public class ConfirmOrderActivity extends Activity {
         }
 
     }
+
+    /* Callbacks */
+    @Override
+    public void updateRestaurantList() { throw new UnsupportedOperationException(); }
+    @Override
+    public void updateMenuList() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void loginSucceed() {
+        plateServiceManager.orderPost(orderJsonRequest, this);
+    }
+    @Override
+    public void loginFailed() {
+        // go to register page
+        View view = findViewById(android.R.id.content);
+        Intent registerIntent = new Intent(view.getContext(), RegisterActivity.class);
+        registerIntent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
+        startActivity(registerIntent);
+    }
+    @Override
+    public void notRegistered() {
+        // go to register page
+        View view = findViewById(android.R.id.content);
+        Intent registerIntent = new Intent(view.getContext(), RegisterActivity.class);
+        registerIntent.putExtra("message_type", Constants.FIRST_TIME);
+        startActivity(registerIntent);
+    }
+
+    @Override
+    public void orderPostSucceed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
+        builder.setMessage(R.string.final_info_success_message)
+                .setTitle(R.string.final_info_success_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+                mainActivityIntent.putExtra("fragPosition", 1);
+                mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainActivityIntent);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    @Override
+    public void orderPostFailed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
+        builder.setMessage(R.string.final_info_fail_message)
+                .setTitle(R.string.final_info_fail_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void registerSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void registerFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetSucceedEmpty() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetFailed() { throw new UnsupportedOperationException(); }
+
+
 }
