@@ -1,7 +1,9 @@
 package tw.plate;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -150,6 +152,12 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
         // FIXME: there must be a better way to get the name array of restaurants
         List<PlateService.Restaurant> restaurantList = plateServiceManager.getRestaurantList();
         int l = restaurantList.size(), i;
+
+        // if empty, send back
+        if (l<=0) {
+            popupEmptyMessageAndSendBack();
+        }
+
         restaurantNames = new String[l];
         for(i=0 ; i<l ; i++) {
             restaurantNames[i] = restaurantList.get(i).name;
@@ -161,6 +169,21 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
         lv.setAdapter(customAdapter);
         lv.setDivider(null);
         lv.setDividerHeight(0);
+    }
+
+    void popupEmptyMessageAndSendBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.restaurant_list_empty_messge)
+                .setTitle(R.string.restaurant_list_empty_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
@@ -187,5 +210,10 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
     public void registerSucceed() { throw new UnsupportedOperationException(); }
     @Override
     public void registerFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentNsFailed() { throw new UnsupportedOperationException(); }
 
 }

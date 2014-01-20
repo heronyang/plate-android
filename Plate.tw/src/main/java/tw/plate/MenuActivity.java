@@ -32,10 +32,12 @@ import retrofit.client.Response;
 
 public class MenuActivity extends ListActivity implements PlateServiceManager.PlateManagerCallback{
 
+    /*
     private ArrayList<String> mealNames = new ArrayList<String>();
     private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
             , mealID = new ArrayList<Integer>()
             , mealAmount = new ArrayList<Integer>();
+            */
 
     PlateServiceManager plateServiceManager;
 
@@ -309,22 +311,26 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         collectResults();
 
         // for test
-        int s = mealNames.size();
-        Log.d(Constants.LOG_TAG, "Final List in this page (menu)");
-        if(s <= 0){
+        //int s = mealNames.size();
+        //Log.d(Constants.LOG_TAG, "Final List in this page (menu)");
+        Cart cart = ((Plate)getApplication()).getCart();
+        if(cart.isEmpty()){
             pleaseOrder();
         }
         else{
+            /*
             for( int i=0 ; i<s ; i++ ){
                 Log.d(Constants.LOG_TAG, "meal name: " + mealNames.get(i) + "\tamount : " + mealAmount.get(i));
             }
-
+            */
             // put
+            /*
             confirmOrderIntent.putStringArrayListExtra("orderMealNames", mealNames);
             confirmOrderIntent.putIntegerArrayListExtra("orderMealPrice", mealPrices);
             confirmOrderIntent.putIntegerArrayListExtra("orderMealID", mealID);
             confirmOrderIntent.putIntegerArrayListExtra("orderMealAmount", mealAmount);
             confirmOrderIntent.putExtra("restName",restName);
+            */
 
             startActivity(confirmOrderIntent);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
@@ -336,6 +342,20 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         int s = mealList.size();
         Log.d(Constants.LOG_TAG, "s = " + s);
 
+
+        /* put things into the cart */
+        Cart cart = ((Plate)getApplication()).getCart();
+        cart.clearOrderItems();
+
+        cart.setRestaurant_name(restName);
+        for(int i=0 ; i<s ; i++) {
+            int amount = customAdapter.getSelectedAmountAtPosition(i);
+            if (amount != 0) {
+                PlateService.Meal ml = mealList.get(i);
+                cart.addOrderItem(ml.meal_price, ml.meal_name, ml.meal_id, amount);
+            }
+        }
+        /*
         mealNames.clear();
         mealPrices.clear();
         mealID.clear();
@@ -350,6 +370,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
                 mealAmount.add(amount);
             }
         }
+        */
     }
 
     private void pleaseOrder(){
@@ -383,6 +404,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         lv.setAdapter(customAdapter);
     }
 
+
     @Override
     public void loginSucceed() { throw new UnsupportedOperationException(); }
     @Override
@@ -405,4 +427,9 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
     public void registerSucceed() { throw new UnsupportedOperationException(); }
     @Override
     public void registerFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentNsFailed() { throw new UnsupportedOperationException(); }
 }

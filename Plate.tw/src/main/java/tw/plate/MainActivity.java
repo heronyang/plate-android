@@ -322,6 +322,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
     @Override
+    public void currentNsSucceed(int current_ns) {
+        getReceiptFragment().currentNsSucceed(current_ns);
+    }
+
+    @Override
+    public void currentNsFailed() {
+        // ignore
+    }
+
+    @Override
     public void updateRestaurantList() { throw new UnsupportedOperationException(); }
     @Override
     public void updateMenuList() { throw new UnsupportedOperationException(); }

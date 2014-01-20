@@ -23,8 +23,12 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.CookieStore;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeoutException;
 
 import retrofit.Callback;
@@ -50,6 +54,10 @@ public class ReceiptFragment extends Fragment{
                     /* DO SOMETHING UPON THE CLICK */
                     Log.d(Constants.LOG_TAG, "clicked");
 
+                    PlateServiceManager plateServiceManager = ((Plate)getActivity().getApplication()).getPlateServiceManager();
+                    plateServiceManager.current_ns(rest_id, getActivity());
+
+                    /*
                     PlateService.PlateTWAPI1 plateTWV1;
                     plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
 
@@ -65,7 +73,7 @@ public class ReceiptFragment extends Fragment{
                             Log.d(Constants.LOG_TAG, "Can't get the current ns" + error.getResponse().getStatus());
                         }
                     });
-
+                    */
                 }
             }
         );
@@ -204,7 +212,8 @@ public class ReceiptFragment extends Fragment{
         String stringTotalPrice = getString(R.string.total_amount)+" "+totalPrice+" 元\n";
         // int slipNumber = lo.pos_slip_number;
 
-        tv_time.setText(lo.ctime);
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        tv_time.setText(df.format(lo.ctime));
         tv_number.setText("" + lo.pos_slip_number);
         tv_rest.setText(lo.restaurant.name);
         rest_id = lo.restaurant.rest_id;
@@ -333,4 +342,42 @@ public class ReceiptFragment extends Fragment{
         TextView tv = (TextView) getView().findViewById(R.id.tv_message);
         tv.setText(getString(R.string.waitForRegisterCompleted));
     }
+
+    public void currentNsSucceed(int _current_ns) {
+        current_ns = _current_ns;
+        showCurrentNS();
+    }
+
+    public void currentNsFailed() {
+
+    }
+
+    /* Tools */
+    /*
+    private String dateCustomFormat(String inputDate) {
+
+        // ex: 2014-01-20T07:17:06 .150995 +00:00
+
+        SimpleDateFormat sdf;
+        String fmt;
+        if (System.getProperty("java.runtime.name").equals("Android Runtime")) {
+            Log.d(Constants.LOG_TAG, "Android Runtime Date Formatter");
+            fmt = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ";
+        } else {
+            fmt = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSX";
+        }
+        sdf = new SimpleDateFormat(fmt, Locale.US);
+
+        String result = "";
+        try {
+            Date date = sdf.parse(inputDate);
+            Log.d(Constants.LOG_TAG, date.toString());
+            result = date.toString();
+        } catch (Exception e) {
+            Log.d(Constants.LOG_TAG, "date formatting error" + e.getMessage());
+        }
+
+        return result;
+    }
+    */
 }

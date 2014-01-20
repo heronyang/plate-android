@@ -420,4 +420,8 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
     public void registerFailed() {
         popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.register_submit_api_error_message));
     };
+    @Override
+    public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentNsFailed() { throw new UnsupportedOperationException(); }
 }

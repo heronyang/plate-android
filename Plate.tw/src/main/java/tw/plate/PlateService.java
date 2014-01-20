@@ -83,10 +83,6 @@ public class PlateService {
     public static class MealAmount {
         public int meal_id;
         public int amount;
-        public MealAmount(int meal_id, int amount) {
-            this.meal_id = meal_id;
-            this.amount = amount;
-        }
     }
 
     // API1: new added
@@ -96,9 +92,11 @@ public class PlateService {
     }
 
     public class OrderV1 {
-        /* FIXME: ctime, mtime should be in Data format */
-        public String ctime;
-        public String mtime;
+        /* FIXME: ctime, mtime should be in Data format
+         * retrofit failed if using Date now
+        * */
+        public Date ctime;
+        public Date mtime;
         public Restaurant restaurant;
         public int pos_slip_number;
         public int status;
@@ -107,6 +105,11 @@ public class PlateService {
     public class OrderItemV1 {
         public Meal meal;
         public int amount;
+
+        public OrderItemV1(Meal _meal, int _amount) {
+            meal = _meal;
+            amount = _amount;
+        }
     }
 
     public class OrderPostResponse {
@@ -175,7 +178,7 @@ public class PlateService {
                     Callback<Response> cb);
     }
 
-    public static final String TEST_USERNAME = "android@plate.tw";
+    //public static final String TEST_USERNAME = "android@plate.tw";
 
     private static RestAdapter restAdapter, restAdapterV1;
     private static PlateTWOldAPI plateTW;
@@ -191,9 +194,9 @@ public class PlateService {
 			 * */
             String fmt;
             if (System.getProperty("java.runtime.name").equals("Android Runtime")) {
-                fmt = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+                fmt = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ";
             } else {
-                fmt = "yyyy-MM-dd'T'HH:mm:ssX";
+                fmt = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ";
             }
             sdf = new SimpleDateFormat(fmt, Locale.US);
         }
@@ -201,7 +204,9 @@ public class PlateService {
         public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx)
                 throws JsonParseException {
             try {
-                return sdf.parse(json.getAsJsonPrimitive().getAsString());
+                String s = json.getAsJsonPrimitive().getAsString();
+                String dateWithoutMicros = s.substring(0, s.length() - 9) + s.substring(s.length() - 6);
+                return sdf.parse(dateWithoutMicros);
             } catch (ParseException e) {
                 throw new JsonParseException(e.getMessage());
             }

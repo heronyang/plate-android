@@ -56,6 +56,9 @@ public class PlateServiceManager{
 
         void registerSucceed();
         void registerFailed();
+
+        void currentNsSucceed(int current_ns);
+        void currentNsFailed();
     }
 
     /* Constructor */
@@ -168,6 +171,23 @@ public class PlateServiceManager{
                 callerActivity.orderGetFailed();
             }
         });
+    }
+
+    /* API: current_ns */
+    public void current_ns(int rest_id, Activity activity) {
+        final PlateManagerCallback callerActivity = (PlateManagerCallback)activity;
+        plateTWV1.current_ns(rest_id, new Callback<PlateService.CurrentNSResponse>() {
+            @Override
+            public void success(PlateService.CurrentNSResponse r, Response response) {
+                callerActivity.currentNsSucceed(r.current_ns);
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                callerActivity.currentNsFailed();
+                Log.d(Constants.LOG_TAG, "Can't get the current ns" + error.getResponse().getStatus());
+            }
+        });
+
     }
 
 

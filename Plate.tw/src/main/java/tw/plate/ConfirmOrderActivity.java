@@ -41,13 +41,15 @@ import retrofit.client.Response;
 public class ConfirmOrderActivity extends Activity implements PlateServiceManager.PlateManagerCallback{
 
     //OrderList passedOrderList;
+    /*
     private ArrayList<String> mealNames = new ArrayList<String>();
     private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
             , mealID = new ArrayList<Integer>()
             , mealAmount = new ArrayList<Integer>();
+    String restName;
+    */
 
     String orderJsonRequest;
-    String restName;
 
     PlateServiceManager plateServiceManager;
 
@@ -58,6 +60,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
 
         setContentView(R.layout.activity_confirm_order);
+        /*
         Intent intent = getIntent();
 
         mealNames = intent.getStringArrayListExtra("orderMealNames");
@@ -70,6 +73,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         for(int i=0; i<mealNames.size(); i++)
             Log.d(Constants.LOG_TAG,"Passed order at position 0: Meal Name: "
                     + mealNames.get(i) + "Amount: " + mealAmount.get(i) +"pieces" );
+                    */
 
         listviewAndTotalAmountSetup();
         buttonSetup();
@@ -83,6 +87,27 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         TextView tv_restaurant = (TextView) findViewById(R.id.tv_co_rest_name);
         TextView tv_total_amount = (TextView)findViewById(R.id.tvTotalAmount);
 
+        Cart cart = ((Plate)getApplication()).getCart();
+        ArrayList<Cart.CartOrderItem> cos = cart.getOrderItems();
+        int l = cart.getNumberOfItems(), i;
+
+        List<String> mealString = new ArrayList<String>();
+        List<String> amountString = new ArrayList<String>();
+        List<String> priceString = new ArrayList<String>();
+
+        for( i=0 ; i<l ; i++) {
+            int meal_price = cos.get(i).meal_price,
+                amount = cos.get(i).amount;
+
+            mealString.add(cos.get(i).meal_name + " ");
+            amountString.add(amount + " 份");
+            priceString.add(meal_price + " 元");
+
+            totalAmount += meal_price * amount;
+        }
+        tv_restaurant.setText(cart.getRestaurant_name());
+
+        /*
         int l = mealNames.size(), i;
         List<String> mealString = new ArrayList<String>();
         List<String> amountString = new ArrayList<String>();
@@ -97,6 +122,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         }
 
         tv_restaurant.setText(restName);
+        */
 
         CustomAdapter customAdapter = new CustomAdapter(this,mealString,amountString,priceString);
         lv.setAdapter(customAdapter);
@@ -259,13 +285,24 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
 
     private String buildOrderJsonString() {
 
-        JSONObject object = new JSONObject();
+        //JSONObject object = new JSONObject();
         String result = "[";
+
+        Cart cart = ((Plate)getApplication()).getCart();
+        ArrayList<Cart.CartOrderItem> cos = cart.getOrderItems();
+        int s = cart.getNumberOfItems(), i;
+
+        for (i=0 ; i<s ; i++) {
+            result += "{\"amount\":" + cos.get(i).amount + ", \"meal_id\": " + cos.get(i).meal_id + "}";
+            if (i != s-1)   result += ", ";
+        }
+        /*
         int s = mealNames.size(), i;
         for (i=0 ; i<s ; i++) {
             result += "{\"amount\":" + mealAmount.get(i) + ", \"meal_id\": " + mealID.get(i) + "}";
             if (i != s-1)   result += ", ";
         }
+        */
         result += "]";
 
         return result;
@@ -430,5 +467,8 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
     @Override
     public void orderGetFailed() { throw new UnsupportedOperationException(); }
 
-
+    @Override
+    public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentNsFailed() { throw new UnsupportedOperationException(); }
 }
