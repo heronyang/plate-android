@@ -69,7 +69,7 @@
     <string name="register_wait_for_play_service_title">等一下</string>
     <string name="register_submit_api_error_title">與主機連線失敗</string>
     <string name="register_submit_api_error_message">在和我們主機連線過程中出現問題</string>
-    <string name="current_number">現在 \n 叫好</string>
+    <string name="current_number">現在 \n 叫號</string>
 
     <!-- for receipt fragment-->
     <string name="receipt_message"> 號 碼 牌 </string>
