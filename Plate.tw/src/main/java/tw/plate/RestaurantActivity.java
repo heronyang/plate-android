@@ -1,7 +1,9 @@
 package tw.plate;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -26,11 +28,12 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class RestaurantActivity extends ListActivity {
+public class RestaurantActivity extends ListActivity implements PlateServiceManager.PlateManagerCallback {
 
-    List<PlateService.Restaurant> restaurantList = new ArrayList<PlateService.Restaurant>();
     String [] restaurantNames;
     CustomAdapter customAdapter;
+
+    PlateServiceManager plateServiceManager;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,9 @@ public class RestaurantActivity extends ListActivity {
         int locationId = intent.getIntExtra("locationId", 0) + 1;   // start from 1
         Log.d(Constants.LOG_TAG, "This place: " + Integer.toString(locationId));
 
+        plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
+        plateServiceManager.restaurants(locationId, this);
+        /*
         PlateService.PlateTWOldAPI plateTW;
         plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
 
@@ -55,6 +61,7 @@ public class RestaurantActivity extends ListActivity {
                 Log.w(Constants.LOG_TAG, "restaurants: failure");
             }
         });
+        */
     }
 
     @Override
@@ -64,24 +71,9 @@ public class RestaurantActivity extends ListActivity {
 
     }
 
-    private void updateRestaurantList() {
-        // FIXME: there must be a better way to get the name array of restaurants
-        int l = restaurantList.size(), i;
-        restaurantNames = new String[l];
-        for(i=0 ; i<l ; i++) {
-            restaurantNames[i] = restaurantList.get(i).name;
-        }
-        //Displaying Items
-        ListView lv = (ListView) findViewById(android.R.id.list);
-
-        customAdapter = new CustomAdapter(this);
-        lv.setAdapter(customAdapter);
-        lv.setDivider(null);
-        lv.setDividerHeight(0);
-    }
-
     private class CustomAdapter extends BaseAdapter {
         LayoutInflater inflater;
+        List<PlateService.Restaurant> restaurantList = plateServiceManager.getRestaurantList();
         public class ViewHolder{
             TextView tv_restaurant;
         }
@@ -151,5 +143,77 @@ public class RestaurantActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*
+        Override for PlateServiceManager's Callbacks
+     */
+    @Override
+    public void updateRestaurantList() {
+        // FIXME: there must be a better way to get the name array of restaurants
+        List<PlateService.Restaurant> restaurantList = plateServiceManager.getRestaurantList();
+        int l = restaurantList.size(), i;
+
+        // if empty, send back
+        if (l<=0) {
+            popupEmptyMessageAndSendBack();
+        }
+
+        restaurantNames = new String[l];
+        for(i=0 ; i<l ; i++) {
+            restaurantNames[i] = restaurantList.get(i).name;
+        }
+        //Displaying Items
+        ListView lv = (ListView) findViewById(android.R.id.list);
+
+        customAdapter = new CustomAdapter(this);
+        lv.setAdapter(customAdapter);
+        lv.setDivider(null);
+        lv.setDividerHeight(0);
+    }
+
+    void popupEmptyMessageAndSendBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.restaurant_list_empty_messge)
+                .setTitle(R.string.restaurant_list_empty_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void updateMenuList() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void loginSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void loginFailed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void notRegistered() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void orderPostSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderPostFailed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetSucceedEmpty() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetFailed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void registerSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void registerFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentNsFailed() { throw new UnsupportedOperationException(); }
 
 }

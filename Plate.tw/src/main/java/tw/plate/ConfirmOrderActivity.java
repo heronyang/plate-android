@@ -38,21 +38,29 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ConfirmOrderActivity extends Activity {
+public class ConfirmOrderActivity extends Activity implements PlateServiceManager.PlateManagerCallback{
 
     //OrderList passedOrderList;
+    /*
     private ArrayList<String> mealNames = new ArrayList<String>();
     private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
             , mealID = new ArrayList<Integer>()
             , mealAmount = new ArrayList<Integer>();
+    String restName;
+    */
 
     String orderJsonRequest;
-    String restName;
+
+    PlateServiceManager plateServiceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
+
         setContentView(R.layout.activity_confirm_order);
+        /*
         Intent intent = getIntent();
 
         mealNames = intent.getStringArrayListExtra("orderMealNames");
@@ -65,6 +73,7 @@ public class ConfirmOrderActivity extends Activity {
         for(int i=0; i<mealNames.size(); i++)
             Log.d(Constants.LOG_TAG,"Passed order at position 0: Meal Name: "
                     + mealNames.get(i) + "Amount: " + mealAmount.get(i) +"pieces" );
+                    */
 
         listviewAndTotalAmountSetup();
         buttonSetup();
@@ -78,6 +87,27 @@ public class ConfirmOrderActivity extends Activity {
         TextView tv_restaurant = (TextView) findViewById(R.id.tv_co_rest_name);
         TextView tv_total_amount = (TextView)findViewById(R.id.tvTotalAmount);
 
+        Cart cart = ((Plate)getApplication()).getCart();
+        ArrayList<Cart.CartOrderItem> cos = cart.getOrderItems();
+        int l = cart.getNumberOfItems(), i;
+
+        List<String> mealString = new ArrayList<String>();
+        List<String> amountString = new ArrayList<String>();
+        List<String> priceString = new ArrayList<String>();
+
+        for( i=0 ; i<l ; i++) {
+            int meal_price = cos.get(i).meal_price,
+                amount = cos.get(i).amount;
+
+            mealString.add(cos.get(i).meal_name + " ");
+            amountString.add(amount + " 份");
+            priceString.add(meal_price + " 元");
+
+            totalAmount += meal_price * amount;
+        }
+        tv_restaurant.setText(cart.getRestaurant_name());
+
+        /*
         int l = mealNames.size(), i;
         List<String> mealString = new ArrayList<String>();
         List<String> amountString = new ArrayList<String>();
@@ -92,6 +122,7 @@ public class ConfirmOrderActivity extends Activity {
         }
 
         tv_restaurant.setText(restName);
+        */
 
         CustomAdapter customAdapter = new CustomAdapter(this,mealString,amountString,priceString);
         lv.setAdapter(customAdapter);
@@ -151,9 +182,12 @@ public class ConfirmOrderActivity extends Activity {
     }
 
     private void loginThenSubmitFinalOrder() {
-        loginSession();
+        //loginSession();
+        SharedPreferences sp = getSharedPreferences("account", 0);
+        plateServiceManager.login(this);
     }
 
+    /*
     private void submitFinalOrder(){
         Log.d(Constants.LOG_TAG, "Order Submit Starts, Order String : " + orderJsonRequest);
 
@@ -247,16 +281,28 @@ public class ConfirmOrderActivity extends Activity {
                 sp.contains(Constants.SP_TAG_PASSWORD));
     }
     // ----------- Login Related Functions : END ------------
+    */
 
     private String buildOrderJsonString() {
 
-        JSONObject object = new JSONObject();
+        //JSONObject object = new JSONObject();
         String result = "[";
+
+        Cart cart = ((Plate)getApplication()).getCart();
+        ArrayList<Cart.CartOrderItem> cos = cart.getOrderItems();
+        int s = cart.getNumberOfItems(), i;
+
+        for (i=0 ; i<s ; i++) {
+            result += "{\"amount\":" + cos.get(i).amount + ", \"meal_id\": " + cos.get(i).meal_id + "}";
+            if (i != s-1)   result += ", ";
+        }
+        /*
         int s = mealNames.size(), i;
         for (i=0 ; i<s ; i++) {
             result += "{\"amount\":" + mealAmount.get(i) + ", \"meal_id\": " + mealID.get(i) + "}";
             if (i != s-1)   result += ", ";
         }
+        */
         result += "]";
 
         return result;
@@ -294,6 +340,7 @@ public class ConfirmOrderActivity extends Activity {
     }
 
     private class CustomAdapter extends BaseAdapter {
+
         LayoutInflater inflater;
         List<String> mealName = new ArrayList<String>();
         List<String> mealAmount = new ArrayList<String>();
@@ -350,4 +397,78 @@ public class ConfirmOrderActivity extends Activity {
         }
 
     }
+
+    /* Callbacks */
+    @Override
+    public void updateRestaurantList() { throw new UnsupportedOperationException(); }
+    @Override
+    public void updateMenuList() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void loginSucceed() {
+        plateServiceManager.orderPost(orderJsonRequest, this);
+    }
+    @Override
+    public void loginFailed() {
+        // go to register page
+        View view = findViewById(android.R.id.content);
+        Intent registerIntent = new Intent(view.getContext(), RegisterActivity.class);
+        registerIntent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
+        startActivity(registerIntent);
+    }
+    @Override
+    public void notRegistered() {
+        // go to register page
+        View view = findViewById(android.R.id.content);
+        Intent registerIntent = new Intent(view.getContext(), RegisterActivity.class);
+        registerIntent.putExtra("message_type", Constants.FIRST_TIME);
+        startActivity(registerIntent);
+    }
+
+    @Override
+    public void orderPostSucceed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
+        builder.setMessage(R.string.final_info_success_message)
+                .setTitle(R.string.final_info_success_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+                mainActivityIntent.putExtra("fragPosition", 1);
+                mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainActivityIntent);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    @Override
+    public void orderPostFailed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
+        builder.setMessage(R.string.final_info_fail_message)
+                .setTitle(R.string.final_info_fail_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void registerSucceed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void registerFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetSucceedEmpty() { throw new UnsupportedOperationException(); }
+    @Override
+    public void orderGetFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentNsFailed() { throw new UnsupportedOperationException(); }
 }
