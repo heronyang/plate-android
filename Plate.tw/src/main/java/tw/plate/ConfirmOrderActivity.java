@@ -40,15 +40,6 @@ import retrofit.client.Response;
 
 public class ConfirmOrderActivity extends Activity implements PlateServiceManager.PlateManagerCallback{
 
-    //OrderList passedOrderList;
-    /*
-    private ArrayList<String> mealNames = new ArrayList<String>();
-    private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
-            , mealID = new ArrayList<Integer>()
-            , mealAmount = new ArrayList<Integer>();
-    String restName;
-    */
-
     String orderJsonRequest;
 
     PlateServiceManager plateServiceManager;
@@ -60,27 +51,15 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
 
         setContentView(R.layout.activity_confirm_order);
-        /*
-        Intent intent = getIntent();
-
-        mealNames = intent.getStringArrayListExtra("orderMealNames");
-        mealPrices = intent.getIntegerArrayListExtra("orderMealPrice");
-        mealID = intent.getIntegerArrayListExtra("orderMealID");
-        mealAmount = intent.getIntegerArrayListExtra("orderMealAmount");
-        restName = intent.getStringExtra("restName");
-
-        //
-        for(int i=0; i<mealNames.size(); i++)
-            Log.d(Constants.LOG_TAG,"Passed order at position 0: Meal Name: "
-                    + mealNames.get(i) + "Amount: " + mealAmount.get(i) +"pieces" );
-                    */
 
         listviewAndTotalAmountSetup();
         buttonSetup();
+
+        Cart cart = ((Plate)getApplication()).getCart();
+        plateServiceManager.current_cooking_orders(cart.getRestaurantId(), this);
     }
 
     private void listviewAndTotalAmountSetup() {
-
         int totalAmount = 0;
 
         ListView lv = (ListView) findViewById(R.id.lv_confim);
@@ -105,24 +84,8 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
 
             totalAmount += meal_price * amount;
         }
-        tv_restaurant.setText(cart.getRestaurant_name());
+        tv_restaurant.setText(cart.getRestaurantName());
 
-        /*
-        int l = mealNames.size(), i;
-        List<String> mealString = new ArrayList<String>();
-        List<String> amountString = new ArrayList<String>();
-        List<String> priceString = new ArrayList<String>();
-        //String [] priceData = new String[l];
-        for( i=0 ; i<l ; i++) {
-            //rowData[i] = rowDataFormat;
-            mealString.add(mealNames.get(i) + " ");
-            amountString.add(mealAmount.get(i) + " 份");
-            priceString.add(mealPrices.get(i) + " 元");
-            totalAmount += mealPrices.get(i) * mealAmount.get(i);
-        }
-
-        tv_restaurant.setText(restName);
-        */
 
         CustomAdapter customAdapter = new CustomAdapter(this,mealString,amountString,priceString);
         lv.setAdapter(customAdapter);
@@ -155,7 +118,6 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
 
     private void popupDoubleConfirmMessage () {
         AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
-
         builder.setMessage(R.string.confirm_order_warning_message)
                 .setTitle(R.string.confirm_order_warning_title);
 
@@ -187,102 +149,6 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         plateServiceManager.login(this);
     }
 
-    /*
-    private void submitFinalOrder(){
-        Log.d(Constants.LOG_TAG, "Order Submit Starts, Order String : " + orderJsonRequest);
-
-        PlateService.PlateTWOldAPI plateTW;
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-
-        PlateService.PlateTWAPI1 plateTWV1;
-        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
-
-        plateTWV1.orderPost(orderJsonRequest, new Callback<PlateService.OrderPostResponse>() {
-            @Override
-            public void success(PlateService.OrderPostResponse r, Response response) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
-                builder.setMessage(R.string.final_info_success_message)
-                        .setTitle(R.string.final_info_success_title);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-                        mainActivityIntent.putExtra("fragPosition", 1);
-                        mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(mainActivityIntent);
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(Constants.LOG_TAG, error.getResponse().getReason());
-                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
-                builder.setMessage(R.string.final_info_fail_message)
-                        .setTitle(R.string.final_info_fail_title);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-    }
-
-    // ----------- Login Related Functions : END ------------
-    // FIXME: there may be better way to make this part be seperated
-
-    private void loginSession() {
-        if (accountInAppNotSet()) {
-            View view = findViewById(android.R.id.content);
-            Intent registerInent = new Intent(view.getContext(), RegisterActivity.class);
-            registerInent.putExtra("message_type", Constants.FIRST_TIME);
-            startActivity(registerInent);
-        } else {
-            // get user's phone_number and password to login
-            SharedPreferences sp = getSharedPreferences("account", 0);
-            String phone_number = sp.getString(Constants.SP_TAG_PHONE_NUMBER, null);
-            String password = sp.getString(Constants.SP_TAG_PASSWORD, null);
-
-            Log.d(Constants.LOG_TAG, "Account Info is already set: PN:" + phone_number + "\tPW:" + password);
-            login(phone_number, password);
-        }
-    }
-
-    private void login(String phone_number, String password) {
-        CookieHandler.setDefault(new CookieManager());
-
-        PlateService.PlateTWOldAPI plateTW;
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-
-        PlateService.PlateTWAPI1 plateTWV1;
-        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
-
-        plateTWV1.login(phone_number, password, new Callback<Response>() {
-            @Override public void success(Response r, Response response) {
-                submitFinalOrder();
-            }
-
-            @Override public void failure(RetrofitError error) {
-                View view = findViewById(android.R.id.content);
-                Intent registerInent = new Intent(view.getContext(), RegisterActivity.class);
-                registerInent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
-                startActivity(registerInent);
-            }
-        });
-    }
-
-    private boolean accountInAppNotSet() {
-        SharedPreferences sp = getSharedPreferences("account", 0);
-        return !(sp.contains(Constants.SP_TAG_PHONE_NUMBER) &&
-                sp.contains(Constants.SP_TAG_PASSWORD));
-    }
-    // ----------- Login Related Functions : END ------------
-    */
-
     private String buildOrderJsonString() {
 
         //JSONObject object = new JSONObject();
@@ -296,13 +162,6 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
             result += "{\"amount\":" + cos.get(i).amount + ", \"meal_id\": " + cos.get(i).meal_id + "}";
             if (i != s-1)   result += ", ";
         }
-        /*
-        int s = mealNames.size(), i;
-        for (i=0 ; i<s ; i++) {
-            result += "{\"amount\":" + mealAmount.get(i) + ", \"meal_id\": " + mealID.get(i) + "}";
-            if (i != s-1)   result += ", ";
-        }
-        */
         result += "]";
 
         return result;
@@ -444,9 +303,28 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
     }
     @Override
     public void orderPostFailed(int errStatus) {
-        String msg = getString(R.string.final_info_fail_message);
+        String msg = "";
         AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
-        msg += errStatus==460?"\n訂單超過300NT":errStatus==461?"\n上一次訂單還沒完成":"Unknown Error";
+
+        switch (errStatus) {
+            case 460:
+                msg += getString(R.string.ERROR_MESSAGE_EXCEED_MAX_TOTAL_PRICE);
+                break;
+            case 461:
+                msg += getString(R.string.ERROR_MESSAGE_INCOMPLETE_ORDER);
+                break;
+            case 462:
+                msg += getString(R.string.ERROR_MESSAGE_REST_CLOSED);
+                break;
+            case 463:
+                msg += getString(R.string.ERROR_MESSAGE_REST_BUSY);
+                break;
+            case 464:
+                msg += getString(R.string.ERROR_MESSAGE_REST_UNKNOWN_STATUS);
+                break;
+            default:
+                break;
+        }
         builder.setMessage(msg)
                 .setTitle(R.string.final_info_fail_title);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -456,6 +334,21 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         });
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    @Override
+    public void currentCookingOrdersSucceed(int current_cooking_orders) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
+        builder.setMessage(getString(R.string.current_cooking_orders_popup_body) + current_cooking_orders)
+                .setTitle(R.string.current_cooking_orders_popup_title);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 

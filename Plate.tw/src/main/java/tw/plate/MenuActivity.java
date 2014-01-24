@@ -32,13 +32,6 @@ import retrofit.client.Response;
 
 public class MenuActivity extends ListActivity implements PlateServiceManager.PlateManagerCallback{
 
-    /*
-    private ArrayList<String> mealNames = new ArrayList<String>();
-    private ArrayList<Integer> mealPrices = new ArrayList<Integer>()
-            , mealID = new ArrayList<Integer>()
-            , mealAmount = new ArrayList<Integer>();
-            */
-
     PlateServiceManager plateServiceManager;
 
     int restId;
@@ -60,25 +53,6 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
 
         plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
         plateServiceManager.menu(restId, this);
-
-        /*
-        PlateService.PlateTWOldAPI plateTW;
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-        plateTW.menu(restId, new Callback<PlateService.MenuResponse>() {
-            @Override
-            public void success(PlateService.MenuResponse ms, Response response) {
-                for (PlateService.Meal m : ms.meal_list) {
-                    mealList.add(m);
-                }
-                updateMenuList();
-            }
-
-            @Override
-            public void failure(RetrofitError e) {
-                Log.d(Constants.LOG_TAG, "menu: failure");
-            }
-        });
-        */
     }
 
     @Override
@@ -311,27 +285,11 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         collectResults();
 
         // for test
-        //int s = mealNames.size();
-        //Log.d(Constants.LOG_TAG, "Final List in this page (menu)");
         Cart cart = ((Plate)getApplication()).getCart();
         if(cart.isEmpty()){
             pleaseOrder();
         }
         else{
-            /*
-            for( int i=0 ; i<s ; i++ ){
-                Log.d(Constants.LOG_TAG, "meal name: " + mealNames.get(i) + "\tamount : " + mealAmount.get(i));
-            }
-            */
-            // put
-            /*
-            confirmOrderIntent.putStringArrayListExtra("orderMealNames", mealNames);
-            confirmOrderIntent.putIntegerArrayListExtra("orderMealPrice", mealPrices);
-            confirmOrderIntent.putIntegerArrayListExtra("orderMealID", mealID);
-            confirmOrderIntent.putIntegerArrayListExtra("orderMealAmount", mealAmount);
-            confirmOrderIntent.putExtra("restName",restName);
-            */
-
             startActivity(confirmOrderIntent);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
@@ -347,7 +305,8 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         Cart cart = ((Plate)getApplication()).getCart();
         cart.clearOrderItems();
 
-        cart.setRestaurant_name(restName);
+        cart.setRestaurantName(restName);
+        cart.setRestaurantId(restId);
         for(int i=0 ; i<s ; i++) {
             int amount = customAdapter.getSelectedAmountAtPosition(i);
             if (amount != 0) {
@@ -355,22 +314,6 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
                 cart.addOrderItem(ml.meal_price, ml.meal_name, ml.meal_id, amount);
             }
         }
-        /*
-        mealNames.clear();
-        mealPrices.clear();
-        mealID.clear();
-        mealAmount.clear();
-
-        for(int i=0 ; i<s ; i++) {
-            int amount = customAdapter.getSelectedAmountAtPosition(i);
-            if (amount != 0) {
-                mealNames.add(mealList.get(i).meal_name);
-                mealPrices.add(mealList.get(i).meal_price);
-                mealID.add(mealList.get(i).meal_id);
-                mealAmount.add(amount);
-            }
-        }
-        */
     }
 
     private void pleaseOrder(){
@@ -432,4 +375,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
     public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
     @Override
     public void currentNsFailed() { throw new UnsupportedOperationException(); }
+
+    @Override
+    public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
 }

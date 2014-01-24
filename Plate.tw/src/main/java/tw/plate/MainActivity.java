@@ -362,6 +362,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void registerSucceed() { throw new UnsupportedOperationException(); }
     @Override
     public void registerFailed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
 
     //================================================================================
     // End

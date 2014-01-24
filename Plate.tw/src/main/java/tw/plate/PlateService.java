@@ -40,7 +40,9 @@ public class PlateService {
         public int location;
         public String name;
         public int rest_id;
+        public String description;
     }
+
     public class RestaurantResponse {
         public int success;
         public List<Restaurant> list;
@@ -120,6 +122,10 @@ public class PlateService {
         public int current_ns;
     }
 
+    public class CurrentCookingOrdersResponse {
+        public int current_cooking_orders;
+    }
+
     interface PlateTWAPI1 {
         @FormUrlEncoded
         @POST("/1/register")
@@ -145,6 +151,10 @@ public class PlateService {
         @GET("/1/current_ns")
         void current_ns(@Query("rest_id") int rest_id,
                         Callback<CurrentNSResponse> cb);
+
+        @GET("/1/current_cooking_orders")
+        void current_cooking_orders(@Query("rest_id") int rest_id,
+                        Callback<CurrentCookingOrdersResponse> cb);
     }
 
     interface PlateTWOldAPI {

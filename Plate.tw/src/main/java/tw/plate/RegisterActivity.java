@@ -427,4 +427,6 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
     public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
     @Override
     public void currentNsFailed() { throw new UnsupportedOperationException(); }
+    @Override
+    public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
 }

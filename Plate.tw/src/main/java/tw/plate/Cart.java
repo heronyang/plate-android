@@ -25,6 +25,7 @@ public class Cart {
 
     private ArrayList<CartOrderItem> cartOrderItems;
     private String restaurant_name;
+    private int restaurant_id;
 
     /* Constructor */
     public Cart() {
@@ -46,11 +47,17 @@ public class Cart {
         cartOrderItems.add(coi);
     }
 
-    public void setRestaurant_name(String _restaurant_name) {
+    public void setRestaurantName(String _restaurant_name) {
         restaurant_name = _restaurant_name;
     }
-    public String getRestaurant_name() {
+    public String getRestaurantName() {
         return restaurant_name;
+    }
+    public void setRestaurantId(int _restaurant_id) {
+        restaurant_id = _restaurant_id;
+    }
+    public int getRestaurantId() {
+        return restaurant_id;
     }
 
     public int getNumberOfItems() {
