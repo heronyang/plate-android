@@ -415,7 +415,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
     @Override
     public void orderPostSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void orderPostFailed() { throw new UnsupportedOperationException(); }
+    public void orderPostFailed(int errorStatus) { throw new UnsupportedOperationException(); }
     @Override
     public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
     @Override

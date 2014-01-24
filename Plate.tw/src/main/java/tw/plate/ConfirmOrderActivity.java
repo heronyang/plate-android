@@ -439,12 +439,15 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
             }
         });
         AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
     @Override
-    public void orderPostFailed() {
+    public void orderPostFailed(int errStatus) {
+        String msg = getString(R.string.final_info_fail_message);
         AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
-        builder.setMessage(R.string.final_info_fail_message)
+        msg += errStatus==460?"\n訂單超過300NT":errStatus==461?"\n上一次訂單還沒完成":"Unknown Error";
+        builder.setMessage(msg)
                 .setTitle(R.string.final_info_fail_title);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -452,6 +455,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
             }
         });
         AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

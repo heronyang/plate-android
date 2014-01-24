@@ -21,6 +21,11 @@
     <string name="title_activity_confirm_order">確認訂單</string>
     <string name="title_activity_register">註冊</string>
 
+    <!-- for main activity page -->
+    <string name="main_exit_message">"誒 , 你確定要離開 plate 嗎?"</string>
+    <string name="main_exit_title">不要走啦</string>
+
+
     <!-- for register page -->
     <string name="example_phone_number">0912321321</string>
     <string name="register_success_message">已經成功送出，請收簡訊</string>
@@ -34,6 +39,7 @@
     <!-- warning popup -->
     <string name="confirm_order_warning_title">注意啊</string>
     <string name="confirm_order_warning_message">你要注意的事項：1. 2. 3.</string>
+
 
     <!-- last confirmation -->
     <string name="final_info_success_title">終於好了</string>
@@ -66,11 +72,12 @@
     <string name="register_wait_for_play_service_title">等一下</string>
     <string name="register_submit_api_error_title">與主機連線失敗</string>
     <string name="register_submit_api_error_message">在和我們主機連線過程中出現問題</string>
-    <string name="current_number">現在 \n 叫號</string>
 
     <!-- for receipt fragment -->
     <string name="receipt_message"> 號 碼 牌 </string>
-    <string name="receipt_button_text"> 現在叫號 </string>
+    <string name="receipt_button_text"> 現場號碼 </string>
+    <string name="current_number">現在的號碼是: </string>
+    <string name="receipt_button_refresh"> 更新 </string>
     <string name="receipt_noorder"> No Order </string>
     <string name="notRegistered">尚未登入</string>
     <string name="register_second_chance_to_register">請輸入電話號碼後收確認簡訊以開啟訂餐功能</string>
@@ -79,5 +86,20 @@
     <string name="next">下一步</string>
     <string name="restaurant_list_empty_messge">目前此位置並無合作餐廳</string>
     <string name="restaurant_list_empty_title">再等等</string>
+
+    <string name="status1">"正在煮"</string>
+    <string name="status2">請領餐</string>
+    <string name="status3">交易完成</string>
+    <string name="status4">交易失敗</string>
+    <string name="status5">交易失敗</string>
+    <string name="status6">交易完成</string>
+
+    <!-- for Location Fragment-->
+    <string-array name="contact_us">
+        <item>More</item>
+        <item>About Us</item>
+        <item>Feedback</item>
+    </string-array>
+
 
 </resources>

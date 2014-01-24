@@ -183,6 +183,7 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
             }
         });
         AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -199,7 +200,7 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
     @Override
     public void orderPostSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void orderPostFailed() { throw new UnsupportedOperationException(); }
+    public void orderPostFailed(int errorStatus) { throw new UnsupportedOperationException(); }
     @Override
     public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
     @Override

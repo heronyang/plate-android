@@ -44,7 +44,7 @@ public class PlateServiceManager{
         void notRegistered();
 
         void orderPostSucceed();
-        void orderPostFailed();
+        void orderPostFailed(int errStatus);
 
         void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse);
         void orderGetSucceedEmpty();
@@ -120,8 +120,9 @@ public class PlateServiceManager{
 
             @Override
             public void failure(RetrofitError error) {
+                Log.d(Constants.LOG_TAG,"network" + error.getResponse().getStatus() );
                 Log.d(Constants.LOG_TAG, error.getResponse().getReason());
-                callerActivity.orderPostFailed();
+                callerActivity.orderPostFailed(error.getResponse().getStatus());
             }
         });
     }
@@ -185,7 +186,6 @@ public class PlateServiceManager{
         });
 
     }
-
 
     // ----------- Login Related Functions : END ------------
     public void login(Activity activity) {

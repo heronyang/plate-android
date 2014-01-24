@@ -7,6 +7,8 @@ import java.net.CookieManager;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -88,12 +90,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             );
         }
-/*        actionBar.addTab(
-                actionBar.newTab()
-                        .setText("dummy")
-                        .setTabListener(this)
-
-        );*/
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("fragPosition",0);
@@ -123,6 +119,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         layout_setup();
+    }
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.main_exit_message)
+                .setTitle(R.string.main_exit_title);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // If cancel, do nothing
+            }
+        });
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        //super.onBackPressed();
     }
 
     @Override
@@ -338,7 +356,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void orderPostSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void orderPostFailed() { throw new UnsupportedOperationException(); }
+    public void orderPostFailed(int errorStatus) { throw new UnsupportedOperationException(); }
 
     @Override
     public void registerSucceed() { throw new UnsupportedOperationException(); }

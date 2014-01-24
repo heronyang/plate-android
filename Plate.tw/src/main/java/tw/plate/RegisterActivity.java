@@ -64,6 +64,7 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
                 }
             });
             AlertDialog dialog = builder.create();
+            dialog.setCanceledOnTouchOutside(false);
             dialog.show();
             return false;
         }
@@ -321,6 +322,7 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
                 }
             });
             AlertDialog dialog = builder.create();
+            dialog.setCanceledOnTouchOutside(false);
             dialog.show();
             return;
         }
@@ -370,6 +372,7 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
         });
 
         AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -395,7 +398,7 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
     @Override
     public void orderPostSucceed() { throw new UnsupportedOperationException(); };
     @Override
-    public void orderPostFailed() { throw new UnsupportedOperationException(); };
+    public void orderPostFailed(int errorStatus) { throw new UnsupportedOperationException(); };
     @Override
     public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
     @Override

@@ -1,7 +1,9 @@
 package tw.plate;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,23 +28,61 @@ public class ReceiptFragment extends Fragment{
 
 
     private int rest_id = Constants.ORDER_EMPTY;
-    private int current_ns = Constants.ORDER_EMPTY;
+    private String current_ns;
+    private Tools tools;
     View v;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         v = inflater.inflate(R.layout.receipt_frag, container, false);
 
-        final View button = v.findViewById(R.id.bn_current_ns);
-        button.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    /* DO SOMETHING UPON THE CLICK */
-                    Log.d(Constants.LOG_TAG, "clicked");
+        final View currNumButton = v.findViewById(R.id.bn_current_ns);
+        final View refreshButton = v.findViewById(R.id.btn_refresh);
+        tools = new Tools();
+        current_ns = "No Order";
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(Constants.LOG_TAG,"refresh clicked");
+                PlateServiceManager plateServiceManager = ((Plate)getActivity().getApplication()).getPlateServiceManager();
+                plateServiceManager.login(getActivity());
 
-                    PlateServiceManager plateServiceManager = ((Plate)getActivity().getApplication()).getPlateServiceManager();
-                    plateServiceManager.current_ns(rest_id, getActivity());
+                refreshButton.setBackground(getResources().getDrawable(R.drawable.circle_frame_pressed));
+                int delay_time =Constants.PRESSED_TIME;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void run() {
+                        refreshButton.setBackground(getResources().getDrawable(R.drawable.circle_frame));
+                    }
+                }, delay_time);
+
+
+            }
+        });
+
+        currNumButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    /* DO SOMETHING UPON THE CLICK */
+                        Log.d(Constants.LOG_TAG, "clicked");
+                        PlateServiceManager plateServiceManager = ((Plate) getActivity().getApplication()).getPlateServiceManager();
+                        plateServiceManager.current_ns(rest_id, getActivity());
+                        showCurrentNS();
+
+                        currNumButton.setBackground(getResources().getDrawable(R.drawable.circle_frame_pressed));
+                        int delay_time =Constants.PRESSED_TIME;
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                            @Override
+                            public void run() {
+                                currNumButton.setBackground(getResources().getDrawable(R.drawable.circle_frame));
+                            }
+                        }, delay_time);
+
 
                     /*
                     PlateService.PlateTWAPI1 plateTWV1;
@@ -58,8 +101,8 @@ public class ReceiptFragment extends Fragment{
                         }
                     });
                     */
+                    }
                 }
-            }
         );
 
         return v;
@@ -69,7 +112,9 @@ public class ReceiptFragment extends Fragment{
     private void showCurrentNS() {
         final Button button = (Button)getView().findViewById(R.id.bn_current_ns);
         button.setText("No. " + current_ns);
-
+        /*Toast.makeText(getActivity().getApplicationContext(),
+                getString(R.string.current_number)+" "+ current_ns, Toast.LENGTH_SHORT).show();
+        */
         // flip back
         int delay_time = Constants.FLIP_BACK_TIME;
 
@@ -77,6 +122,7 @@ public class ReceiptFragment extends Fragment{
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                //TODO Bugs, unfortunate
                 button.setText(getString(R.string.receipt_button_text));
             }
         }, delay_time);
@@ -177,6 +223,7 @@ public class ReceiptFragment extends Fragment{
         TextView tv_rest = (TextView) getView().findViewById(R.id.tv_rec_restaurant);
         TextView tv_time = (TextView) getView().findViewById(R.id.tv_order_time);
         TextView tv_total = (TextView) getView().findViewById(R.id.tv_total);
+        TextView tv_status = (TextView) getView().findViewById(R.id.tv_order_status);
         ListView lv = (ListView) v.findViewById(R.id.lv_receipt);
 
         List<String> mealString = new ArrayList<String>();
@@ -195,18 +242,52 @@ public class ReceiptFragment extends Fragment{
         }
         String stringTotalPrice = getString(R.string.total_amount)+" "+totalPrice+" 元\n";
         // int slipNumber = lo.pos_slip_number;
+        String status="";
+        int textColor=0;
+        switch(lo.status){
+            case 0: {
+                status = getString(R.string.status1);
+                textColor = getResources().getColor(R.color.blue);
+                break;
+            }
+            case 1: {
+                status = getString(R.string.status2);
+                textColor = getResources().getColor(R.color.green);
+                break;
+            }
+            case 2:{
+                status = getString(R.string.status3);
+                textColor = getResources().getColor(R.color.black);
+                break;
+            }
+            case 3: {
+                status = getString(R.string.status4);
+                textColor = getResources().getColor(R.color.red);
+                break;
+            }
+            case 4:{
+                status = getString(R.string.status5);
+                textColor = getResources().getColor(R.color.blue);
+                break;
+            }
+            case 5: status = getString(R.string.status6);
+                break;
+        }
 
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         tv_time.setText(df.format(lo.ctime));
-        tv_number.setText("" + lo.pos_slip_number);
+        tv_number.setText(tools.formattedNS(lo.pos_slip_number));
         tv_rest.setText(lo.restaurant.name);
         rest_id = lo.restaurant.rest_id;
         tv_total.setText(stringTotalPrice);
+        tv_status.setText("("+ status +")");
+        //tv_status.setTextColor(textColor);
 
         CustomAdapter customAdapter = new CustomAdapter(this.getActivity(),mealString,amountString,priceString);
         lv.setAdapter(customAdapter);
         lv.setDivider(null);
         lv.setDividerHeight(0);
+
         //tv.setText(outputString);
         //tv_price.setText(stringPrice);
 
@@ -233,8 +314,9 @@ public class ReceiptFragment extends Fragment{
     }
 
     public void onBackPressed() {
-        Intent mainIntent = new Intent(getActivity(),MainActivity.class);
+        Intent mainIntent = new Intent(getActivity().getApplicationContext(),MainActivity.class);
         startActivity(mainIntent);
+        Log.d(Constants.LOG_TAG,"back pressed");
         return;
     }
 
@@ -298,11 +380,12 @@ public class ReceiptFragment extends Fragment{
 
     public void loginSucceed() {
         // OrderGet here
+
         /*
         TextView tv = (TextView)getView().findViewById(R.id.tv_rec_restaurant);
         tv.setText("Login Succeeded!");
         */
-    };
+    }
 
     public void orderGetSucceedEmpty() {
         TextView tv = (TextView) getView().findViewById(R.id.tv_message);
@@ -328,7 +411,8 @@ public class ReceiptFragment extends Fragment{
     }
 
     public void currentNsSucceed(int _current_ns) {
-        current_ns = _current_ns;
+        current_ns = tools.formattedNS(_current_ns);
+        Log.d(Constants.LOG_TAG,"Curr NS:"+current_ns);
         showCurrentNS();
     }
 

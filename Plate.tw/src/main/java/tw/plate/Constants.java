@@ -5,20 +5,18 @@ final public class Constants {
 
     /* Names */
     public static final String[] CANTEEN_LIST = new String[]{"  女 二 餐 廳  ", "   第 二 餐 廳  ", "  第 一 餐 廳  ", "  其  他  "};
-<<<<<<< HEAD
-    //public static final String API_URI_PREFIX = "http://10.0.2.2:8080"; // Developing Mode
-    //public static final String API_URI_PREFIX = "http://192.168.1.28:8080"; // Heron's Local Developing Mode
-=======
     //public static final String API_URI_PREFIX = "http://10.0.2.2:8000"; // Developing Mode
-    //public static final String API_URI_PREFIX = "http://192.168.0.115:8080"; // Heron's Local Developing Mode
-    public static final String API_URI_PREFIX = "http://192.168.0.192:8080"; // Heron's Local Developing Mode
->>>>>>> 2af5164a4325b9439db06f75d1d14c4d94396e63
+    public static final String API_URI_PREFIX = "http://192.168.0.115:8080"; // Heron's Local Developing Mode
+    //public static final String API_URI_PREFIX = "http://192.168.0.192:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://172.18.80.3:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://api.plate.tw"; // Release Mode
     //public static final String API_URI_PREFIX = "http://api-dev.plate.tw:8080"; // Release Mode
 
+    public static  final String OFFICIAL_WEBSITE = "http://plate.tw";
+    public static  final String OFFICIAL_MAILBOX = "mailto:plate-service@googlegroups.com";
+
     /* Numbers */
-    public static final int MAX_AMOUNT = 4;
+    public static final int MAX_AMOUNT = 6;
 
     /* TAGS */
     public static final String LOG_TAG = "PlateLog";
@@ -34,6 +32,9 @@ final public class Constants {
 
     /* Time */
     public static final int FLIP_BACK_TIME = 3000; // ms
+    public static final int PRESSED_TIME = 1000; // ms
+
+
 
     private Constants(){}
 }
