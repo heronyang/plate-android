@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -246,6 +247,20 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
         tv.setText(message);
 
         gcm_setup();
+
+
+        // setup edit text
+        EditText editText = (EditText)findViewById(R.id.phone_number_et);
+        editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    submit();
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -306,7 +321,9 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
 
         if (!checkAndReceiveInputPhoneNumber()) {
             // wrong input
-            popupMessage(getString(R.string.register_wrong_input_format_title), getString(R.string.register_wrong_input_format_message));
+            //popupMessage(getString(R.string.register_wrong_input_format_title), getString(R.string.register_wrong_input_format_message));
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_wrong_input_format_message),
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -339,25 +356,6 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
 
         PlateServiceManager plateServiceManager = ((Plate)this.getApplication()).getPlateServiceManager();
         plateServiceManager.register(phone_number, password, Constants.PASSWORD_TYPE, regid, this);
-
-        /*
-        PlateService.PlateTWAPI1 plateTWV1;
-        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
-
-        Log.d(Constants.LOG_TAG, "regid >> " + regid);
-        plateTWV1.register(phone_number, password, Constants.PASSWORD_TYPE, regid, new Callback<Response>() {
-            @Override
-            public void success(Response r, Response response) {
-                popupMessage(getString(R.string.register_success_title), getString(R.string.register_success_message));
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(Constants.LOG_TAG, "Can't Register, status code = " + error.getResponse().getStatus());
-                popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.register_submit_api_error_message));
-            }
-        });
-        */
 
     }
     private void popupMessage(String title, String message) {
