@@ -45,23 +45,6 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
 
         plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
         plateServiceManager.restaurants(locationId, this);
-        /*
-        PlateService.PlateTWOldAPI plateTW;
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-
-        plateTW.restaurants(locationId, new Callback<PlateService.RestaurantResponse>() {
-            @Override public void success(PlateService.RestaurantResponse rs, Response response) {
-                for (PlateService.Restaurant r: rs.list) {
-                    restaurantList.add(r);
-                }
-                //DISPLAY The Content
-                updateRestaurantList();
-            }
-            @Override public void failure(RetrofitError e) {
-                Log.w(Constants.LOG_TAG, "restaurants: failure");
-            }
-        });
-        */
     }
 
     @Override
@@ -117,18 +100,34 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
             viewHolder.tv_restaurant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent menuIntent = new Intent(view.getContext(), MenuActivity.class);
-                    menuIntent.putExtra("restId", restaurantList.get(arg0).rest_id);
-                    menuIntent.putExtra("restName", restaurantList.get(arg0).name);
-                    //view.setBackgroundColor(getResources().getColor(R.color.fresh_orange));
-                    startActivity(menuIntent);
-                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
+                    final PlateService.Restaurant restaurant = restaurantList.get(arg0);
+                    Log.d(Constants.LOG_TAG, "description: " + restaurant.description);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantActivity.this);
+                    builder.setMessage(restaurant.description)
+                            .setTitle(restaurant.name + " : " + getString(R.string.restaurant_info_popup_title));
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            viewMenu(restaurant);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
 
             return convertview;
         }
 
+    }
+
+    private void viewMenu(PlateService.Restaurant restaurant) {
+        Intent menuIntent = new Intent(this, MenuActivity.class);
+        menuIntent.putExtra("restId", restaurant.rest_id);
+        menuIntent.putExtra("restName", restaurant.name);
+        startActivity(menuIntent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @Override
@@ -216,5 +215,6 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
     public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
     @Override
     public void currentNsFailed() { throw new UnsupportedOperationException(); }
-
+    @Override
+    public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
 }

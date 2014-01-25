@@ -96,6 +96,14 @@
     <string name="status4">交易失敗</string>
     <string name="status5">交易失敗</string>
     <string name="status6">交易完成</string>
+    <string name="ERROR_MESSAGE_EXCEED_MAX_TOTAL_PRICE">訂單總價超過300NTD</string>
+    <string name="ERROR_MESSAGE_INCOMPLETE_ORDER">有尚未完成訂單，一次只能訂一個</string>
+    <string name="ERROR_MESSAGE_REST_CLOSED">非餐廳營業時間</string>
+    <string name="ERROR_MESSAGE_REST_BUSY">餐廳目前忙碌中，無法收單</string>
+    <string name="ERROR_MESSAGE_REST_UNKNOWN_STATUS">餐廳無上線</string>
+    <string name="restaurant_info_popup_title">注意事項</string>
+    <string name="current_cooking_orders_popup_title">等候人數</string>
+    <string name="current_cooking_orders_popup_body">餐廳線上點餐等候人數：</string>
 
     <!-- for Location Fragment-->
     <string-array name="contact_us">

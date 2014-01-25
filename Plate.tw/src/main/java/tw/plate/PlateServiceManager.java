@@ -55,6 +55,8 @@ public class PlateServiceManager{
 
         void currentNsSucceed(int current_ns);
         void currentNsFailed();
+
+        void currentCookingOrdersSucceed(int current_cooking_orders);
     }
 
     /* Constructor */
@@ -182,6 +184,23 @@ public class PlateServiceManager{
             public void failure(RetrofitError error) {
                 callerActivity.currentNsFailed();
                 Log.d(Constants.LOG_TAG, "Can't get the current ns" + error.getResponse().getStatus());
+            }
+        });
+
+    }
+
+    /* API: current_cooking_orders */
+    public void current_cooking_orders(int rest_id, Activity activity) {
+        final PlateManagerCallback callerActivity = (PlateManagerCallback)activity;
+        plateTWV1.current_cooking_orders(rest_id, new Callback<PlateService.CurrentCookingOrdersResponse>() {
+            @Override
+            public void success(PlateService.CurrentCookingOrdersResponse r, Response response) {
+                callerActivity.currentCookingOrdersSucceed(r.current_cooking_orders);
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                // just ignore at this point
+                Log.d(Constants.LOG_TAG, "Can't get the current cooking orders" + error.getResponse().getStatus());
             }
         });
 
