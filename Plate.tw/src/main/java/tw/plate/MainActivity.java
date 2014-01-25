@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -156,10 +157,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-   //         selectIP();
-            return true;
+        String url = Constants.OFFICIAL_WEBSITE;
+        switch (id) {
+            case R.id.action_settings:
+                break;
+            case R.id.menu_aboutus: {
+                url = Constants.OFFICIAL_WEBSITE;
+                break;
+            }
+            case R.id.menu_feedback: {
+                url = Constants.OFFICIAL_MAILBOX;
+                break;
+            }
+            default:
+                break;
         }
+        Intent intentLink = new Intent( Intent.ACTION_VIEW);
+        intentLink.setData(Uri.parse(url));
+        startActivity(intentLink);
         return super.onOptionsItemSelected(item);
     }
 

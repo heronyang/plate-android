@@ -37,32 +37,6 @@ public class LocationFragment extends Fragment{
 
     private void setupUpSpinner(){
         //FIXME using the actionbar, intent 
-        Spinner sp = (Spinner) v.findViewById(R.id.sp_about);
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                Log.d(Constants.LOG_TAG,"OK!!");
-                switch(pos){
-                    case 0: url = "";
-                        break;
-                    case 1: url = Constants.OFFICIAL_WEBSITE;
-                        break;
-                    case 2: url = Constants.OFFICIAL_MAILBOX;
-                        break;
-                    default: url = Constants.OFFICIAL_WEBSITE;
-                }
-                if(pos != 0){
-                    Intent intentLink = new Intent( Intent.ACTION_VIEW);
-                    intentLink.setData(Uri.parse(url));
-                    startActivity(intentLink);
-                }
-            }
-            @Override
-             public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
 
     }
 
