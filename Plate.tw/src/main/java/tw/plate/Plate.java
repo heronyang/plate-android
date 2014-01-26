@@ -13,7 +13,7 @@ import org.acra.annotation.*;
         mode = ReportingInteractionMode.TOAST,
         forceCloseDialogAfterToast = false, // optional, default false
         resToastText = R.string.crash_toast_text,
-        mailTo = Constants.OFFICIAL_MAILBOX,
+        mailTo = Constants.PLATE_DEV_MAILBOX,
         //mailTo = "anthonyang86@yahoo.com",
         customReportContent = { ReportField.APP_VERSION_CODE, ReportField.APP_VERSION_NAME, ReportField.ANDROID_VERSION, ReportField.PHONE_MODEL, ReportField.CUSTOM_DATA, ReportField.STACK_TRACE, ReportField.LOGCAT }
 )

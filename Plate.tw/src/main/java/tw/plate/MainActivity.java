@@ -166,7 +166,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 break;
             }
             case R.id.menu_feedback: {
-                url = Constants.OFFICIAL_MAILBOX;
+                url = "mailto:"+Constants.PLATE_SERVICE_MAILBOX;
                 break;
             }
             default:

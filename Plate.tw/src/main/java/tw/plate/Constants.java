@@ -13,7 +13,8 @@ final public class Constants {
     //public static final String API_URI_PREFIX = "http://api-dev.plate.tw:8080"; // Release Mode
 
     public static  final String OFFICIAL_WEBSITE = "http://plate.tw";
-    public static  final String OFFICIAL_MAILBOX = "plate-service@googlegroups.com";
+    public static  final String PLATE_SERVICE_MAILBOX = "plate-service@googlegroups.com";
+    public static  final String PLATE_DEV_MAILBOX = "dev-plate-tw@googlegroups.com";
 
     /* Numbers */
     public static final int MAX_AMOUNT = 6;
