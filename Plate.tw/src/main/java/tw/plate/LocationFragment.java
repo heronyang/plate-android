@@ -14,9 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.acra.ACRA;
 
 
 public class LocationFragment extends Fragment{
@@ -30,7 +33,16 @@ public class LocationFragment extends Fragment{
         updateLocationList();
         setupUpSpinner();
 
-
+        //Testing error reporting
+        Button bt = (Button) v.findViewById(R.id.btn_err_trigger);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(Constants.LOG_TAG,"clicked!!");
+                Log.d(Constants.LOG_TAG,"throwing exception!!");
+                throw new RuntimeException("Dying on purpose");
+            }
+        });
 
         return v;
     }
