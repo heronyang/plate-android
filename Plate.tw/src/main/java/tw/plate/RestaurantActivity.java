@@ -104,7 +104,14 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
                     final PlateService.Restaurant restaurant = restaurantList.get(arg0);
                     Log.d(Constants.LOG_TAG, "description: " + restaurant.description);
                     AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantActivity.this);
-                    builder.setMessage(restaurant.description)
+
+                    String msg = "";
+                    if (!restaurant.is_open) {
+                        msg += "* 餐廳目前休息中：" + restaurant.closed_reason + "\n";
+                    }
+                    msg += restaurant.description;
+
+                    builder.setMessage(msg)
                             .setTitle(restaurant.name + " : " + getString(R.string.restaurant_info_popup_title));
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -159,7 +166,14 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
 
         restaurantNames = new String[l];
         for(i=0 ; i<l ; i++) {
-            restaurantNames[i] = restaurantList.get(i).name;
+            String rest_status_str = "";
+            if (restaurantList.get(i).is_open) {
+                rest_status_str = getString(R.string.rest_status_open);
+            } else {
+                rest_status_str = getString(R.string.rest_status_close);
+            }
+
+            restaurantNames[i] = restaurantList.get(i).name + rest_status_str;
         }
         //Displaying Items
         ListView lv = (ListView) findViewById(android.R.id.list);

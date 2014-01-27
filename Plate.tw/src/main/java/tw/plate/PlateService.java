@@ -41,6 +41,8 @@ public class PlateService {
         public String name;
         public int rest_id;
         public String description;
+        public boolean is_open;
+        public String closed_reason;
     }
 
     public class RestaurantResponse {
