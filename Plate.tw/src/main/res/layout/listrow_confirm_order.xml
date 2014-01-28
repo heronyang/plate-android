@@ -7,7 +7,7 @@
     <TextView
         android:textSize="@dimen/menu_text_size"
         android:layout_width="0dp"
-        android:layout_weight=".60"
+        android:layout_weight=".62"
         android:layout_height="wrap_content"
         android:text="meal name"
         android:gravity="left"
@@ -16,9 +16,11 @@
     <TextView
         android:textSize="@dimen/menu_text_size"
         android:layout_width="0dp"
-        android:layout_weight=".20"
+        android:layout_weight=".22"
         android:layout_height="wrap_content"
-        android:text="price"
+        android:layout_gravity="right"
+        android:textColor="@color/background_1"
+        android:text="50 元"
         android:gravity="right"
         android:id="@+id/tv_price" />
 
@@ -26,9 +28,11 @@
         android:layout_marginLeft="@dimen/small_margin"
         android:textSize="@dimen/menu_text_size"
         android:layout_width="0dp"
-        android:layout_weight=".20"
+        android:layout_weight=".16"
         android:layout_height="wrap_content"
-        android:text="amount"
-        android:id="@+id/tv_amount" />
+        android:layout_gravity="right"
+        android:text="am"
+        android:id="@+id/tv_amount"
+        android:gravity="right" />
 
 </LinearLayout>

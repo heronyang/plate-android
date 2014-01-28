@@ -3,10 +3,13 @@ package tw.plate;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +18,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,7 +47,7 @@ public class ReceiptFragment extends Fragment{
                 PlateServiceManager plateServiceManager = ((Plate)getActivity().getApplication()).getPlateServiceManager();
                 plateServiceManager.login(getActivity());
 
-                refreshButton.setBackground(getResources().getDrawable(R.drawable.circle_frame_pressed));
+                refreshButton.setBackgroundResource(R.drawable.circle_frame_pressed);
                 int delay_time =Constants.PRESSED_TIME;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -72,8 +72,8 @@ public class ReceiptFragment extends Fragment{
                         plateServiceManager.current_ns(rest_id, getActivity());
                         showCurrentNS();
 
-                        currNumButton.setBackground(getResources().getDrawable(R.drawable.circle_frame_pressed));
-                        int delay_time =Constants.PRESSED_TIME;
+                        currNumButton.setBackgroundResource(R.drawable.circle_frame_pressed);
+                        int delay_time =Constants.FLIP_BACK_TIME;
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -82,25 +82,6 @@ public class ReceiptFragment extends Fragment{
                                 currNumButton.setBackground(getResources().getDrawable(R.drawable.circle_frame));
                             }
                         }, delay_time);
-
-
-                    /*
-                    PlateService.PlateTWAPI1 plateTWV1;
-                    plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
-
-                    plateTWV1.current_ns(rest_id, new Callback<PlateService.CurrentNSResponse>() {
-                        @Override
-                        public void success(PlateService.CurrentNSResponse r, Response response) {
-                            current_ns = r.current_ns;
-                            showCurrentNS();
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            Log.d(Constants.LOG_TAG, "Can't get the current ns" + error.getResponse().getStatus());
-                        }
-                    });
-                    */
                     }
                 }
         );
@@ -142,80 +123,6 @@ public class ReceiptFragment extends Fragment{
         }
     }
 
-    /*
-    private void loginSession() {
-        if (accountInAppNotSet()) {
-            Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
-            registerInent.putExtra("message_type", Constants.FIRST_TIME);
-            startActivity(registerInent);
-        } else {
-            // get user's phone_number and password to login
-            SharedPreferences sp = getActivity().getSharedPreferences("account", 0);
-            String phone_number = sp.getString(Constants.SP_TAG_PHONE_NUMBER, null);
-            String password = sp.getString(Constants.SP_TAG_PASSWORD, null);
-
-            Log.d(Constants.LOG_TAG, "Account Info is already set: PN:" + phone_number + "\tPW:" + password);
-            login(phone_number, password);
-        }
-    }
-
-    private void login(String phone_number, String password) {
-        PlateService.PlateTWOldAPI plateTW;
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-
-        PlateService.PlateTWAPI1 plateTWV1;
-        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
-
-        plateTWV1.login(phone_number, password, new Callback<Response>() {
-            @Override
-            public void success(Response r, Response response) {
-                updateReceiptContent();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Intent registerInent = new Intent(getActivity(), RegisterActivity.class);
-                registerInent.putExtra("message_type", Constants.SP_SAVED_BUT_LOGIN_FAIL);
-                startActivity(registerInent);
-            }
-        });
-    }
-
-    private void updateReceiptContent() {
-
-
-        PlateService.PlateTWOldAPI plateTW;
-        plateTW = PlateService.getOldAPI(Constants.API_URI_PREFIX);
-
-        PlateService.PlateTWAPI1 plateTWV1;
-        plateTWV1 = PlateService.getAPI1(Constants.API_URI_PREFIX);
-
-        plateTWV1.orderGet(new Callback<PlateService.OrderGetResponse>() {
-            @Override
-            public void success(PlateService.OrderGetResponse orderGetResponse, Response response) {
-                // if empty
-                Log.d(Constants.LOG_TAG, "Ok, success!");
-                if (response.getStatus() == 204) {
-                    TextView tv = (TextView) getView().findViewById(R.id.tv_message);
-                    tv.setText(getString(R.string.receipt_noorder));
-                }
-                // if show
-                else {
-                    PlateService.OrderV1 lo = orderGetResponse.last_order;
-                    List<PlateService.OrderItemV1> orderItems = orderGetResponse.order_items;
-                    Log.d(Constants.LOG_TAG, String.format("%s %s %s %d %d", lo.ctime, lo.mtime, lo.restaurant.name, lo.pos_slip_number, lo.status));
-
-                    displayResponse(orderItems,lo);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(Constants.LOG_TAG, "Failed! retrofit  " + error.getMessage() + error.getResponse().getStatus());
-            }
-        });
-    }
-    */
     private void displayResponse(List<PlateService.OrderItemV1> orderItems,PlateService.OrderV1 lo){
         //TextView tv = (TextView) getView().findViewById(R.id.tvReceipt);
         //TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
@@ -374,7 +281,7 @@ public class ReceiptFragment extends Fragment{
     }
 
     public void orderGetSucceedEmpty() {
-        TextView tv = (TextView) getView().findViewById(R.id.tv_message);
+        TextView tv = (TextView) getView().findViewById(R.id.tv_total);
         tv.setText(getString(R.string.receipt_noorder));
     }
 
@@ -387,12 +294,12 @@ public class ReceiptFragment extends Fragment{
     }
 
     public void notRegistered() {
-        TextView tv = (TextView) getView().findViewById(R.id.tv_message);
+        TextView tv = (TextView) getView().findViewById(R.id.tv_total);
         tv.setText(getString(R.string.notRegistered));
     }
 
     public void waitForRegisterCompleted() {
-        TextView tv = (TextView) getView().findViewById(R.id.tv_message);
+        TextView tv = (TextView) getView().findViewById(R.id.tv_total);
         tv.setText(getString(R.string.waitForRegisterCompleted));
     }
 

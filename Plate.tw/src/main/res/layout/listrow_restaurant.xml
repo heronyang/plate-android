@@ -4,30 +4,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-
-    <RelativeLayout
+    <TextView
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/lv_height"
-        >
-
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/box_height">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textColor="@color/main_text_color"
-                android:text="New Text"
-                android:id="@+id/tv_listrow_restaurant"
-                android:background="@drawable/onclick_background_selector"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-        </FrameLayout>
-
-        <!-- android:textSize="@dimen/box_textsize" -->
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/main_text_color"
+        android:text="New Text"
+        android:id="@+id/tv_listrow_restaurant"
+        android:textSize="@dimen/location_restaurant_listrow_text_size"
+        android:background="@drawable/onclick_background_selector"
+        android:layout_margin="@dimen/location_restaurant_listrow_margin"
+        android:padding="@dimen/location_restaurant_listrow_padding"/>
 
 </LinearLayout>

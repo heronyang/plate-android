@@ -16,7 +16,6 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".70"
-        android:layout_alignParentLeft="true"
         android:id="@+id/linearLayout">
 
         <FrameLayout
@@ -72,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"
-                android:text=""
+                android:text="A12"
                 android:textSize="@dimen/slip_num_size"
                 android:paddingBottom="@dimen/small_margin"
                 android:id="@+id/tv_slip_num"
@@ -99,23 +98,18 @@
             android:orientation="vertical"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/tv_message" />
-
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight=".80"
+                android:layout_weight=".75"
                 android:id="@+id/lv_receipt" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight=".20"
-                android:text=""
+                android:layout_weight=".25"
+                android:textColor="@color/background_1"
+                android:text="合計: 130元"
                 android:id="@+id/tv_total"
                 android:layout_gravity="right" />
         </LinearLayout>>

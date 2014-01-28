@@ -24,8 +24,8 @@
     <!-- for main activity page -->
     <string name="main_exit_message">"誒 , 你確定要離開 plate 嗎?"</string>
     <string name="main_exit_title">不要走啦</string>
-    <string name="main_about_us">關於我們</string>
-    <string name="main_feedback">迴歸</string>
+    <string name="main_about_us">About</string>
+    <string name="main_feedback">Feedback</string>
 
 
 

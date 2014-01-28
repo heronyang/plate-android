@@ -85,7 +85,6 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
 
                 viewHolder=new ViewHolder();
                 viewHolder.tv_restaurant = (TextView) convertview.findViewById(R.id.tv_listrow_restaurant);
-                viewHolder.tv_restaurant.setTextSize(getResources().getDimension(R.dimen.rest_textsize));
 
                 convertview.setTag(viewHolder);
             }

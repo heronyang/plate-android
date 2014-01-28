@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -54,8 +55,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setDisplayShowHomeEnabled(false);     // turn off display
-        actionBar.setDisplayShowTitleEnabled(false);    // turn off display
+        actionBar.setDisplayShowHomeEnabled(true);     // turn off display
+        actionBar.setDisplayShowTitleEnabled(true);    // turn off display
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -82,14 +83,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // the adapter. Also specify this Activity object, which implements
             // the TabListener interface, as the callback (listener) for when
             // this tab is selected.
-            int[] tabsResources= new int[]{R.drawable.tab_location_trans,R.drawable.tab_bill_trans};
-            actionBar.addTab(
-                    actionBar.newTab()
+            int[] tabsResources= new int[]{R.drawable.tab01, R.drawable.tab02};
+            //View tabView = getLayoutInflater().inflate(R.layout.tab_custom, null);
+            //tabView.setBackgroundColor(Color.YELLOW); // set custom color
+            ActionBar.Tab tab = actionBar.newTab()
                             //.setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this)
-                            .setIcon(getResources().getDrawable(tabsResources[i]))
-
-            );
+                            .setIcon(getResources().getDrawable(tabsResources[i]));
+            //tab.setCustomView(tabView);
+            actionBar.addTab(tab);
         }
 
         Intent intent = getIntent();
@@ -172,7 +174,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             default:
                 break;
         }
-        Intent intentLink = new Intent( Intent.ACTION_VIEW);
+        Intent intentLink = new Intent(Intent.ACTION_VIEW);
         intentLink.setData(Uri.parse(url));
         startActivity(intentLink);
         return super.onOptionsItemSelected(item);

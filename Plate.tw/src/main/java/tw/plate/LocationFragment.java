@@ -2,20 +2,14 @@ package tw.plate;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -80,7 +74,6 @@ public class LocationFragment extends Fragment{
 
                 viewHolder=new ViewHolder();
                 viewHolder.tv_location = (TextView) convertview.findViewById(R.id.tv_listrow_location);
-                viewHolder.tv_location.setTextSize(getResources().getDimension(R.dimen.box_textsize));
 
                 convertview.setTag(viewHolder);
             }

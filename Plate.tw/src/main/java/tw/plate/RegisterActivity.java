@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,6 +62,10 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
                     .setTitle(R.string.require_google_service_title);
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    String url = Constants.GOOGLE_PLAY_SERVICE;
+                    Intent intentLink = new Intent(Intent.ACTION_VIEW);
+                    intentLink.setData(Uri.parse(url));
+                    startActivity(intentLink);
                     finish();
                 }
             });

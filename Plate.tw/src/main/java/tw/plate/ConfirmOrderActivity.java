@@ -92,7 +92,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         lv.setDivider(null);
         lv.setDividerHeight(0);
 
-        tv_total_amount.setText(totalAmount + " 元  ");
+        tv_total_amount.setText(totalAmount + " 元");
     }
 
 

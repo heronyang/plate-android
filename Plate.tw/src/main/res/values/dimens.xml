@@ -8,7 +8,7 @@
     <dimen name="box_height"> 70dp </dimen>
     <dimen name="lv_height"> 72dp </dimen>
     <dimen name="box_padding"> 15dp </dimen>
-    <dimen name="box_textsize"> 20sp </dimen>
+    <dimen name="box_textSize"> 20sp </dimen>
     <dimen name="box_padding_side"> 15dp </dimen>
 
     <dimen name="title_textsize"> 25sp </dimen>
@@ -32,18 +32,18 @@
 
     <!-- Confrirm Order-->
     <dimen name="co_margin_buttom"> 60dp </dimen>
-    <dimen name="co_margin_side"> 40dp </dimen>
-    <dimen name="co_restname_size"> 25sp </dimen>
-    <dimen name="co_text_size"> 25sp </dimen>
-    <dimen name="co_totalamount_size"> 25dp </dimen>
-    <dimen name="co_padding"> 10dp </dimen>
-    <dimen name="padding_top"> 25dp </dimen>
+    <dimen name="co_margin_side"> 20dp </dimen>
+    <dimen name="co_restname_size"> 20sp </dimen>
+    <dimen name="co_text_size"> 20sp </dimen>
+    <dimen name="co_totalamount_size"> 20dp </dimen>
+    <dimen name="co_padding"> 5dp </dimen>
+    <dimen name="padding_top"> 20dp </dimen>
 
 
     <!-- receipt -->>
     <dimen name="rec_line_padding"> 20dp </dimen>
     <dimen name="rec_title_padding"> 20dp </dimen>
-    <dimen name="slip_num_size"> 70dp </dimen>
+    <dimen name="slip_num_size"> 50sp </dimen>
     <dimen name="restname_text_size"> 30sp </dimen>
     <dimen name="item_text_size"> 20sp </dimen>
 
@@ -52,9 +52,11 @@
     <dimen name="reg_box_padding_side"> 20dp </dimen>
 
 
-    <dimen name="small_margin"> 15dp </dimen>
+    <dimen name="small_margin"> 15sp </dimen>
     <dimen name="small_small_margin"> 10dp </dimen>
-
+    <dimen name="location_restaurant_listrow_text_size">16sp</dimen>
+    <dimen name="location_restaurant_listrow_margin">2dp</dimen>
+    <dimen name="location_restaurant_listrow_padding">10dp</dimen>
 
 
 </resources>
