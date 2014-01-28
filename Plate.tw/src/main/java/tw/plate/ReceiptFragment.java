@@ -47,14 +47,14 @@ public class ReceiptFragment extends Fragment{
                 PlateServiceManager plateServiceManager = ((Plate)getActivity().getApplication()).getPlateServiceManager();
                 plateServiceManager.login(getActivity());
 
-                refreshButton.setBackgroundResource(R.drawable.circle_frame_pressed);
+                refreshButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
                 int delay_time =Constants.PRESSED_TIME;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void run() {
-                        refreshButton.setBackground(getResources().getDrawable(R.drawable.circle_frame));
+                        refreshButton.setBackground(getResources().getDrawable(R.drawable.rounded_rectangle_frame));
                     }
                 }, delay_time);
 
@@ -72,14 +72,14 @@ public class ReceiptFragment extends Fragment{
                         plateServiceManager.current_ns(rest_id, getActivity());
                         showCurrentNS();
 
-                        currNumButton.setBackgroundResource(R.drawable.circle_frame_pressed);
+                        currNumButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
                         int delay_time =Constants.FLIP_BACK_TIME;
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                             @Override
                             public void run() {
-                                currNumButton.setBackground(getResources().getDrawable(R.drawable.circle_frame));
+                                currNumButton.setBackground(getResources().getDrawable(R.drawable.rounded_rectangle_frame));
                             }
                         }, delay_time);
                     }
@@ -144,8 +144,8 @@ public class ReceiptFragment extends Fragment{
             int price = amount*orderItems.get(i).meal.meal_price;
             totalPrice+=price;
             mealString.add(i,meal.meal_name + " ");
-            amountString.add(i,amount+" 份");
-            priceString.add(i,price+" 元");
+            amountString.add(i,amount+"份");
+            priceString.add(i,price+"元");
         }
         String stringTotalPrice = getString(R.string.total_amount)+" "+totalPrice+" 元\n";
         // int slipNumber = lo.pos_slip_number;

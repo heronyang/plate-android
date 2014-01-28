@@ -28,7 +28,7 @@
             android:textSize="@dimen/menu_price_size"
             android:id="@+id/tv_listrow_price"
             android:layout_width="0dp"
-            android:layout_weight=".20"
+            android:layout_weight=".18"
             android:textColor="@color/color_5"
             />
 
@@ -36,8 +36,10 @@
             android:layout_margin="@dimen/small_margin"
             android:layout_height="wrap_content"
             android:id="@+id/listrow_menu_spinner"
+            android:scrollbarSize="100dp"
+            android:gravity="right"
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".27"
             />
 
     </LinearLayout>

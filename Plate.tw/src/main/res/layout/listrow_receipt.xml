@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
     >
 
     <TextView
-        android:layout_weight=".40"
+        android:layout_weight=".56"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/tvReceipt"
@@ -19,15 +21,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/tvAmount"
+        android:textColor="@color/background_1"
         android:text="3pcs"
+        android:gravity="right"
         android:textSize="@dimen/menu_text_size"
         />
 
     <TextView
         android:layout_marginLeft="@dimen/small_small_margin"
         android:layout_width="0dp"
-        android:layout_weight=".35"
+        android:layout_weight=".19"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:text="price"
         android:textSize="@dimen/menu_text_size"
         android:id="@+id/tv_receipt_price" />

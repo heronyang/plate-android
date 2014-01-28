@@ -336,7 +336,8 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         TextView tv_category = (TextView) findViewById(R.id.tv_category);
         ListView lv = (ListView) findViewById(android.R.id.list);
 
-        tv_category.setText(getResources().getString(R.string.menu_list_category));
+        //tv_category.setText(getResources().getString(R.string.menu_list_category));
+        tv_category.setHeight(20);
 
         ArrayAdapter<String> spAdapter;
         String [] spinnerItems = new String[Constants.MAX_AMOUNT];
@@ -345,7 +346,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         customAdapter = new CustomAdapter(this, spAdapter);
-        customAdapter.setAnimation(Animation.GROW);
+        customAdapter.setAnimation(Animation.CARDS);
         lv.setAdapter(customAdapter);
     }
 

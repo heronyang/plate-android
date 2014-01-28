@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/gray_version"
+    android:weightSum="1"
     >
     <LinearLayout
         android:background="@drawable/rectangle_frame"
@@ -15,18 +16,19 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight=".70"
+        android:layout_weight=".9"
+        android:weightSum="1"
         android:id="@+id/linearLayout">
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".06"
+            android:layout_weight=".1"
             >
 
             <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:textColor="@color/black_text"
                 android:paddingRight="@dimen/small_small_margin"
                 android:id="@+id/tv_order_time"
@@ -39,7 +41,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".2"
+            android:layout_weight=".15"
             android:gravity="bottom"
             >
 
@@ -47,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/restname_text_size"
-                android:paddingLeft="@dimen/small_margin"
                 android:text="rest name"
                 android:layout_gravity="center_horizontal|bottom"
                 android:id="@+id/tv_rec_restaurant" />
@@ -56,9 +57,10 @@
 
         <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".25"
+            android:layout_gravity="top"
             >
-
 
             <View
                 android:layout_width="fill_parent"
@@ -73,10 +75,10 @@
                 android:textStyle="bold"
                 android:text="A12"
                 android:textSize="@dimen/slip_num_size"
-                android:paddingBottom="@dimen/small_margin"
+                android:gravity="top"
                 android:id="@+id/tv_slip_num"
                 android:textColor="@color/color_6"
-                android:layout_gravity="center" />
+                android:layout_gravity="top|center" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,26 +93,30 @@
             style="@style/margin_left_right_top"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".60"
+            android:layout_weight=".55"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginBottom="@dimen/small_margin"
             android:orientation="vertical"
+            android:weightSum="1"
             >
 
             <ListView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".75"
+                android:layout_weight=".78"
                 android:id="@+id/lv_receipt" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight=".25"
+                android:layout_weight=".22"
                 android:textColor="@color/background_1"
+                android:layout_margin="0dp"
                 android:text="合計: 130元"
                 android:id="@+id/tv_total"
+                android:gravity="bottom"
+                android:textAlignment="textEnd"
                 android:layout_gravity="right" />
         </LinearLayout>>
     </LinearLayout>
@@ -118,7 +124,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2"
+        android:layout_weight="0.1"
+        android:layout_marginBottom="10dp"
          >
 
         <RelativeLayout
@@ -130,24 +137,24 @@
             android:layout_centerHorizontal="true">
 
             <Button
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:id="@+id/bn_current_ns"
-                    android:background="@drawable/circle_frame"
-                    android:text="@string/receipt_button_text"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"/>
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:id="@+id/bn_current_ns"
+                android:background="@drawable/rounded_rectangle_frame"
+                android:text="@string/receipt_button_text"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
 
-                <Button
-                    android:layout_marginLeft="@dimen/small_small_margin"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/circle_frame"
-                    android:text="@string/receipt_button_refresh"
-                    android:id="@+id/btn_refresh"
-                    android:layout_toRightOf="@+id/bn_current_ns"
-                     />
+            <Button
+                android:layout_marginLeft="@dimen/small_small_margin"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_rectangle_frame"
+                android:text="@string/receipt_button_refresh"
+                android:id="@+id/btn_refresh"
+                android:layout_toRightOf="@+id/bn_current_ns"
+                 />
         </RelativeLayout>
     </RelativeLayout>
 

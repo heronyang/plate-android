@@ -79,8 +79,8 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
                 amount = cos.get(i).amount;
 
             mealString.add(cos.get(i).meal_name + " ");
-            amountString.add(amount + " 份");
-            priceString.add(meal_price + " 元");
+            amountString.add(amount + "份");
+            priceString.add(meal_price + "元");
 
             totalAmount += meal_price * amount;
         }
