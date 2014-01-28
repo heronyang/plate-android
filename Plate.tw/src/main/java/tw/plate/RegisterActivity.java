@@ -396,7 +396,7 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
     @Override
     public void orderPostSucceed() { throw new UnsupportedOperationException(); };
     @Override
-    public void orderPostFailed(int errorStatus) { throw new UnsupportedOperationException(); };
+    public void orderPostFailed(String errorMsg, int errorStatus) { throw new UnsupportedOperationException(); };
     @Override
     public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }
     @Override

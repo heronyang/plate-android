@@ -4,14 +4,23 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONObject;
+
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.ConversionException;
+import retrofit.converter.GsonConverter;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by heron on 1/2/14.
@@ -44,7 +53,7 @@ public class PlateServiceManager{
         void notRegistered();
 
         void orderPostSucceed();
-        void orderPostFailed(int errStatus);
+        void orderPostFailed(String errorMsg, int errStatus);
 
         void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse);
         void orderGetSucceedEmpty();
@@ -111,7 +120,7 @@ public class PlateServiceManager{
     }
 
     /* API: orderPost */
-    public void orderPost(String orderJsonRequest, Activity activity){
+    public void orderPost(String orderJsonRequest, final Activity activity){
         final PlateManagerCallback callerActivity = (PlateManagerCallback)activity;
 
         plateTWV1.orderPost(orderJsonRequest, new Callback<PlateService.OrderPostResponse>() {
@@ -124,7 +133,25 @@ public class PlateServiceManager{
             public void failure(RetrofitError error) {
                 Log.d(Constants.LOG_TAG,"network" + error.getResponse().getStatus() );
                 Log.d(Constants.LOG_TAG, error.getResponse().getReason());
-                callerActivity.orderPostFailed(error.getResponse().getStatus());
+
+                Response response = error.getResponse();
+                TypedInput body = response.getBody();
+
+                Gson gson = new GsonBuilder().create();
+                GsonConverter gsonConverter = new GsonConverter(gson);
+
+                String error_msg = activity.getString(R.string.order_fail_default_message);
+                try {
+                    PlateService.ErrorResponse er;
+                    er = (PlateService.ErrorResponse)gsonConverter.fromBody(body, PlateService.ErrorResponse.class);
+                    error_msg = er.error_msg;
+                    Log.d(Constants.LOG_TAG, "error_msg >> " + er.error_msg);
+                } catch (ConversionException e) {
+                    Log.d(Constants.LOG_TAG, "conversion error >> " + e.getMessage());
+                } catch (Exception e) {
+                    Log.d(Constants.LOG_TAG, "other casting exception >> " + e.getMessage());
+                }
+                callerActivity.orderPostFailed(error_msg, error.getResponse().getStatus());
             }
         });
     }

@@ -371,7 +371,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void orderPostSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void orderPostFailed(int errorStatus) { throw new UnsupportedOperationException(); }
+    public void orderPostFailed(String errorMsg, int errorStatus) { throw new UnsupportedOperationException(); }
 
     @Override
     public void registerSucceed() { throw new UnsupportedOperationException(); }

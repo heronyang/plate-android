@@ -128,6 +128,10 @@ public class PlateService {
         public int current_cooking_orders;
     }
 
+    public class ErrorResponse {
+        public String error_msg;
+    }
+
     interface PlateTWAPI1 {
         @FormUrlEncoded
         @POST("/1/register")

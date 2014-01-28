@@ -302,7 +302,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
         dialog.show();
     }
     @Override
-    public void orderPostFailed(int errStatus) {
+    public void orderPostFailed(String errorMsg, int errStatus) {
         String msg = "";
         AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmOrderActivity.this);
 
@@ -325,7 +325,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
             default:
                 break;
         }
-        builder.setMessage(msg)
+        builder.setMessage(errorMsg)
                 .setTitle(R.string.final_info_fail_title);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -349,6 +349,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
             }
         });
         AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

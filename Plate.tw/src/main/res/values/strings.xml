@@ -106,6 +106,7 @@
     <string name="current_cooking_orders_popup_body">餐廳線上點餐等候人數：</string>
     <string name="rest_status_open">(營業中)</string>
     <string name="rest_status_close">(休息中)</string>
+    <string name="order_fail_default_message">點餐失敗</string>
 
     <!-- for Location Fragment-->
     <string-array name="contact_us">
