@@ -287,21 +287,7 @@ public class ReceiptFragment extends Fragment{
         lv.setAdapter(customAdapter);
         lv.setDivider(null);
         lv.setDividerHeight(0);
-
-        //tv.setText(outputString);
-        //tv_price.setText(stringPrice);
-
-
     }
-
-    /*
-    private boolean accountInAppNotSet() {
-        SharedPreferences sp = getActivity().getSharedPreferences("account",
-                0);
-        return !(sp.contains(Constants.SP_TAG_PHONE_NUMBER) &&
-                 sp.contains(Constants.SP_TAG_PASSWORD));
-    }
-    */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -414,9 +400,5 @@ public class ReceiptFragment extends Fragment{
         current_ns = tools.formattedNS(_current_ns);
         Log.d(Constants.LOG_TAG,"Curr NS:"+current_ns);
         showCurrentNS();
-    }
-
-    public void currentNsFailed() {
-
     }
 }

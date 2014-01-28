@@ -66,6 +66,8 @@ public class PlateServiceManager{
         void currentNsFailed();
 
         void currentCookingOrdersSucceed(int current_cooking_orders);
+
+        void networkError();
     }
 
     /* Constructor */
@@ -92,6 +94,10 @@ public class PlateServiceManager{
             }
             @Override
             public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 // redirect to login page
                 Log.d(Constants.LOG_TAG, "Update: Error : " + error.getMessage());
             }
@@ -113,7 +119,11 @@ public class PlateServiceManager{
             }
 
             @Override
-            public void failure(RetrofitError e) {
+            public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 Log.d(Constants.LOG_TAG, "menu: failure");
             }
         });
@@ -131,6 +141,10 @@ public class PlateServiceManager{
 
             @Override
             public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 Log.d(Constants.LOG_TAG,"network" + error.getResponse().getStatus() );
                 Log.d(Constants.LOG_TAG, error.getResponse().getReason());
 
@@ -168,6 +182,10 @@ public class PlateServiceManager{
 
             @Override
             public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 Log.d(Constants.LOG_TAG, "Can't Register, status code = " + error.getResponse().getStatus());
                 callerActivity.registerFailed();
             }
@@ -193,6 +211,10 @@ public class PlateServiceManager{
 
             @Override
             public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 Log.d(Constants.LOG_TAG, "Failed! retrofit  " + error.getMessage() + error.getResponse().getStatus());
                 callerActivity.orderGetFailed();
             }
@@ -209,6 +231,10 @@ public class PlateServiceManager{
             }
             @Override
             public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 callerActivity.currentNsFailed();
                 Log.d(Constants.LOG_TAG, "Can't get the current ns" + error.getResponse().getStatus());
             }
@@ -226,6 +252,10 @@ public class PlateServiceManager{
             }
             @Override
             public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 // just ignore at this point
                 Log.d(Constants.LOG_TAG, "Can't get the current cooking orders" + error.getResponse().getStatus());
             }
@@ -253,6 +283,10 @@ public class PlateServiceManager{
                 callerActivity.loginSucceed();
             }
             @Override public void failure(RetrofitError error) {
+                if (error.isNetworkError()) {
+                    callerActivity.networkError();
+                    return;
+                }
                 callerActivity.loginFailed();
             }
         });

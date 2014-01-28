@@ -1,8 +1,10 @@
 package tw.plate;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -378,4 +380,22 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
 
     @Override
     public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
+
+
+
+    @Override
+    public void networkError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.network_error_message)
+                .setTitle(R.string.network_error_title);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                System.exit(0);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
 }

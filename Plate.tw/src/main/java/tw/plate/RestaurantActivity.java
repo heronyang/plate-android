@@ -231,4 +231,22 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
     public void currentNsFailed() { throw new UnsupportedOperationException(); }
     @Override
     public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
+
+
+
+    @Override
+    public void networkError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.network_error_message)
+                .setTitle(R.string.network_error_title);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                System.exit(0);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
 }

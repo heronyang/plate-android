@@ -369,4 +369,21 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
     public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }
     @Override
     public void currentNsFailed() { throw new UnsupportedOperationException(); }
+
+
+    @Override
+    public void networkError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.network_error_message)
+                .setTitle(R.string.network_error_title);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                System.exit(0);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
 }
