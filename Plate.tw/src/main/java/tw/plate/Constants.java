@@ -15,7 +15,9 @@ final public class Constants {
 
     public static final String OFFICIAL_WEBSITE = "http://plate.tw";
     public static final String OFFICIAL_MAILBOX = "mailto:plate-service@googlegroups.com";
+    public static final String PLATE_SERVICE_MAILBOX = "plate-service@googlegroups.com";
     public static final String GOOGLE_PLAY_SERVICE = "https://play.google.com/store/apps/details?id=com.google.android.gms";
+    public static final String PLATE_DEV_MAILBOX = "dev-plate-tw@googlegroups.com";
 
     /* Numbers */
     public static final int MAX_AMOUNT = 6;
