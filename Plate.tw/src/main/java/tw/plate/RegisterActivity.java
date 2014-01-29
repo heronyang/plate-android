@@ -369,6 +369,7 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
                 .setTitle(title);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                setNoMoreFirstTime();
                 intentMain();
                 finish();
             }
@@ -377,6 +378,13 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+    }
+
+    private void setNoMoreFirstTime() {
+        // set the first time app use as false
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("first_time", "1").commit();
     }
 
     private void intentMain() {

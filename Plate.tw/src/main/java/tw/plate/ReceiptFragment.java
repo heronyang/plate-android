@@ -3,13 +3,10 @@ package tw.plate;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,32 +55,31 @@ public class ReceiptFragment extends Fragment{
                     }
                 }, delay_time);
 
-
             }
         });
 
         currNumButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    /* DO SOMETHING UPON THE CLICK */
-                        Log.d(Constants.LOG_TAG, "clicked");
-                        PlateServiceManager plateServiceManager = ((Plate) getActivity().getApplication()).getPlateServiceManager();
-                        plateServiceManager.current_ns(rest_id, getActivity());
-                        showCurrentNS();
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                /* DO SOMETHING UPON THE CLICK */
+                    Log.d(Constants.LOG_TAG, "clicked");
+                    PlateServiceManager plateServiceManager = ((Plate) getActivity().getApplication()).getPlateServiceManager();
+                    plateServiceManager.current_ns(rest_id, getActivity());
+                    showCurrentNS();
 
-                        currNumButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
-                        int delay_time =Constants.FLIP_BACK_TIME;
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-                            @Override
-                            public void run() {
-                                currNumButton.setBackground(getResources().getDrawable(R.drawable.rounded_rectangle_frame));
-                            }
-                        }, delay_time);
-                    }
+                    currNumButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
+                    int delay_time =Constants.FLIP_BACK_TIME;
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                        @Override
+                        public void run() {
+                            currNumButton.setBackground(getResources().getDrawable(R.drawable.rounded_rectangle_frame));
+                        }
+                    }, delay_time);
                 }
+            }
         );
 
         return v;
@@ -93,9 +89,6 @@ public class ReceiptFragment extends Fragment{
     private void showCurrentNS() {
         final Button button = (Button)getView().findViewById(R.id.bn_current_ns);
         button.setText("No. " + current_ns);
-        /*Toast.makeText(getActivity().getApplicationContext(),
-                getString(R.string.current_number)+" "+ current_ns, Toast.LENGTH_SHORT).show();
-        */
         // flip back
         int delay_time = Constants.FLIP_BACK_TIME;
 
@@ -103,7 +96,6 @@ public class ReceiptFragment extends Fragment{
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //TODO Bugs, unfortunate
                 button.setText(getString(R.string.receipt_button_text));
             }
         }, delay_time);
@@ -147,8 +139,8 @@ public class ReceiptFragment extends Fragment{
             amountString.add(i,amount+"份");
             priceString.add(i,price+"元");
         }
+
         String stringTotalPrice = getString(R.string.total_amount)+" "+totalPrice+" 元\n";
-        // int slipNumber = lo.pos_slip_number;
         String status="";
         int textColor=0;
         switch(lo.status){
@@ -188,7 +180,6 @@ public class ReceiptFragment extends Fragment{
         rest_id = lo.restaurant.rest_id;
         tv_total.setText(stringTotalPrice);
         tv_status.setText("("+ status +")");
-        //tv_status.setTextColor(textColor);
 
         CustomAdapter customAdapter = new CustomAdapter(this.getActivity(),mealString,amountString,priceString);
         lv.setAdapter(customAdapter);

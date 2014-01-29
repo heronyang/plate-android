@@ -37,6 +37,7 @@ final public class Constants {
     /* Time */
     public static final int FLIP_BACK_TIME = 3000; // ms
     public static final int PRESSED_TIME = 1000; // ms
+    public static final int WELCOME_PAGE_DELAY_TIME = 3000; // ms
 
 
 

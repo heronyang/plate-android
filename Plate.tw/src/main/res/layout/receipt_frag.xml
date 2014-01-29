@@ -33,6 +33,7 @@
                 android:paddingRight="@dimen/small_small_margin"
                 android:id="@+id/tv_order_time"
                 android:gravity="right"
+                android:text="2014/12/03 23:30"
                 android:layout_gravity="center_horizontal|top" />
 
         </FrameLayout>
@@ -41,7 +42,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".15"
+            android:layout_weight=".10"
             android:gravity="bottom"
             >
 
@@ -58,7 +59,7 @@
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:layout_gravity="top"
             >
 
@@ -80,20 +81,20 @@
                 android:textColor="@color/color_6"
                 android:layout_gravity="top|center" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status"
-                android:textSize="@dimen/item_text_size"
-                android:id="@+id/tv_order_status"
-                android:layout_gravity="center_horizontal|bottom" />
-        </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="@dimen/item_text_size"
+            android:id="@+id/tv_order_status"
+            android:layout_gravity="center_horizontal|bottom" />
+    </FrameLayout>
 
-        <LinearLayout
-            style="@style/margin_left_right_top"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".55"
+    <LinearLayout
+        style="@style/margin_left_right_top"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+            android:layout_weight=".60"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginBottom="@dimen/small_margin"
@@ -104,18 +105,18 @@
             <ListView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".78"
+                android:layout_weight=".88"
                 android:id="@+id/lv_receipt" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight=".22"
+                android:layout_weight=".12"
                 android:textColor="@color/background_1"
+                android:textSize="14sp"
                 android:layout_margin="0dp"
                 android:text="合計: 130元"
                 android:id="@+id/tv_total"
-                android:gravity="bottom"
                 android:textAlignment="textEnd"
                 android:layout_gravity="right" />
         </LinearLayout>>

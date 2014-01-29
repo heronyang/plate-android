@@ -2,15 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image_main"
+    android:background="@drawable/welcome_page_v2"
+    android:scaleType = "centerCrop"
     tools:context="tw.plate.WelcomeActivity$PlaceholderFragment">
-
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:id="@+id/welcome_next_ns"
-        android:background="@drawable/circle_frame"
-        android:text="@string/next"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

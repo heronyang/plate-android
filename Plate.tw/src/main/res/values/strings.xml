@@ -52,7 +52,7 @@
 
     <!-- require for play service popup -->
     <string name="require_google_service_title">裝一下</string>
-    <string name="require_google_service_message">裝一下Google PlayService，不然你會收不到通知</string>
+    <string name="require_google_service_message">裝一下Google Play Service，不然你會收不到通知</string>
 
     <!-- for popup dialog -->
     <string name="ok">好啦</string>
@@ -87,7 +87,7 @@
     <string name="waitForRegisterCompleted">尚未登入，請收驗證簡訊</string>
     <string name="title_activity_welcome">Welcome</string>
     <string name="next">下一步</string>
-    <string name="restaurant_list_empty_messge">目前此位置並無合作餐廳</string>
+    <string name="restaurant_list_empty_message">目前此位置並無合作餐廳</string>
     <string name="restaurant_list_empty_title">再等等</string>
 
     <string name="status1">"正在煮"</string>

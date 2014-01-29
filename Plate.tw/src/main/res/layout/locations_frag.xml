@@ -6,6 +6,14 @@
     android:background="@color/background_1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- this button is only for testing -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trigger Error"
+        android:id="@+id/btn_err_trigger"
+        android:layout_gravity="right" />
+
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/margin_left_right"
         android:id="@+id/lv_canteen"
@@ -14,19 +22,5 @@
         android:layout_marginTop="50dp"
         android:layout_gravity="center"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trigger Error"
-        android:id="@+id/btn_err_trigger"
-        android:layout_gravity="right" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight=".10"
-        android:text=""
-        android:id="@+id/tv_dummy2"
-        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
