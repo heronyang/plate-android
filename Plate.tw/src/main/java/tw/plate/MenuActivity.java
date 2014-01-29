@@ -372,7 +372,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
     @Override
     public void registerSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void registerFailed() { throw new UnsupportedOperationException(); }
+    public void registerFailed(RetrofitError error) { throw new UnsupportedOperationException(); }
 
     @Override
     public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }

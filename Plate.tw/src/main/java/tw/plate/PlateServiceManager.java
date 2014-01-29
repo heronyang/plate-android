@@ -60,7 +60,7 @@ public class PlateServiceManager{
         void orderGetFailed();
 
         void registerSucceed();
-        void registerFailed();
+        void registerFailed(RetrofitError error);
 
         void currentNsSucceed(int current_ns);
         void currentNsFailed();
@@ -187,7 +187,7 @@ public class PlateServiceManager{
                     return;
                 }
                 Log.d(Constants.LOG_TAG, "Can't Register, status code = " + error.getResponse().getStatus());
-                callerActivity.registerFailed();
+                callerActivity.registerFailed(error);
             }
         });
     }

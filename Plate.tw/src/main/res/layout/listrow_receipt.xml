@@ -12,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/tvReceipt"
-        android:text="等一下囉, 快好了!"
         android:textSize="@dimen/menu_text_size"
         />
 
@@ -22,7 +21,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvAmount"
         android:textColor="@color/background_1"
-        android:text="3pcs"
         android:gravity="right"
         android:textSize="@dimen/menu_text_size"
         />
@@ -33,7 +31,6 @@
         android:layout_weight=".19"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:text="price"
         android:textSize="@dimen/menu_text_size"
         android:id="@+id/tv_receipt_price" />
 

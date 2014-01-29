@@ -356,7 +356,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
     @Override
     public void registerSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void registerFailed() { throw new UnsupportedOperationException(); }
+    public void registerFailed(RetrofitError error) { throw new UnsupportedOperationException(); }
 
     @Override
     public void orderGetSucceed(PlateService.OrderGetResponse orderGetResponse) { throw new UnsupportedOperationException(); }

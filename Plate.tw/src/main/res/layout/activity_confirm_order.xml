@@ -55,7 +55,6 @@
             </LinearLayout>
 
             <TextView
-                android:text="--- NTD"
                 android:layout_height="0dp"
                 android:layout_weight=".15"
                 android:textSize="@dimen/co_totalamount_size"

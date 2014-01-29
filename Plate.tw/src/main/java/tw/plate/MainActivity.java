@@ -29,6 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import retrofit.RetrofitError;
+
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, PlateServiceManager.PlateManagerCallback {
 
     PlateServiceManager plateServiceManager;
@@ -378,7 +380,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void registerSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void registerFailed() { throw new UnsupportedOperationException(); }
+    public void registerFailed(RetrofitError error) { throw new UnsupportedOperationException(); }
     @Override
     public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
 

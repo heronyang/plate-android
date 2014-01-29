@@ -7,14 +7,13 @@ final public class Constants {
     public static final String[] CANTEEN_LIST = new String[]{"女 二 餐 廳", "第 二 餐 廳", "第 一 餐 廳", "其  他"};
     //public static final String API_URI_PREFIX = "http://10.0.2.2:8000"; // Developing Mode
     //public static final String API_URI_PREFIX = "http://192.168.0.115:8080"; // Heron's Local Developing Mode
-    public static final String API_URI_PREFIX = "http://192.168.0.192:8080"; // Heron's Local Developing Mode
+    public static final String API_URI_PREFIX = "http://192.168.1.228:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://192.168.1.28:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://172.18.80.3:8080"; // Heron's Local Developing Mode
     //public static final String API_URI_PREFIX = "http://api.plate.tw"; // Release Mode
     //public static final String API_URI_PREFIX = "http://api-dev.plate.tw:8080"; // Release Mode
 
     public static final String OFFICIAL_WEBSITE = "http://plate.tw";
-    public static final String OFFICIAL_MAILBOX = "mailto:plate-service@googlegroups.com";
     public static final String PLATE_SERVICE_MAILBOX = "plate-service@googlegroups.com";
     public static final String GOOGLE_PLAY_SERVICE = "https://play.google.com/store/apps/details?id=com.google.android.gms";
     public static final String PLATE_DEV_MAILBOX = "dev-plate-tw@googlegroups.com";
@@ -38,8 +37,6 @@ final public class Constants {
     public static final int FLIP_BACK_TIME = 3000; // ms
     public static final int PRESSED_TIME = 1000; // ms
     public static final int WELCOME_PAGE_DELAY_TIME = 3000; // ms
-
-
 
     private Constants(){}
 }

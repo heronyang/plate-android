@@ -9,7 +9,6 @@
         android:layout_width="0dp"
         android:layout_weight=".62"
         android:layout_height="wrap_content"
-        android:text="meal name"
         android:gravity="left"
         android:id="@+id/tv_mealname" />
 
@@ -20,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:textColor="@color/background_1"
-        android:text="50 元"
         android:gravity="right"
         android:id="@+id/tv_price" />
 
@@ -31,7 +29,6 @@
         android:layout_weight=".16"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="am"
         android:id="@+id/tv_amount"
         android:gravity="right" />
 

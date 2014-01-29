@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import retrofit.RetrofitError;
+
 public class RestaurantActivity extends ListActivity implements PlateServiceManager.PlateManagerCallback {
 
     String [] restaurantNames;
@@ -211,7 +213,7 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
     @Override
     public void registerSucceed() { throw new UnsupportedOperationException(); }
     @Override
-    public void registerFailed() { throw new UnsupportedOperationException(); }
+    public void registerFailed(RetrofitError error) { throw new UnsupportedOperationException(); }
 
     @Override
     public void currentNsSucceed(int current_ns) { throw new UnsupportedOperationException(); }

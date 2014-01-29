@@ -13,9 +13,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.acra.ACRA;
-
-
 public class LocationFragment extends Fragment{
     private View v;
     private CustomAdapter customAdapter;
@@ -28,6 +25,7 @@ public class LocationFragment extends Fragment{
         setupUpSpinner();
 
         //Testing error reporting
+        /*
         Button bt = (Button) v.findViewById(R.id.btn_err_trigger);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +35,7 @@ public class LocationFragment extends Fragment{
                 throw new RuntimeException("Dying on purpose");
             }
         });
+        */
 
         return v;
     }

@@ -10,7 +10,6 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:textColor="@color/main_text_color"
-        android:text="New Text"
         android:id="@+id/tv_listrow_restaurant"
         android:textSize="@dimen/location_restaurant_listrow_text_size"
         android:background="@drawable/onclick_background_selector"

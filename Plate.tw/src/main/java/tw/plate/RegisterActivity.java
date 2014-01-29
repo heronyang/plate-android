@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -35,6 +37,9 @@ import java.util.regex.Pattern;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.ConversionException;
+import retrofit.converter.GsonConverter;
+import retrofit.mime.TypedInput;
 
 import static tw.plate.GcmUtilities.SENDER_ID;
 import static tw.plate.GcmUtilities.PROPERTY_APP_VERSION;
@@ -431,7 +436,27 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
         popupMessage(getString(R.string.register_success_title), getString(R.string.register_success_message));
     };
     @Override
-    public void registerFailed() {
+    public void registerFailed(RetrofitError error) {
+        if (error.getResponse().getStatus() == 470) {
+
+            Response response = error.getResponse();
+            TypedInput body = response.getBody();
+            Gson gson = new GsonBuilder().create();
+            GsonConverter gsonConverter = new GsonConverter(gson);
+            String error_msg = getString(R.string.order_fail_default_message);
+            try {
+                PlateService.ErrorResponse er;
+                er = (PlateService.ErrorResponse)gsonConverter.fromBody(body, PlateService.ErrorResponse.class);
+                error_msg = er.error_msg;
+                Log.d(Constants.LOG_TAG, "error_msg >> " + er.error_msg);
+            } catch (ConversionException e) {
+                Log.d(Constants.LOG_TAG, "conversion error >> " + e.getMessage());
+            } catch (Exception e) {
+                Log.d(Constants.LOG_TAG, "other casting exception >> " + e.getMessage());
+            }
+            popupMessage(getString(R.string.try_again_later_title), error_msg);
+            return;
+        }
         popupMessage(getString(R.string.register_submit_api_error_title), getString(R.string.register_submit_api_error_message));
     };
     @Override

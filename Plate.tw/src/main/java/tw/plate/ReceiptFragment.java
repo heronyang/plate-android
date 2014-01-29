@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.RetrofitError;
+
 public class ReceiptFragment extends Fragment{
 
 
@@ -36,7 +38,7 @@ public class ReceiptFragment extends Fragment{
         final View currNumButton = v.findViewById(R.id.bn_current_ns);
         final View refreshButton = v.findViewById(R.id.btn_refresh);
         tools = new Tools();
-        current_ns = "No Order";
+        current_ns = "...";
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

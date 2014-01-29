@@ -33,7 +33,6 @@
                 android:paddingRight="@dimen/small_small_margin"
                 android:id="@+id/tv_order_time"
                 android:gravity="right"
-                android:text="2014/12/03 23:30"
                 android:layout_gravity="center_horizontal|top" />
 
         </FrameLayout>
@@ -50,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/restname_text_size"
-                android:text="rest name"
                 android:layout_gravity="center_horizontal|bottom"
                 android:id="@+id/tv_rec_restaurant" />
 
@@ -74,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"
-                android:text="A12"
                 android:textSize="@dimen/slip_num_size"
                 android:gravity="top"
                 android:id="@+id/tv_slip_num"
@@ -84,7 +81,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status"
             android:textSize="@dimen/item_text_size"
             android:id="@+id/tv_order_status"
             android:layout_gravity="center_horizontal|bottom" />
@@ -115,7 +111,7 @@
                 android:textColor="@color/background_1"
                 android:textSize="14sp"
                 android:layout_margin="0dp"
-                android:text="合計: 130元"
+                android:text="@string/receipt_loading_msg"
                 android:id="@+id/tv_total"
                 android:textAlignment="textEnd"
                 android:layout_gravity="right" />
@@ -160,6 +156,3 @@
     </RelativeLayout>
 
 </LinearLayout>
-
-    <!--android:text="@string/receipt_button_text"
-        -->

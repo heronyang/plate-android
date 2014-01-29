@@ -15,7 +15,7 @@ public class WelcomeActivity extends ActionBarActivity {
 
         getSupportActionBar().hide();
 
-        int delay_time = Constants.FLIP_BACK_TIME;
+        int delay_time = Constants.WELCOME_PAGE_DELAY_TIME;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
