@@ -210,9 +210,9 @@ public class PlateService {
 			 * */
             String fmt;
             if (System.getProperty("java.runtime.name").equals("Android Runtime")) {
-                fmt = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ";
+                fmt = "yyyy-MM-dd'T'HH:mmZ";
             } else {
-                fmt = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ";
+                fmt = "yyyy-MM-dd'T'HH:mmZ";
             }
             sdf = new SimpleDateFormat(fmt, Locale.US);
         }
