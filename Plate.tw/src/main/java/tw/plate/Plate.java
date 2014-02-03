@@ -7,15 +7,19 @@ import org.acra.annotation.*;
  */
 
 //TODO make it sends to a backend system
-@ReportsCrashes(formKey = "",
-        //formUri = "http://www.yourselectedbackend.com/reportpath",
-        //formUri = "http://api-dev.plate.tw:8080/reportpath",
+@ReportsCrashes(
+        formKey = "",
+        formUri = "http://dev.plate.tw:5984/acra-myapp/_design/acra-storage/_update/report",
+        reportType = org.acra.sender.HttpSender.Type.JSON,
+        httpMethod = org.acra.sender.HttpSender.Method.PUT,
+        formUriBasicAuthLogin="plate-android",
+        formUriBasicAuthPassword="1234",
         mode = ReportingInteractionMode.TOAST,
         forceCloseDialogAfterToast = false, // optional, default false
-        resToastText = R.string.crash_toast_text,
-        mailTo = Constants.PLATE_DEV_MAILBOX,
+        resToastText = R.string.crash_toast_text
+        //mailTo = Constants.PLATE_DEV_MAILBOX,
         //mailTo = "anthonyang86@yahoo.com",
-        customReportContent = { ReportField.APP_VERSION_CODE, ReportField.APP_VERSION_NAME, ReportField.ANDROID_VERSION, ReportField.PHONE_MODEL, ReportField.CUSTOM_DATA, ReportField.STACK_TRACE, ReportField.LOGCAT }
+        //customReportContent = { ReportField.REPORT_ID, ReportField.APP_VERSION_CODE, ReportField.APP_VERSION_NAME, ReportField.ANDROID_VERSION, ReportField.PHONE_MODEL, ReportField.CUSTOM_DATA, ReportField.STACK_TRACE, ReportField.LOGCAT }
 )
 public class Plate extends Application {
 

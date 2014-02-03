@@ -17,6 +17,27 @@ repositories {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+
+        myConfig {
+            storeFile file("plate.tw-release-key.keystore")
+            storePassword "plate20140217"
+            keyAlias "plate-dev"
+            keyPassword "plate20140217"
+        }
+    }
+
+    buildTypes {
+        foo {
+            debuggable true
+            jniDebugBuild true
+            signingConfig signingConfigs.myConfig
+        }
+    }
+
     compileSdkVersion 19
     buildToolsVersion '19.0.0'
 
