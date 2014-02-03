@@ -6,10 +6,9 @@ import org.acra.annotation.*;
  * Created by heron on 1/19/14.
  */
 
-//TODO make it sends to a backend system
 @ReportsCrashes(
         formKey = "",
-        formUri = "http://dev.plate.tw:5984/acra-myapp/_design/acra-storage/_update/report",
+        formUri = Constants.ACRA_BACKEND_SERVER,
         reportType = org.acra.sender.HttpSender.Type.JSON,
         httpMethod = org.acra.sender.HttpSender.Method.PUT,
         formUriBasicAuthLogin="plate-android",
