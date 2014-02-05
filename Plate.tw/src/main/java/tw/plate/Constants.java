@@ -18,7 +18,7 @@ final public class Constants {
     public static final String GOOGLE_PLAY_SERVICE = "https://play.google.com/store/apps/details?id=com.google.android.gms";
     public static final String PLATE_DEV_MAILBOX = "dev-plate-tw@googlegroups.com";
 
-    public static final String ACRA_BACKEND_SERVER = "http://dev.plate.tw:5984/acra-myapp/_design/acra-storage/_update/report";
+    public static final String ACRA_BACKEND_SERVER = "http://dev.plate.tw:5984/acra-plate-android/_design/acra-storage/_update/report";
 
     /* Numbers */
     public static final int MAX_AMOUNT = 6;
