@@ -22,7 +22,7 @@ android {
             storeFile file("debug.keystore")
         }
 
-        myConfig {
+        release {
             storeFile file("plate.tw-release-key.keystore")
             storePassword "plate20140217"
             keyAlias "plate-dev"
@@ -31,10 +31,10 @@ android {
     }
 
     buildTypes {
-        foo {
-            debuggable true
-            jniDebugBuild true
-            signingConfig signingConfigs.myConfig
+        release {
+            debuggable false
+            jniDebugBuild false
+            signingConfig signingConfigs.release
         }
     }
 
@@ -52,8 +52,8 @@ android {
     }
     buildTypes {
         release {
-            runProguard true
-            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
     productFlavors {
