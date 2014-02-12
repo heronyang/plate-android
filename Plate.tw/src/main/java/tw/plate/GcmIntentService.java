@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,7 +59,7 @@ public class GcmIntentService extends IntentService {
                     // If it's a regular GCM message, do some work.
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE:
-                    messageRecieveHandler(extras);
+                    messageReceiveHandler(extras);
                     break;
                 default:
                     Log.d(Constants.LOG_TAG, "message type no listed");
@@ -69,7 +70,19 @@ public class GcmIntentService extends IntentService {
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    private void messageRecieveHandler(Bundle extras) {
+    private void messageReceiveHandler(Bundle extras) {
+
+        // ignore wrong receiver here
+        SharedPreferences sp = getSharedPreferences("account", 0);
+        if (sp.contains(Constants.SP_TAG_PHONE_NUMBER) && extras.containsKey("username")){
+            String phone_number = sp.getString(Constants.SP_TAG_PHONE_NUMBER, null);
+            String gcm_receiver = extras.get("username").toString();
+            if (!phone_number.equals(gcm_receiver)) {
+                Log.d(Constants.LOG_TAG, "Message dismissed, original receiver: " + gcm_receiver);
+                return;
+            }
+        }
+
         // Post notification of received message.
         String title, message, ticker;
 
