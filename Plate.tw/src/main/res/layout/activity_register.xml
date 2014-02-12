@@ -27,4 +27,52 @@
         android:inputType="phone"
         android:imeOptions="actionDone"
         />
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tv_terms"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_unseen"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:text="@string/terms_of_service"/>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tv_policy"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_unseen"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:text="@string/policy"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/bt_skip"
+            android:text="@string/skip_register"
+            android:background="@color/foreground_1"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/bt_accept_register"
+            android:text="@string/accept_register_button_content"
+            android:background="@color/foreground_2"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </LinearLayout>
