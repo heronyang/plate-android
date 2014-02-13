@@ -56,6 +56,10 @@ def getVersionCode() {
     return versionMajor*10000 + versionMinor*1000 + versionPatch*100 + versionBuild
 }
 
+def getVersionName() {
+    return "${versionMajor}.${versionMinor}.${versionPatch}"
+}
+
 def gitSha() {
     return 'git rev-parse --short HEAD'.execute().text.trim()
 }
@@ -93,7 +97,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 17
         versionCode getVersionCode()
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        versionName getVersionName()
         buildConfigField "String", "GIT_SHA", "\"${gitSha()}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime()}\""
     }
@@ -135,7 +139,7 @@ task commitBumpVersionCode(dependsOn: 'bumpVersionCode') << {
         commandLine 'git', 'commit', '-a', '-m', 'Bump versionCode'
     }
     exec {
-        commandLine 'git', 'tag', "version-code-${getVersionCode()}"
+        commandLine 'git', 'tag', "${getVersionName()}.${versionBuild}"
     }
 }
 
