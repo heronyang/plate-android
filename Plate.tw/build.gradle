@@ -27,11 +27,6 @@ def versionLoad() {
         Integer.parseInt(p.getProperty('versionBuild')) ]
 }
 
-task version << {
-    println computeVersionCode()
-    println computeVersionName()
-}
-
 def versionSave(major, minor, patch, build) {
     def pf = file('../version.properties')
     def p = new Properties() {
