@@ -8,6 +8,7 @@
 
     <!-- this button is only for testing -->
     <Button
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trigger Error"
@@ -21,6 +22,5 @@
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
         android:layout_gravity="center"/>
-
 
 </LinearLayout>

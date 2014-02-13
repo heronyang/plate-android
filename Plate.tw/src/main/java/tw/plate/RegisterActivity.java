@@ -11,11 +11,15 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -258,7 +262,6 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
 
         gcm_setup();
 
-
         // setup edit text
         EditText editText = (EditText)findViewById(R.id.phone_number_et);
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -266,11 +269,53 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 // TODO Auto-generated method stub
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    submit();
+                    //click the button instead
+                    //submit();
                 }
                 return false;
             }
         });
+
+        setupTermsAndPolicy();
+        setupButtonsOnclick();
+
+    }
+
+    private void setupButtonsOnclick() {
+        Button buttonAccept = (Button)findViewById(R.id.bt_accept_register);
+        buttonAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+                Toast.makeText(getApplicationContext(), getString(R.string.register_please_wait), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Button buttonSkip = (Button)findViewById(R.id.bt_skip);
+        buttonSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setNoMoreFirstTime();
+                finish();
+                intentMain();
+            }
+        });
+    }
+
+    private void setupTermsAndPolicy() {
+        // set terms hyperlink clickable
+        TextView tv_terms =(TextView)findViewById(R.id.tv_terms);
+        tv_terms.setClickable(true);
+        tv_terms.setMovementMethod(LinkMovementMethod.getInstance());
+        String content_terms = "<a href='http://plate.tw/terms/'>"+ getString(R.string.terms_of_service) +"</a>";
+        tv_terms.setText(Html.fromHtml(content_terms));
+
+        // set policy hyperlink clickable
+        TextView tv_policy =(TextView)findViewById(R.id.tv_policy);
+        tv_policy.setClickable(true);
+        tv_policy.setMovementMethod(LinkMovementMethod.getInstance());
+        String content_policy = "<a href='http://plate.tw/policy/'>"+ getString(R.string.policy) +"</a>";
+        tv_policy.setText(Html.fromHtml(content_policy));
     }
 
     @Override

@@ -29,7 +29,7 @@
 
 
     <!-- for register page -->
-    <string name="example_phone_number">0912321321</string>
+    <string name="example_phone_number">如：0912321321</string>
     <string name="register_success_message">已經成功送出，請收簡訊</string>
     <string name="register_success_title">收簡訊啦</string>
     <string name="register_wrong_input_format_message">電話號碼格式錯誤</string>
@@ -124,7 +124,12 @@
 
     <!-- ARCA Error reporting -->
     <string name="crash_toast_text">Ooooops ! I crashed, but a report can be sent to my developers! They will fix me!</string>
-    <string name="receipt_loading_msg">loading...</string>
+    <string name="receipt_loading_msg">loading…</string>
     <string name="try_again_later_title">請稍後再試</string>
+    <string name="policy"><u>隱私條款</u></string>
+    <string name="terms_of_service"><u>服務條款</u></string>
+    <string name="accept_register_button_content">同意條款並註冊帳號</string>
+    <string name="register_please_wait">簡訊寄出中，請稍後</string>
+    <string name="skip_register">跳過</string>
 
 </resources>
