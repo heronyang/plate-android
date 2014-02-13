@@ -1,7 +1,9 @@
 package tw.plate;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -76,6 +78,7 @@ public class LocationFragment extends Fragment{
         public long getItemId(int position){
             return position;
         }
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         public View getView(final int arg0, View convertview, ViewGroup arg2) {
             ViewHolder viewHolder = null;
             if(convertview == null)
@@ -108,7 +111,9 @@ public class LocationFragment extends Fragment{
             // set values
             String locationName = Constants.CANTEEN_LIST[arg0];
             viewHolder.tv_location.setText(locationName);
-
+            if(arg0 == 1){
+                viewHolder.tv_location.setBackground(getResources().getDrawable(R.drawable.onclick_background_selector));
+            }
             return convertview;
         }
 

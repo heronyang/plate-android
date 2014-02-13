@@ -61,10 +61,6 @@
     <color name="tab_select">#f4cc3b</color>
     <color name="tab_touch">#f4cc3b</color>
 
-    <color name="test1">#0a0aaa</color>
-    <color name="test2">#aa0abb</color>
-    <color name="test3">#00FF00</color>
-    <color name="test4">#00FFFF</color>
-
+    <color name="tab_unavail">#aa8e29</color>
 
 </resources>
