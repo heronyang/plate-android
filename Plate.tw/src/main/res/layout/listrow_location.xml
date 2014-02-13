@@ -13,7 +13,7 @@
         android:text="New Text"
         android:id="@+id/tv_listrow_location"
         android:textSize="@dimen/location_restaurant_listrow_text_size"
-        android:background="@drawable/rectangle_frame_unavail"
+        android:background="@drawable/onclick_background_selector"
         android:layout_margin="@dimen/location_restaurant_listrow_margin"
         android:padding="@dimen/location_restaurant_listrow_padding"/>
 </LinearLayout>

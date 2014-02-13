@@ -70,6 +70,7 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
         }
         public View getView(final int arg0, View convertview, ViewGroup arg2) {
             ViewHolder viewHolder = null;
+            final PlateService.Restaurant restaurant = restaurantList.get(arg0);
             if(convertview == null)
             {
                 convertview = inflater.inflate(R.layout.listrow_restaurant, null);
@@ -84,14 +85,15 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
                 viewHolder=(ViewHolder)convertview.getTag();
             }
             // set values
+            if(!restaurant.is_open){
+                viewHolder.tv_restaurant.setBackground(getResources().getDrawable(R.drawable.rectangle_frame_unavail));
+            }
             String restName = restaurantNames[arg0];
             viewHolder.tv_restaurant.setText(restName);
 
             viewHolder.tv_restaurant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    final PlateService.Restaurant restaurant = restaurantList.get(arg0);
                     Log.d(Constants.LOG_TAG, "description: " + restaurant.description);
                     AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantActivity.this);
 

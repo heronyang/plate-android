@@ -111,8 +111,8 @@ public class LocationFragment extends Fragment{
             // set values
             String locationName = Constants.CANTEEN_LIST[arg0];
             viewHolder.tv_location.setText(locationName);
-            if(arg0 == 1){
-                viewHolder.tv_location.setBackground(getResources().getDrawable(R.drawable.onclick_background_selector));
+            if(arg0 != 1){
+                viewHolder.tv_location.setBackground(getResources().getDrawable(R.drawable.rectangle_frame_unavail));
             }
             return convertview;
         }
