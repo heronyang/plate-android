@@ -6,4 +6,6 @@
     <dimen name="location_restaurant_listrow_text_size">25sp</dimen>
     <dimen name="location_restaurant_listrow_margin">1dp</dimen>
     <dimen name="location_restaurant_listrow_padding">15dp</dimen>
+    <dimen name="slip_num_size"> 45sp </dimen>
+    <dimen name="restname_text_size"> 25sp </dimen>
 </resources>
