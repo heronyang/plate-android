@@ -40,12 +40,7 @@
 
     <!-- warning popup -->
     <string name="confirm_order_warning_title">注意啊</string>
-    <string name="confirm_order_warning_message">
-        1. 當您送出訂單後將「無法」取消訂單，請「務必」再次確認您所點選的餐點。\n
-        2. 為了確保您能收到領餐通知，於確認領餐前務必讓手機保持連網狀態。\n
-        3. 為了維持餐點品質，請於收到領餐通知後盡速前往領餐。\n
-        4. 請務必於商家「當日營業時間內」前至該商家領取餐點，若未取餐，系統將於「每日午夜12點」統一標記未領餐紀錄一次；若達「兩次」未取餐紀錄，將不能再次點餐。
-    </string>
+    <string name="confirm_order_warning_message">1. 訂單送出後，將無法取消\n2. 領餐前，手機請保持「連網」狀態\n3. 請於收到領餐通知後，盡速領餐\n4. 請務必於商家「當日營業時間內」取餐；若逾「兩次」未取餐，將不能使用本系統</string>
 
 
     <!-- last confirmation -->
