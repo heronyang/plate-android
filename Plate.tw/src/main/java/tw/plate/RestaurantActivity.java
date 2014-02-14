@@ -73,7 +73,6 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
             final PlateService.Restaurant restaurant = restaurantList.get(arg0);
             if(convertview == null)
             {
-                //FIXME
                 if(!restaurant.is_open){
                     convertview = inflater.inflate(R.layout.listrow_restaurant_unavail, null);
                     //viewHolder.tv_restaurant.setBackground(getResources().getDrawable(R.drawable.rectangle_frame_unavail));
