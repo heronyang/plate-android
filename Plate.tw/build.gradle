@@ -1,19 +1,72 @@
-/* vim: ts=4:sw=4:smarttab:expandtab
+/* vim: ts=4:sw=4:smarttab:expandtab:ft=groovy
  */
+
+import java.text.SimpleDateFormat
 
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
-
+        classpath 'com.android.tools.build:gradle:0.8.+'
     }
 }
 apply plugin: 'android'
 
 repositories {
     mavenCentral()
+}
+
+def versionLoad() {
+    def pf = file('../version.properties')
+    def p = new Properties()
+    p.load(new FileInputStream(pf))
+    return [ Integer.parseInt(p.getProperty('versionMajor')),
+        Integer.parseInt(p.getProperty('versionMinor')),
+        Integer.parseInt(p.getProperty('versionPatch')),
+        Integer.parseInt(p.getProperty('versionBuild')) ]
+}
+
+def versionSave(major, minor, patch, build) {
+    def pf = file('../version.properties')
+    def p = new Properties() {
+        @Override
+        public synchronized Enumeration<Object> keys() {
+            return Collections.enumeration([ 'versionMajor', 'versionMinor', 'versionPatch', 'versionBuild' ])
+        }
+    }
+
+    p.setProperty('versionMajor', new Integer(major).toString())
+    p.setProperty('versionMinor', new Integer(minor).toString())
+    p.setProperty('versionPatch', new Integer(patch).toString())
+    p.setProperty('versionBuild', new Integer(build).toString())
+    p.store(new FileOutputStream(pf), "Used in build.gradle")
+}
+
+ext {
+    def t = versionLoad()
+    versionMajor = t[0]
+    versionMinor = t[1]
+    versionPatch = t[2]
+    versionBuild = t[3]
+}
+
+def computeVersionCode() {
+    return versionMajor*10000 + versionMinor*1000 + versionPatch*100 + versionBuild
+}
+
+def computeVersionName() {
+    return "${versionMajor}.${versionMinor}.${versionPatch}"
+}
+
+def gitSha() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}
+
+def buildTime() {
+    def df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
+    df.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return df.format(new Date())
 }
 
 android {
@@ -32,8 +85,6 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            jniDebugBuild false
             signingConfig signingConfigs.release
         }
     }
@@ -44,6 +95,10 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 17
+        versionCode computeVersionCode()
+        versionName computeVersionName()
+        buildConfigField "String", "GIT_SHA", "\"${gitSha()}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime()}\""
     }
 
     compileOptions {
@@ -61,6 +116,9 @@ android {
             proguardFile 'proguard-rules.txt'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -72,3 +130,26 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'com.squareup.picasso:picasso:2.1.1'
 }
+
+task bumpVersionCode << {
+    project.versionBuild = versionBuild + 1
+    versionSave(versionMajor, versionMinor, versionPatch, versionBuild)
+}
+
+task commitBumpVersionCode(dependsOn: 'bumpVersionCode') << {
+    exec {
+        commandLine 'git', 'commit', '-a', '-m', 'Bump versionCode'
+    }
+    exec {
+        commandLine 'git', 'tag', "${computeVersionName()}.${versionBuild}"
+    }
+}
+
+/* NOTE: hack to make assemble run after commitBumpVersionCode for release */
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith('assemble')) {
+        task.mustRunAfter commitBumpVersionCode
+    }
+}
+
+task release(dependsOn: ['commitBumpVersionCode', 'assembleRelease'])
