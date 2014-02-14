@@ -83,6 +83,11 @@ public class GcmIntentService extends IntentService {
             }
         }
 
+        if (!sp.contains(Constants.SP_TAG_PHONE_NUMBER)) {
+            Log.d(Constants.LOG_TAG, "Message dismissed, no user registered in this phone");
+            return;
+        }
+
         // Post notification of received message.
         String title, message, ticker;
 
