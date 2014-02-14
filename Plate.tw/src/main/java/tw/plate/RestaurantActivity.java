@@ -74,7 +74,6 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
             if(convertview == null)
             {
                 convertview = inflater.inflate(R.layout.listrow_restaurant, null);
-
                 viewHolder=new ViewHolder();
                 viewHolder.tv_restaurant = (TextView) convertview.findViewById(R.id.tv_listrow_restaurant);
 
@@ -84,10 +83,14 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
             {
                 viewHolder=(ViewHolder)convertview.getTag();
             }
+            /*
             // set values
+            //FIXME
             if(!restaurant.is_open){
+                convertview = inflater.inflate(R.layout.listrow_location_unavail, null);
                 viewHolder.tv_restaurant.setBackground(getResources().getDrawable(R.drawable.rectangle_frame_unavail));
             }
+            */
             String restName = restaurantNames[arg0];
             viewHolder.tv_restaurant.setText(restName);
 

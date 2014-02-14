@@ -78,13 +78,16 @@ public class LocationFragment extends Fragment{
         public long getItemId(int position){
             return position;
         }
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         public View getView(final int arg0, View convertview, ViewGroup arg2) {
             ViewHolder viewHolder = null;
             if(convertview == null)
             {
-                convertview = inflater.inflate(R.layout.listrow_location, null);
-
+                if(arg0 != 1){
+                    //viewHolder.tv_location.setBackground(getResources().getDrawable(R.drawable.rectangle_frame_unavail));
+                    convertview = inflater.inflate(R.layout.listrow_location_unavail, null);
+                }else{
+                    convertview = inflater.inflate(R.layout.listrow_location, null);
+                }
                 viewHolder=new ViewHolder();
                 viewHolder.tv_location = (TextView) convertview.findViewById(R.id.tv_listrow_location);
 
@@ -111,9 +114,6 @@ public class LocationFragment extends Fragment{
             // set values
             String locationName = Constants.CANTEEN_LIST[arg0];
             viewHolder.tv_location.setText(locationName);
-            if(arg0 != 1){
-                viewHolder.tv_location.setBackground(getResources().getDrawable(R.drawable.rectangle_frame_unavail));
-            }
             return convertview;
         }
 
