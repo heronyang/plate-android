@@ -1,7 +1,6 @@
 /* vim: ts=4:sw=4:smarttab:expandtab:ft=groovy
  */
 
-import java.util.regex.Pattern 
 import java.text.SimpleDateFormat
 
 buildscript {
@@ -52,8 +51,12 @@ ext {
     versionBuild = t[3]
 }
 
-def getVersionCode() {
+def computeVersionCode() {
     return versionMajor*10000 + versionMinor*1000 + versionPatch*100 + versionBuild
+}
+
+def computeVersionName() {
+    return "${versionMajor}.${versionMinor}.${versionPatch}"
 }
 
 def gitSha() {
@@ -92,8 +95,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 17
-        versionCode getVersionCode()
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        versionCode computeVersionCode()
+        versionName computeVersionName()
         buildConfigField "String", "GIT_SHA", "\"${gitSha()}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime()}\""
     }
@@ -112,6 +115,9 @@ android {
         defaultFlavor {
             proguardFile 'proguard-rules.txt'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -135,7 +141,7 @@ task commitBumpVersionCode(dependsOn: 'bumpVersionCode') << {
         commandLine 'git', 'commit', '-a', '-m', 'Bump versionCode'
     }
     exec {
-        commandLine 'git', 'tag', "version-code-${getVersionCode()}"
+        commandLine 'git', 'tag', "${computeVersionName()}.${versionBuild}"
     }
 }
 
