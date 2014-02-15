@@ -146,33 +146,31 @@ public class ReceiptFragment extends Fragment{
         String status="";
         int textColor=0;
         switch(lo.status){
-            case 0: {
+            case 0:
                 status = getString(R.string.status1);
                 textColor = getResources().getColor(R.color.blue);
                 break;
-            }
-            case 1: {
+            case 1:
                 status = getString(R.string.status2);
                 textColor = getResources().getColor(R.color.green);
                 break;
-            }
-            case 2:{
+            case 2:
                 status = getString(R.string.status3);
                 textColor = getResources().getColor(R.color.black);
                 break;
-            }
-            case 3: {
+            case 3:
                 status = getString(R.string.status4);
                 textColor = getResources().getColor(R.color.red);
                 break;
-            }
-            case 4:{
+            case 4:
                 status = getString(R.string.status5);
                 textColor = getResources().getColor(R.color.blue);
                 break;
-            }
             case 5: status = getString(R.string.status6);
                 break;
+            case 6: status = getString(R.string.status7);
+                break;
+            default: throw new RuntimeException("Order Status undefined");
         }
 
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");

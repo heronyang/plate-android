@@ -95,6 +95,7 @@
     <string name="status4">交易失敗</string>
     <string name="status5">交易失敗</string>
     <string name="status6">交易成功</string>
+    <string name="status7">交易失敗</string>
     <string name="ERROR_MESSAGE_EXCEED_MAX_TOTAL_PRICE">訂單總價過大</string>
     <string name="ERROR_MESSAGE_INCOMPLETE_ORDER">有尚未完成訂單，一次只能訂一個</string>
     <string name="ERROR_MESSAGE_REST_CLOSED">非餐廳營業時間</string>
