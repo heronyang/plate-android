@@ -297,6 +297,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // inform receiptFragment the user is logged in
         tag = makeFragmentName(R.id.pager, 1);
         ReceiptFragment receiptFragment = (ReceiptFragment)fm.findFragmentByTag(tag);
+        //BUG FIX
+        if(receiptFragment == null){
+            receiptFragment = ReceiptFragment.newInstance();
+        }
         return receiptFragment;
     }
 
