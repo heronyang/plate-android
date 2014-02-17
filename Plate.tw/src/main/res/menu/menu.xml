@@ -15,7 +15,7 @@
     -->
 
     <item android:id="@+id/action_confirm"
-        android:icon="@drawable/button_ok_menu_selector"
+        android:title="@string/action_bar_confirm"
         android:showAsAction="always" />
 <!-- android:title="@string/action_confirm" -->
 

@@ -253,11 +253,11 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
-        //menu.findItem(R.id.action_bar_title).setTitle(restName);
+        /*
         String title = getActionBar().getTitle().toString();
         title += ":    "+restName;
         getActionBar().setTitle(title);
-        //getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light_gray)));
+        */
         return true;
     }
 
@@ -337,7 +337,9 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         ListView lv = (ListView) findViewById(android.R.id.list);
 
         //tv_category.setText(getResources().getString(R.string.menu_list_category));
-        tv_category.setHeight(20);
+        // FIXME: this is a fast implementation for upcoming release
+        tv_category.setText(restName);
+        //tv_category.setHeight(20);
 
         ArrayAdapter<String> spAdapter;
         String [] spinnerItems = new String[Constants.MAX_AMOUNT];

@@ -2,7 +2,7 @@
 <resources>
 
     <!-- app -->
-    <string name="app_name">Plate</string>
+    <string name="app_name">PLATE</string>
 
     <!-- tabs -->
     <string name="tab_location">選餐</string>
@@ -127,5 +127,6 @@
     <string name="accept_register_button_content">同意條款並註冊帳號</string>
     <string name="register_please_wait">簡訊寄出中，請稍後</string>
     <string name="skip_register">跳過</string>
+    <string name="action_bar_confirm">確 認</string>
 
 </resources>
