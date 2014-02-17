@@ -133,11 +133,14 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true">
 
+            <!--
+                android:background="@drawable/rounded_rectangle_frame"
+            -->
             <Button
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:id="@+id/bn_current_ns"
-                android:background="@drawable/rounded_rectangle_frame"
+                android:background="@drawable/onclick_background_selector"
                 android:text="@string/receipt_button_text"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
@@ -147,7 +150,7 @@
                 android:layout_marginLeft="@dimen/small_small_margin"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
-                android:background="@drawable/rounded_rectangle_frame"
+                android:background="@drawable/onclick_background_selector"
                 android:text="@string/receipt_button_refresh"
                 android:id="@+id/btn_refresh"
                 android:layout_toRightOf="@+id/bn_current_ns"

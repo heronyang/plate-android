@@ -46,17 +46,17 @@ public class ReceiptFragment extends Fragment{
                 PlateServiceManager plateServiceManager = ((Plate)getActivity().getApplication()).getPlateServiceManager();
                 plateServiceManager.login(getActivity());
 
-                refreshButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
+                //refreshButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
                 int delay_time =Constants.PRESSED_TIME;
                 Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                /*handler.postDelayed(new Runnable() {
                     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void run() {
                         refreshButton.setBackground(getResources().getDrawable(R.drawable.rounded_rectangle_frame));
                     }
                 }, delay_time);
-
+                */
             }
         });
 
@@ -70,16 +70,17 @@ public class ReceiptFragment extends Fragment{
                     plateServiceManager.current_ns(rest_id, getActivity());
                     showCurrentNS();
 
-                    currNumButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
+                    //currNumButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
                     int delay_time =Constants.FLIP_BACK_TIME;
                     Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
+                    /*handler.postDelayed(new Runnable() {
                         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                         @Override
                         public void run() {
                             currNumButton.setBackground(getResources().getDrawable(R.drawable.rounded_rectangle_frame));
                         }
                     }, delay_time);
+                    */
                 }
             }
         );
