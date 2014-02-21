@@ -21,7 +21,7 @@
     <string name="title_activity_register">註冊</string>
 
     <!-- for main activity page -->
-    <string name="main_exit_message">"誒 , 確定要離開 Plate 嗎?"</string>
+    <string name="main_exit_message">"誒 , 確定要離開 PLATE 嗎?"</string>
     <string name="main_exit_title">不要走啦</string>
     <string name="main_about_us">About</string>
     <string name="main_feedback">Feedback</string>
@@ -35,8 +35,8 @@
     <string name="register_wrong_input_format_message">電話號碼格式錯誤</string>
     <string name="register_wrong_input_format_title">錯了啦</string>
     <string name="register_default">請輸入電話號碼</string>
-    <string name="register_first_time">Welcome to Plate! 為了使商家於領餐時確認您的身分，請輸入電話號碼以啟動點餐功能。</string>
-    <string name="register_sp_saved_but_login_fail">請點簡訊內連結以啟用Plate點餐功能</string>
+    <string name="register_first_time">Welcome to PLATE! 為了使商家於領餐時確認您的身分，請輸入電話號碼以啟動點餐功能。</string>
+    <string name="register_sp_saved_but_login_fail">請點簡訊內連結啟用PLATE點餐功能，\n輸入電話號碼以重送確認簡訊</string>
 
     <!-- warning popup -->
     <string name="confirm_order_warning_title">注意啊</string>
@@ -83,7 +83,7 @@
     <string name="receipt_noorder">目前沒有訂單</string>
     <string name="notRegistered">尚未登入</string>
     <string name="register_second_chance_to_register">請輸入手機號碼，收到確認簡訊後將開啟訂餐功能。</string>
-    <string name="waitForRegisterCompleted">尚未登入，請收驗證簡訊</string>
+    <string name="waitForRegisterCompleted">尚未登入</string>
     <string name="title_activity_welcome">Welcome</string>
     <string name="next">下一步</string>
     <string name="restaurant_list_empty_message">尚無合作餐廳！</string>

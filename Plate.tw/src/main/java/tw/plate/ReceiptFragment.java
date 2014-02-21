@@ -1,6 +1,7 @@
 package tw.plate;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -24,7 +25,6 @@ import java.util.List;
 import retrofit.RetrofitError;
 
 public class ReceiptFragment extends Fragment{
-
 
     private int rest_id = Constants.ORDER_EMPTY;
     private String current_ns;
@@ -114,9 +114,18 @@ public class ReceiptFragment extends Fragment{
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             //updateReceiptContent();
-        } else {
-            // Do your Work
         }
+    }
+
+    @Override
+    public void onStart() {
+        boolean updateReceipt = getActivity().getIntent().getBooleanExtra("updateReceipt", false);
+        Log.d(Constants.LOG_TAG, "updateReceipt extra: " + updateReceipt );
+        if (updateReceipt) {
+            updateReceiptContent();
+            getActivity().getIntent().removeExtra("updateReceipt");
+        }
+        super.onStart();
     }
 
     public void updateReceiptContent() {

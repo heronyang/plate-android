@@ -293,6 +293,7 @@ public class ConfirmOrderActivity extends Activity implements PlateServiceManage
             public void onClick(DialogInterface dialog, int id) {
                 Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
                 mainActivityIntent.putExtra("fragPosition", 1);
+                mainActivityIntent.putExtra("updateReceipt", true);
                 mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(mainActivityIntent);
             }

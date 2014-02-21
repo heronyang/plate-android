@@ -111,7 +111,7 @@
                 android:textColor="@color/background_1"
                 android:textSize="14sp"
                 android:layout_margin="0dp"
-                android:text="@string/receipt_loading_msg"
+                android:text="@string/waitForRegisterCompleted"
                 android:id="@+id/tv_total"
                 android:textAlignment="textEnd"
                 android:layout_gravity="right" />

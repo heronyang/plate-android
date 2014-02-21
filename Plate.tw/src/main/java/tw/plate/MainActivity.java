@@ -96,8 +96,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             actionBar.addTab(tab);
         }
 
+
+        // receive intent from "confirm"
         Intent intent = getIntent();
-        int position = intent.getIntExtra("fragPosition",0);
+        int position = intent.getIntExtra("fragPosition", 0);
+        boolean updateReceipt = intent.getBooleanExtra("updateReceipt", false);
+
+        Log.d(Constants.LOG_TAG, "[main] fragPosition: " + position);
+        Log.d(Constants.LOG_TAG, "[main] updateReceipt extra: " + updateReceipt );
+        //getIntent().removeExtra("updateReceipt");
+
         mViewPager.setCurrentItem(position);
     }
 

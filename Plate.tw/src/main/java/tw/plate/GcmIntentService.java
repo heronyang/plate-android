@@ -124,9 +124,10 @@ public class GcmIntentService extends IntentService {
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("fragPosition",1);
+        intent.putExtra("fragPosition", 1);
+        intent.putExtra("updateReceipt", true);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                intent, 0);
+                intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Uri ringtonePath = Uri.parse("android.resource://tw.plate/" + R.raw.ringtone_finish);
         NotificationCompat.Builder mBuilder =
