@@ -287,7 +287,7 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
             @Override
             public void onClick(View v) {
                 submit();
-                Toast.makeText(getApplicationContext(), getString(R.string.register_please_wait), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), getString(R.string.register_please_wait), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -478,8 +478,12 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
 
         Log.d(Constants.LOG_TAG, "phone_number = " + phone_number + "\tPS = " + password);
 
-        popupMessage(getString(R.string.register_success_title), getString(R.string.register_success_message));
+        //popupMessage(getString(R.string.register_success_title), getString(R.string.register_success_message));
+        Toast.makeText(getApplicationContext(), getString(R.string.register_please_wait), Toast.LENGTH_LONG).show();
+        setNoMoreFirstTime();
+        intentMain();
     };
+
     @Override
     public void registerFailed(RetrofitError error) {
         if (error.getResponse().getStatus() == 470) {
@@ -510,7 +514,6 @@ public class RegisterActivity extends Activity implements PlateServiceManager.Pl
     public void currentNsFailed() { throw new UnsupportedOperationException(); }
     @Override
     public void currentCookingOrdersSucceed(int current_cooking_orders) { throw new UnsupportedOperationException(); }
-
 
 
     @Override
