@@ -23,6 +23,7 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
 
     String [] restaurantNames;
     CustomAdapter customAdapter;
+    String restStatus = "open";
 
     PlateServiceManager plateServiceManager;
 
@@ -102,6 +103,9 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
                     String msg = "";
                     if (!restaurant.is_open) {
                         msg += "* 餐廳目前休息中：" + restaurant.closed_reason + "\n";
+                        restStatus = "closed";
+                    }else {
+                        restStatus = "open";
                     }
                     msg += restaurant.description;
 
@@ -127,6 +131,7 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
         Intent menuIntent = new Intent(this, MenuActivity.class);
         menuIntent.putExtra("restId", restaurant.rest_id);
         menuIntent.putExtra("restName", restaurant.name);
+        menuIntent.putExtra("restStatus",restStatus);
         startActivity(menuIntent);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
@@ -152,7 +157,6 @@ public class RestaurantActivity extends ListActivity implements PlateServiceMana
         // FIXME: there must be a better way to get the name array of restaurants
         List<PlateService.Restaurant> restaurantList = plateServiceManager.getRestaurantList();
         int l = restaurantList.size(), i;
-
         // if empty, send back
         if (l<=0) {
             popupEmptyMessageAndSendBack();

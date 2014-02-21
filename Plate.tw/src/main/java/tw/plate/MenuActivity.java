@@ -39,6 +39,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
     int restId;
     String restName;
     private CustomAdapter customAdapter;
+    String restStatus;
 
     public enum Animation {
         CURL, TWIRL, ZIPPER, FADE, FLY, REVERSE_FLY, FLIP, CARDS, GROW, WAVE;
@@ -52,6 +53,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         Intent intent = getIntent();
         restId = intent.getIntExtra("restId", 0);
         restName = intent.getStringExtra("restName");
+        restStatus = intent.getStringExtra("restStatus");
 
         plateServiceManager = ((Plate) this.getApplication()).getPlateServiceManager();
         plateServiceManager.menu(restId, this);
@@ -128,6 +130,7 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
                 viewHolder.tv_name = (TextView) convertview.findViewById(R.id.listrow_menu_tv);
                 viewHolder.tv_price = (TextView) convertview.findViewById(R.id.tv_listrow_price);
                 convertview.setTag(viewHolder);
+
             }
             else
             {
@@ -160,8 +163,17 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
                     // The selection can disappear for instance when touch is activated or when the adapter becomes empty.
                 }
             });
-            selectAnimation(convertview,arg0, animation);
 
+            if(restStatus.equals("closed")){
+                //TODO set the spinner invisible
+                Log.d(Constants.LOG_TAG,"spinner visibility GONE");
+                viewHolder.sp.setVisibility(convertview.GONE);
+            } else{
+                Log.d(Constants.LOG_TAG,"spinner visibility VISIBLE");
+                viewHolder.sp.setVisibility(convertview.VISIBLE);
+            }
+
+            selectAnimation(convertview,arg0, animation);
             viewHolder.sp.setSelection(amounts[arg0]);
             return convertview;
         }
@@ -285,10 +297,14 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
         View view = findViewById(android.R.id.content);
         Intent confirmOrderIntent = new Intent(view.getContext(), ConfirmOrderActivity.class);
         collectResults();
-
+        Log.d(Constants.LOG_TAG,"status: "+restStatus);
         // for test
         Cart cart = ((Plate)getApplication()).getCart();
-        if(cart.isEmpty()){
+        if(restStatus.equals("closed")){
+            Log.d(Constants.LOG_TAG,"equals");
+            sorryClosed();
+        }
+        else if(cart.isEmpty()){
             pleaseOrder();
         }
         else{
@@ -323,6 +339,10 @@ public class MenuActivity extends ListActivity implements PlateServiceManager.Pl
                 Toast.LENGTH_SHORT).show();
     }
 
+    private void sorryClosed(){
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.menu_closed),
+                Toast.LENGTH_SHORT).show();
+    }
     /*
         Override for PlateServiceManager's Callbacks
      */
