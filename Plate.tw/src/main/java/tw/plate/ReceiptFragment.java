@@ -1,10 +1,8 @@
 package tw.plate;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -17,12 +15,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import retrofit.RetrofitError;
+import java.util.Map;
 
 public class ReceiptFragment extends Fragment{
 
@@ -119,6 +121,23 @@ public class ReceiptFragment extends Fragment{
 
     @Override
     public void onStart() {
+        // TODO: [sp] load previous data
+        SharedPreferences sp = getActivity().getSharedPreferences("offline_data", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        if (sp.contains("jsonLastOrder") && sp.contains("jsonLastOrderItems")) {
+            String jsonLastOrder = sp.getString("jsonLastOrder", "");
+            String jsonLastOrderItems = sp.getString("jsonLastOrderItems", "");
+
+            Type typeOrderV1 = new TypeToken<PlateService.OrderV1>() {}.getType();
+            Type typeOrderItemV1 = new TypeToken<List<PlateService.OrderItemV1>>() {}.getType();
+
+            PlateService.OrderV1 lo = gson.fromJson(jsonLastOrder, typeOrderV1);
+            List<PlateService.OrderItemV1> orderItems = gson.fromJson(jsonLastOrderItems, typeOrderItemV1);
+
+            displayResponse(orderItems, lo);
+        }
+
+        // then, update if needed
         boolean updateReceipt = getActivity().getIntent().getBooleanExtra("updateReceipt", false);
         Log.d(Constants.LOG_TAG, "updateReceipt extra: " + updateReceipt );
         if (updateReceipt) {
@@ -135,9 +154,9 @@ public class ReceiptFragment extends Fragment{
         plateServiceManager.login(getActivity());
     }
 
-    private void displayResponse(List<PlateService.OrderItemV1> orderItems,PlateService.OrderV1 lo){
-        //TextView tv = (TextView) getView().findViewById(R.id.tvReceipt);
-        //TextView tv_price = (TextView) getView().findViewById(R.id.tv_receipt_price);
+    private void displayResponse(List<PlateService.OrderItemV1> orderItems, PlateService.OrderV1 lo){
+
+        // get UI components
         TextView tv_number = (TextView) getView().findViewById(R.id.tv_slip_num);
         TextView tv_rest = (TextView) getView().findViewById(R.id.tv_rec_restaurant);
         TextView tv_time = (TextView) getView().findViewById(R.id.tv_order_time);
@@ -145,6 +164,7 @@ public class ReceiptFragment extends Fragment{
         TextView tv_status = (TextView) getView().findViewById(R.id.tv_order_status);
         ListView lv = (ListView) v.findViewById(R.id.lv_receipt);
 
+        // build strings to display (orderItems)
         List<String> mealString = new ArrayList<String>();
         List<String> amountString = new ArrayList<String>();
         List<String> priceString = new ArrayList<String>();
@@ -160,6 +180,7 @@ public class ReceiptFragment extends Fragment{
             priceString.add(i,price+"元");
         }
 
+        // display lo's content: lo.status, lo.ctime, lo.restaurant, lo.number_slip
         String stringTotalPrice = getString(R.string.total_amount)+" "+totalPrice+" 元\n";
         String status="";
         int textColor=0;
@@ -196,6 +217,8 @@ public class ReceiptFragment extends Fragment{
         tv_number.setText(tools.formattedNS(lo.pos_slip_number));
         tv_rest.setText(lo.restaurant.name);
         rest_id = lo.restaurant.rest_id;
+
+        //
         tv_total.setText(stringTotalPrice);
         tv_status.setText("("+ status +")");
 
@@ -300,6 +323,20 @@ public class ReceiptFragment extends Fragment{
         Log.d(Constants.LOG_TAG, String.format("%s %s %s %d %d", lo.ctime, lo.mtime, lo.restaurant.name, lo.pos_slip_number, lo.status));
 
         displayResponse(orderItems, lo);
+
+        // TODO: [sp] store orderItems, lo
+        storeContentToOffline(orderItems, lo);
+    }
+
+    private void storeContentToOffline(List<PlateService.OrderItemV1> orderItems, PlateService.OrderV1 lo){
+        Gson gson = new Gson();
+        String jsonLastOrder = gson.toJson(lo);
+        String jsonLastOrderItems = gson.toJson(orderItems);
+
+        SharedPreferences sp = getActivity().getSharedPreferences("offline_data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("jsonLastOrder", jsonLastOrder).commit();
+        ed.putString("jsonLastOrderItems", jsonLastOrderItems).commit();
     }
 
     public void notRegistered() {
