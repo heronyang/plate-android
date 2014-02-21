@@ -208,8 +208,10 @@ public class PlateService {
 			 * http://developer.android.com/reference/java/text/SimpleDateFormat.html
 			 * http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
 			 * */
+            //FIXME: server : "yyyy-MM-dd'T'HH:mmZ", local : "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ";
             String fmt;
             if (System.getProperty("java.runtime.name").equals("Android Runtime")) {
+                //fmt = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ";
                 fmt = "yyyy-MM-dd'T'HH:mmZ";
             } else {
                 fmt = "yyyy-MM-dd'T'HH:mmZ";

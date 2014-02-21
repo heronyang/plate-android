@@ -79,7 +79,7 @@
     <string name="receipt_message">號 碼 牌</string>
     <string name="receipt_button_text"> 現場號碼 </string>
     <string name="current_number">現在的號碼是：</string>
-    <string name="receipt_button_refresh">更新</string>
+    <string name="receipt_button_refresh">重新整理</string>
     <string name="receipt_noorder">目前沒有訂單</string>
     <string name="notRegistered">尚未登入</string>
     <string name="register_second_chance_to_register">請輸入手機號碼，收到確認簡訊後將開啟訂餐功能。</string>

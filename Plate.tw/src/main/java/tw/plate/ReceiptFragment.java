@@ -43,8 +43,12 @@ public class ReceiptFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Log.d(Constants.LOG_TAG,"refresh clicked");
+                updateReceiptContent();
+
+                /*
                 PlateServiceManager plateServiceManager = ((Plate)getActivity().getApplication()).getPlateServiceManager();
                 plateServiceManager.login(getActivity());
+                */
 
                 /*
                 refreshButton.setBackgroundResource(R.drawable.rounded_rectangle_frame_pressed);
@@ -109,14 +113,17 @@ public class ReceiptFragment extends Fragment{
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            Log.d(Constants.LOG_TAG, "Time to setup login");
-            //loginSession();
-            PlateServiceManager plateServiceManager;
-            plateServiceManager = ((Plate)(getActivity().getApplication())).getPlateServiceManager();
-            plateServiceManager.login(getActivity());
+            //updateReceiptContent();
         } else {
             // Do your Work
         }
+    }
+
+    public void updateReceiptContent() {
+        Log.d(Constants.LOG_TAG, "update receipt content");
+        PlateServiceManager plateServiceManager;
+        plateServiceManager = ((Plate)(getActivity().getApplication())).getPlateServiceManager();
+        plateServiceManager.login(getActivity());
     }
 
     private void displayResponse(List<PlateService.OrderItemV1> orderItems,PlateService.OrderV1 lo){
