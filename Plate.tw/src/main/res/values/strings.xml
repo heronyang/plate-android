@@ -109,8 +109,8 @@
     <string name="rest_status_close">(休息中)</string>
     <string name="order_fail_default_message">點餐失敗</string>
     <string name="phone_number_tv">電話號碼</string>
-    <string name="network_error_message">開啟網路</string>
-    <string name="network_error_title">請連線上網際網路</string>
+    <string name="network_error_message">請連線上網際網路</string>
+    <string name="network_error_title">開啟網路</string>
 
     <!-- for Location Fragment-->
     <string-array name="contact_us">

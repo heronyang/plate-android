@@ -405,7 +405,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                System.exit(0);
+                //System.exit(0);
             }
         });
         AlertDialog dialog = builder.create();
